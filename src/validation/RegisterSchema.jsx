@@ -1,7 +1,6 @@
 import * as yup from 'yup'
 export const RegisterSchema = yup.object({
-    fullName: yup.string()
-        .required("Full name is required")
+    fullName: yup.string().required("Full name is required")
         .trim()
         .test(
             "is-triple-name",
@@ -15,22 +14,18 @@ export const RegisterSchema = yup.object({
             /^[A-Za-z\u0600-\u06FF\s]+$/,
             "Name can only contain letters"),
 
-    email: yup.string().required("Email is required").email("Invalid email format").max(100, "Email is too long"),
+    email: yup.string().required("Email is required")
+    .email("Invalid email format").max(100, "Email is too long"),
 
-    password: yup
-        .string()
-        .required("Password is required")
-        .min(12, "Password must be at least 12 characters")
-        .max(128, "Password is too long")
+    password: yup.string().required("Password is required")
+        .min(8, "Password must be at least 8 characters")
+        .max(20, "Password is long")
         .matches(/[A-Z]/, "Must contain at least one uppercase letter")
         .matches(/[a-z]/, "Must contain at least one lowercase letter")
         .matches(/[0-9]/, "Must contain at least one number")
         .matches(/[@$!%*?&]/, "Must contain at least one special character")
         .matches(/^(?!.*(.)\1{3,})/,"Password cannot contain repeated characters"),
 
-    confirmPassword: yup
-        .string()
-        .required("Please confirm your password")
+    confirmPassword: yup.string().required("Please confirm your password")
         .oneOf([yup.ref("password")], "Passwords must match")
-
 });

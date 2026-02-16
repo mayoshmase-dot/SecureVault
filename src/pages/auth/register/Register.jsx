@@ -1,24 +1,25 @@
-import { Box, Button, Link, TextField, Typography } from '@mui/material';
+import { Box, Button, CircularProgress, Link, TextField, Typography } from '@mui/material';
 import logoSecure from '../../../assets/img/logoSecure.png'
 import { Link as ReactLink } from 'react-router-dom'
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { RegisterSchema } from '../../../validation/RegisterSchema';
+import { useState } from 'react';
 
 export default function Register() {
-  const { register, handleSubmit, formState: { errors } } = useForm({
+  const [serverErrors, setserverErrors] = useState([])
+  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm({
     resolver: yupResolver(RegisterSchema)
   });
   const RegisterForm = (data) => {
-    console.log(data)
+    setserverErrors(data)
   }
   return (
     <Box display={'flex'} flexDirection={'column'} gap={2} my={5} p={5}
       sx={{
         borderRadius: 3, backgroundColor: 'rgb(30, 58, 80)',
         boxShadow: `0 10px 30px rgba(0,0,0,0.7),0 0 20px rgba(34,197,94,0.15)`
-      }}
-    >
+      }} >
       <Box display={'flex'} flexDirection={'column'} gap={1}>
         <Box display={'flex'} alignItems={'center'} >
           <Box component={'img'} src={logoSecure} height={50} />
@@ -30,10 +31,17 @@ export default function Register() {
         <Typography variant='body2' sx={{ color: 'rgb(255, 255, 255)' }}>
           Already have an account? {' '}
           <Link component={ReactLink} to={'/login'} underline='none' sx={{ color: '#22C55E', fontWeight: 600 }}>
-            Sign in
+            Sign In
           </Link>
         </Typography>
       </Box>
+      {serverErrors?.length > 0 && (
+        <Box mt={1} color={'red'}>
+          {serverErrors.map((error) => {
+            <Typography>{error}</Typography>
+          })}
+        </Box>
+      )}
       <Box component={'form'} onSubmit={handleSubmit(RegisterForm)}
         display={'flex'} flexDirection={'column'} gap={2.5}>
 
@@ -42,7 +50,7 @@ export default function Register() {
             input: { color: 'white' }, label: { color: 'rgb(255, 255, 255)' },
             '& .MuiOutlinedInput-root': {
               '& fieldset': { borderColor: 'rgba(255,255,255,0.2)' },
-              '&.Mui-focused fieldset': { borderColor: '#22C55E'},
+              '&.Mui-focused fieldset': { borderColor: '#22C55E' },
               '&:hover fieldset': { borderColor: '#22C55E' },
             }
           }}
@@ -81,8 +89,8 @@ export default function Register() {
           }}
           error={errors.confirmPassword} helperText={errors.confirmPassword?.message} />
 
-        <Button type='submit' variant="contained" sx={{ borderRadius: 5, backgroundColor: 'rgb(48, 168, 90)' }}>
-          Create Account
+        <Button type='submit' variant="contained" sx={{ borderRadius: 5, backgroundColor: 'rgb(48, 168, 90)' }} disabled={isSubmitting}>
+          {isSubmitting ? <CircularProgress /> : 'Create Account'}
         </Button>
       </Box>
     </Box>
