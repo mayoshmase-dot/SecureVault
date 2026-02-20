@@ -8,10 +8,7 @@ export default function MainLayout() {
   return (
     <>
       <Navbar />
-      <Container maxWidth="xs">
-        <Outlet />
-      </Container>
-     
+        <Outlet />     
       <Footer />
       </>
   )

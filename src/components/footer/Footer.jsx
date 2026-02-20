@@ -2,7 +2,7 @@ import { Box, Typography } from "@mui/material";
 
 export default function Footer() {
   return (
-    <Box component="footer" bgcolor={'rgb(30, 58, 80)'} p={2} color={"#fff"}>
+    <Box component="footer" bgcolor={'rgb(1, 6, 46)'} p={2} color={"#fff"}>
 
       <Box sx={{ display: "flex", justifyContent: "space-between", flexWrap:'wrap',gap:2 , alignItems: "center", mb: 3 }}>
 

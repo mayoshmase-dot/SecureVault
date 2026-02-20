@@ -11,7 +11,7 @@ import { Link as ReactLink } from 'react-router-dom'
 
 export default function Navbar() {
   return (
-    <AppBar position="static" sx={{ backgroundColor: 'rgb(30, 58, 80)' }}>
+    <AppBar position="static" sx={{ backgroundColor: 'rgb(1, 6, 46)' }}>
       <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <Box display={'flex'} alignItems={'center'}>
           <Box component={'img'} src={LogoSecure} alt="SecureVault Logo" sx={{ height: 50 }} />
