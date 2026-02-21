@@ -1,5 +1,5 @@
 import { Box, Button, CircularProgress, Container, Link, TextField, Typography } from '@mui/material';
-import logoSecure from '../../../assets/img/logoSecure.png'
+import logoSecure from '../../../assets/img/LogoSecure.png'
 import { Link as ReactLink } from 'react-router-dom'
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -18,7 +18,7 @@ export default function Register() {
     <Container maxWidth='xs'>
       <Box display={'flex'} flexDirection={'column'} gap={2} my={5} p={5}
         sx={{
-          borderRadius: 3, backgroundColor: 'rgb(1, 6, 46)',
+          borderRadius: 3, backgroundColor: 'rgb(1, 6, 46)',userSelect:'none',
           boxShadow: `0 10px 30px rgba(0,0,0,0.7),0 0 20px rgba(34,197,94,0.15)`
         }} >
         <Box display={'flex'} flexDirection={'column'} gap={1}>

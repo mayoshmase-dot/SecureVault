@@ -1,47 +1,40 @@
 import heroImg from '../../assets/img/hero.webp'
-import { Box, Button, Link, Typography } from '@mui/material'
+import { Box, Link, Typography } from '@mui/material'
 import { Link as LinkReact } from 'react-router-dom'
 
 export default function Hero() {
     return (
-        <Box>
-            <Box>
-                <Box position={'relative'} sx={{
-                    height: "100vh",
-                    backgroundImage: `url(${heroImg})`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                    backgroundRepeat: "no-repeat",
-                    paddingLeft: "100%",
-                }} >
-                </Box>
-            </Box>
-            <Box color="white" position="absolute" top={30} bottom={0} left={0} right={0}
-                sx={{ display: 'flex', flexDirection: 'column', gap: 3, justifyContent: 'center', alignItems: 'flex-start', pl: 8 }} >
-                <Typography variant="h4" sx={{ fontWeight: "bold" }}>
-                    Secure Your Passwords in One Safe Vault
-                </Typography>
+  <Box sx={{position:'relative', height: "100vh",userSelect: 'none', backgroundImage: `url(${heroImg})`, backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat" }}>
 
-                <Typography variant="body1" sx={{ maxWidth: "500px" }}>
-                    Store, manage, and generate strong passwords with advanced encryption and
-                    two-factor authentication.
-                </Typography>
+  <Box color="white" position="absolute" top={0} left={0} right={0} bottom={0}
+    sx={{ display: "flex", flexDirection: "column",justifyContent: "center",
+      alignItems: { xs: "center", md: "flex-start" },
+      textAlign: { xs: "center", md: "left" },
+      gap: 3,px: { xs: 3, sm: 6, md: 10 },
+    }}>
 
-                <Box display="flex" gap={3}>
-                    <Link component={LinkReact} to={'/register'} color='white' underline='none'
-                        variant="contained"
-                        sx={{ borderRadius: 7, px: 5, py: 2, backgroundColor: "rgb(48,168,90)" }}>
-                        Create Account
-                    </Link>
+    <Typography variant="h4" sx={{fontWeight: "bold",fontSize: { xs: "28px", sm: "34px", md: "40px" },}}>
+      Secure Your Passwords in One Safe Vault
+    </Typography>
 
-                    <Link component={LinkReact} to={'/login'} color='white' underline='none'
-                        variant="contained"
-                        sx={{borderRadius: 7, px: 5, py: 2, backgroundColor: "rgb(48,168,90)" }}>
-                        Sign In
-                    </Link>
-                </Box>
-            </Box>
+    <Typography
+      sx={{maxWidth: "500px",fontSize: { xs: "14px", sm: "16px" }}}>
+    Store, manage, and generate strong passwords with advanced encryption and
+      two-factor authentication.
+    </Typography>
 
-        </Box>
+    <Box display="flex" gap={3} flexDirection={{ xs: "column", sm: "row" }} width={{ xs: "100%", sm: "auto" }}>
+      <Link component={LinkReact} to="/register" underline="none"
+        sx={{ borderRadius: 7, px: 5,py: 2,backgroundColor: "rgb(48,168,90)", color: "white", textAlign: "center" }} >
+        Create Account
+      </Link>
+
+      <Link component={LinkReact} to="/login" underline="none"
+      sx={{borderRadius: 7,px: 5,py: 2,backgroundColor: "rgb(48,168,90)",color: "white",textAlign: "center"}}>
+        Sign In
+      </Link>
+    </Box>
+  </Box>
+</Box>
     )
 }

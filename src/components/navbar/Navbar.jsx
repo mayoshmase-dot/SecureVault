@@ -10,6 +10,11 @@ import { Link } from '@mui/material';
 import { Link as ReactLink } from 'react-router-dom'
 
 export default function Navbar() {
+  const scrollToFeatures = () => {
+  document.getElementById("features")?.scrollIntoView({
+    behavior: "smooth",
+  })
+}
   return (
     <AppBar position="static" sx={{ backgroundColor: 'rgb(1, 6, 46)' }}>
       <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -21,7 +26,7 @@ export default function Navbar() {
         </Box>
         <Box sx={{ display: { xs: 'none', md: 'flex' } }} alignItems={'center'} gap={4}>
           <Link component={ReactLink} to='/' underline='none' color="inherit">Home</Link>
-          <Link component={ReactLink} to='/features' underline='none' color="inherit">Features</Link>
+          <Link component={ReactLink}  onClick={scrollToFeatures} underline='none' color="inherit">Features</Link>
           <Link component={ReactLink} to='/login' underline='none' color="inherit">
             Sign In
           </Link>

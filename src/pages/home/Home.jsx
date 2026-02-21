@@ -1,8 +1,11 @@
 import React from 'react';
 import Hero from '../../components/hero/Hero';
+import Features from '../../components/features/Features';
 
 export default function Home() {
-  return (
+  return (<>
     <Hero />
+    <Features />
+  </>
   )
 };
