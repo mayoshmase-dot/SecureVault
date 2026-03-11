@@ -2,7 +2,7 @@ import { Box, Typography } from "@mui/material";
 
 export default function Footer() {
   return (
-   <Box component="footer" bgcolor="rgb(1, 6, 46)" color="#fff"
+   <Box component="footer" bgcolor="rgb(1, 6, 46)" color="#fff" 
   px={{ xs: 2, sm: 4 }}
   py={{ xs: 3, sm: 4 }}>
   <Box

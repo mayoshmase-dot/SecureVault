@@ -31,7 +31,7 @@ export default function Navbar() {
             Sign In
           </Link>
           <Link component={ReactLink} to='/register' underline='none' >
-            <Button variant="contained" sx={{ borderRadius: 5, px: 2, backgroundColor: 'rgb(48, 168, 90)' }}>Sign up</Button>
+            <Button variant="contained" sx={{ borderRadius: 5, px: 2, backgroundColor: 'rgb(48, 168, 90)' , boxShadow:' 0 0 20px rgba(48,168,90,0.6) '}}>Sign up</Button>
           </Link>
         </Box>
         <IconButton edge="start" color="inherit" aria-label="menu" sx={{ display: { xs: 'block', md: 'none' } }}>

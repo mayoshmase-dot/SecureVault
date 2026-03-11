@@ -3,25 +3,30 @@ import MainLayout from "./layout/MainLayout";
 import Home from "./pages/home/Home";
 import Login from "./pages/auth/login/Login";
 import Register from "./pages/auth/register/Register";
+import Dashboard from "./pages/dashboard/Dashboard";
 
 const router = createBrowserRouter([
     {
-        path : '/',
-        element : <MainLayout />,
-        children : [
+        path: '/',
+        element: <MainLayout />,
+        children: [
             {
-                index : true ,
-                element : <Home />
+                index: true,
+                element: <Home />
             },
             {
-                path : 'login',
-                element : <Login />
+                path: 'login',
+                element: <Login />
             },
             {
-                path : 'register',
-                element : <Register />
+                path: 'register',
+                element: <Register />
             },
-        ] 
+            {
+                path: 'dashboard',
+                element: <Dashboard />
+            },
+        ]
     }
 ]);
-export default router ;
+export default router;

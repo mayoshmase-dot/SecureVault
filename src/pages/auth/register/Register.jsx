@@ -8,9 +8,11 @@ import { useState } from 'react';
 
 export default function Register() {
   const [serverErrors, setserverErrors] = useState([])
-  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm({
+  const { register, handleSubmit, watch, formState: { errors, isSubmitting } } = useForm({
     resolver: yupResolver(RegisterSchema)
   });
+  const passwordValue = watch("password", "");
+
   const RegisterForm = (data) => {
     setserverErrors(data)
   }
@@ -18,7 +20,7 @@ export default function Register() {
     <Container maxWidth='xs'>
       <Box display={'flex'} flexDirection={'column'} gap={2} my={5} p={5}
         sx={{
-          borderRadius: 3, backgroundColor: 'rgb(1, 6, 46)',userSelect:'none',
+          borderRadius: 3, backgroundColor: 'rgb(1, 6, 46)', userSelect: 'none',
           boxShadow: `0 10px 30px rgba(0,0,0,0.7),0 0 20px rgba(34,197,94,0.15)`
         }} >
         <Box display={'flex'} flexDirection={'column'} gap={1}>
@@ -89,12 +91,11 @@ export default function Register() {
               }
             }}
             error={errors.confirmPassword} helperText={errors.confirmPassword?.message} />
-
-          <Button type='submit' variant="contained" sx={{ borderRadius: 5, backgroundColor: 'rgb(48, 168, 90)' }} disabled={isSubmitting}>
+          <Button type='submit' variant="contained" sx={{ borderRadius: 5, backgroundColor: 'rgb(48, 168, 90)' ,boxShadow : '0 0 20px rgba(48,168,90,0.6)'  }} disabled={isSubmitting}>
             {isSubmitting ? <CircularProgress /> : 'Create Account'}
           </Button>
         </Box>
       </Box>
-      </Container>
-      )
+    </Container>
+  )
 };
