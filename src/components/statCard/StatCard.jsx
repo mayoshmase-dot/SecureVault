@@ -9,7 +9,7 @@ export default function StatCard() {
             <Container maxWidth="lg">
                 <Grid container spacing={5}>
                     <Grid item xs={12} md={6} lg={4} flex={1} >
-                        <Card sx={{ py: 4, px: 3, bgcolor: "rgb(1,6,46)", color: "white", height: "100%" }}>
+                        <Card sx={{ py: 4, px: 3, bgcolor: "rgb(1,6,46)", color: "white", height: "100%" , borderRadius:3 }}>
                             <Box display="flex" flexDirection={{xs:'column' , md:'row'}} alignItems="center" gap={2}>
                                 <IconButton sx={{ color: "rgb(48,168,90)" }}>
                                     <GppGoodOutlinedIcon fontSize="large" />
@@ -22,7 +22,7 @@ export default function StatCard() {
                         </Card>
                     </Grid>
                     <Grid item xs={12} md={6} lg={4} flex={1}>
-                        <Card sx={{ py: 4, px: 3, bgcolor: "rgb(1,6,46)", color: "white", height: "100%" }}>
+                        <Card sx={{ py: 4, px: 3, bgcolor: "rgb(1,6,46)", color: "white", height: "100%" , borderRadius:3}}>
                             <Box display="flex" flexDirection={{xs:'column' , md:'row'}} alignItems="center" gap={2}>
                                 <IconButton sx={{ color: "orange" }}>
                                     <GppMaybeOutlinedIcon fontSize="large" />
@@ -36,7 +36,7 @@ export default function StatCard() {
                     </Grid>
 
                     <Grid item xs={12} md={6} lg={4} flex={1}>
-                        <Card sx={{ py: 4, px: 3, bgcolor: "rgb(1,6,46)", color: "white", height: "100%" }}>
+                        <Card sx={{ py: 4, px: 3, bgcolor: "rgb(1,6,46)", color: "white", height: "100%" , borderRadius:3 }}>
                             <Box display="flex" flexDirection={{xs:'column' , md:'row'}} alignItems="center" gap={2}>
                                 <IconButton  sx={{ color: "dodgerblue" }}>
                                     <VpnKeyOutlinedIcon fontSize="large" />
