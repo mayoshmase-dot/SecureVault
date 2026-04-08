@@ -26,12 +26,12 @@ export default function Hero() {
 
         <Box display="flex" gap={3} flexDirection={{ xs: "column", sm: "row" }} width={{ xs: "100%", sm: "auto" }}>
           <Link component={LinkReact} to="/register" underline="none"
-            sx={{ borderRadius: 7, px: 5, py: 2, backgroundColor: "rgb(48,168,90)", boxShadow: ' 0 0 20px rgba(48,168,90,0.6)', color: "white", textAlign: "center" }} >
+            sx={{ borderRadius: 7, px: 5, py: 2, backgroundColor: "secondary.main", boxShadow: ' 0 0 20px rgba(48, 168, 90, 0.1) ', color: "white", textAlign: "center" }} >
             Create Account
           </Link>
 
           <Link component={LinkReact} to="/login" underline="none"
-            sx={{ borderRadius: 7, px: 5, py: 2, backgroundColor: "rgb(48,168,90)", boxShadow: ' 0 0 20px rgba(48,168,90,0.6)', color: "white", textAlign: "center" }}>
+            sx={{ borderRadius: 7, px: 5, py: 2, backgroundColor: "secondary.main", boxShadow: ' 0 0 20px rgba(48, 168, 90, 0.1) ', color: "white", textAlign: "center" }}>
             Sign In
           </Link>
         </Box>

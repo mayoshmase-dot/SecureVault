@@ -11,12 +11,12 @@ import { Link as ReactLink } from 'react-router-dom'
 
 export default function Navbar() {
   const scrollToFeatures = () => {
-  document.getElementById("features")?.scrollIntoView({
-    behavior: "smooth",
-  })
-}
+    document.getElementById("features")?.scrollIntoView({
+      behavior: "smooth",
+    })
+  }
   return (
-    <AppBar position="static" sx={{ backgroundColor: 'rgb(1, 6, 46)' }}>
+    <AppBar position="static" sx={{ backgroundColor: 'primary.main' }}>
       <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <Box display={'flex'} alignItems={'center'}>
           <Box component={'img'} src={LogoSecure} alt="SecureVault Logo" sx={{ height: 50 }} />
@@ -26,12 +26,12 @@ export default function Navbar() {
         </Box>
         <Box sx={{ display: { xs: 'none', md: 'flex' } }} alignItems={'center'} gap={4}>
           <Link component={ReactLink} to='/' underline='none' color="inherit">Home</Link>
-          <Link component={ReactLink}  onClick={scrollToFeatures} underline='none' color="inherit">Features</Link>
+          <Link component={ReactLink} onClick={scrollToFeatures} underline='none' color="inherit">Features</Link>
           <Link component={ReactLink} to='/login' underline='none' color="inherit">
             Sign In
           </Link>
           <Link component={ReactLink} to='/register' underline='none' >
-            <Button variant="contained" sx={{ borderRadius: 5, px: 2, backgroundColor: 'rgb(48, 168, 90)' , boxShadow:' 0 0 20px rgba(48,168,90,0.6) '}}>Sign up</Button>
+            <Button variant="contained" sx={{ borderRadius: 5, px: 2, backgroundColor: 'secondary.main', boxShadow: ' 0 0 20px rgba(48, 168, 90, 0.1) ' }}>Sign up</Button>
           </Link>
         </Box>
         <IconButton edge="start" color="inherit" aria-label="menu" sx={{ display: { xs: 'block', md: 'none' } }}>

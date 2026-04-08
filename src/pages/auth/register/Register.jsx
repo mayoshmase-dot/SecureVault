@@ -11,7 +11,6 @@ export default function Register() {
   const { register, handleSubmit, watch, formState: { errors, isSubmitting } } = useForm({
     resolver: yupResolver(RegisterSchema)
   });
-  const passwordValue = watch("password", "");
 
   const RegisterForm = (data) => {
     setserverErrors(data)
@@ -20,7 +19,7 @@ export default function Register() {
     <Container maxWidth='xs'>
       <Box display={'flex'} flexDirection={'column'} gap={2} my={5} p={5}
         sx={{
-          borderRadius: 3, backgroundColor: 'rgb(1, 6, 46)', userSelect: 'none',
+          borderRadius: 3, backgroundColor: 'primary.main', userSelect: 'none',
           boxShadow: `0 10px 30px rgba(0,0,0,0.7),0 0 20px rgba(34,197,94,0.15)`
         }} >
         <Box display={'flex'} flexDirection={'column'} gap={1}>
@@ -33,7 +32,7 @@ export default function Register() {
 
           <Typography variant='body2' sx={{ color: 'rgb(255, 255, 255)' }}>
             Already have an account? {' '}
-            <Link component={ReactLink} to={'/login'} underline='none' sx={{ color: '#22C55E', fontWeight: 600 }}>
+            <Link component={ReactLink} to={'/login'} underline='none' sx={{ color: 'secondary.main', fontWeight: 600 }}>
               Sign In
             </Link>
           </Typography>
@@ -49,14 +48,6 @@ export default function Register() {
           display={'flex'} flexDirection={'column'} gap={2.5}>
 
           <TextField {...register('fullName')} fullWidth label="Full Name" variant="outlined"
-            sx={{
-              input: { color: 'white' }, label: { color: 'rgb(255, 255, 255)' },
-              '& .MuiOutlinedInput-root': {
-                '& fieldset': { borderColor: 'rgba(255,255,255,0.2)' },
-                '&.Mui-focused fieldset': { borderColor: '#22C55E' },
-                '&:hover fieldset': { borderColor: '#22C55E' },
-              }
-            }}
             error={errors.fullName} helperText={errors.fullName?.message} />
 
           <TextField {...register('email')} fullWidth label="Email" variant="outlined"
@@ -71,27 +62,13 @@ export default function Register() {
             error={errors.email} helperText={errors.email?.message} />
 
           <TextField {...register('password')} fullWidth label="Password" type="password" variant="outlined"
-            sx={{
-              input: { color: 'white' }, label: { color: 'rgb(255, 255, 255)' },
-              '& .MuiOutlinedInput-root': {
-                '& fieldset': { borderColor: 'rgba(255,255,255,0.2)' },
-                '&.Mui-focused fieldset': { borderColor: '#22C55E' },
-                '&:hover fieldset': { borderColor: '#22C55E' },
-              }
-            }}
+
             error={errors.password} helperText={errors.password?.message} />
 
           <TextField {...register('confirmPassword')} fullWidth label="Confirm password" type="password" variant="outlined"
-            sx={{
-              input: { color: 'white' }, label: { color: 'rgb(255, 255, 255)' },
-              '& .MuiOutlinedInput-root': {
-                '& fieldset': { borderColor: 'rgba(255,255,255,0.2)' },
-                '&.Mui-focused fieldset': { borderColor: '#22C55E' },
-                '&:hover fieldset': { borderColor: '#22C55E' },
-              }
-            }}
+
             error={errors.confirmPassword} helperText={errors.confirmPassword?.message} />
-          <Button type='submit' variant="contained" sx={{ borderRadius: 5, backgroundColor: 'rgb(48, 168, 90)' ,boxShadow : '0 0 20px rgba(48,168,90,0.6)'  }} disabled={isSubmitting}>
+          <Button type='submit' variant="contained" sx={{ borderRadius: 5, backgroundColor: 'secondary.main', boxShadow: '0 0 20px rgba(48,168,90,0.1)' }} disabled={isSubmitting}>
             {isSubmitting ? <CircularProgress /> : 'Create Account'}
           </Button>
         </Box>

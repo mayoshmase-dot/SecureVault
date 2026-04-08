@@ -2,7 +2,7 @@ import { Box, Typography } from "@mui/material";
 
 export default function Footer() {
   return (
-   <Box component="footer" bgcolor="rgb(1, 6, 46)" color="#fff" 
+   <Box component="footer" bgcolor="primary.main" color="#fff" 
   px={{ xs: 2, sm: 4 }}
   py={{ xs: 3, sm: 4 }}>
   <Box
@@ -31,7 +31,7 @@ export default function Footer() {
   </Box>
 
   <Box
-    sx={{textAlign: "center", borderTop: "1px solid rgb(48, 168, 90)",pt: 2,mt: 2, }}>
+    sx={{textAlign: "center", borderTop: "1px solid",borderTopColor:'secondary.main',pt: 2,mt: 2, }}>
     <Typography variant="caption">
       &copy; {new Date().getFullYear()} SecureVault – All rights reserved.
     </Typography>

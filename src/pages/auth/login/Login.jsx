@@ -1,6 +1,6 @@
 import { Box, Button, CircularProgress, Container, Link, TextField, Typography } from '@mui/material';
 import logoSecure from '../../../assets/img/LogoSecure.png'
-import { Link as ReactLink } from 'react-router-dom'
+import { Link as ReactLink, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { LoginSchema } from '../../../validation/LoginSchema';
@@ -11,14 +11,17 @@ export default function Login() {
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm({
     resolver: yupResolver(LoginSchema), mode: "all"
   });
+  const navigate = useNavigate();
+
   const LoginForm = (data) => {
     setserverErrors(data)
+    navigate('/dashboard')
   }
   return (
     <Container maxWidth='xs'>
       <Box display={'flex'} flexDirection={'column'} gap={2} my={8} p={5}
         sx={{
-          borderRadius: 3, backgroundColor: 'rgb(1, 6, 46)', userSelect: 'none',
+          borderRadius: 3, backgroundColor: 'primary.main', userSelect: 'none',
           boxShadow: `0 10px 30px rgba(0,0,0,0.7),0 0 20px rgba(34,197,94,0.15)`
         }}>
         <Box display={'flex'} flexDirection={'column'} gap={1}>
@@ -31,7 +34,7 @@ export default function Login() {
 
           <Typography variant='body2' sx={{ color: 'rgb(255, 255, 255)' }}>
             Don’t have an accout yet? {' '}
-            <Link component={ReactLink} to={'/register'} underline='none' sx={{ color: '#22C55E', fontWeight: 600 }}>
+            <Link component={ReactLink} to={'/register'} underline='none' sx={{ color: 'secondary.main', fontWeight: 600 }}>
               Sign Up
             </Link>
           </Typography>
@@ -68,7 +71,7 @@ export default function Login() {
             }}
             error={errors.password} helperText={errors.password?.message} />
 
-          <Button type='submit' variant="contained" sx={{ borderRadius: 5, backgroundColor: 'rgb(48, 168, 90)' , boxShadow : ' 0 0 20px rgba(48,168,90,0.6)' }} disabled={isSubmitting}>
+          <Button type='submit' variant="contained" sx={{ borderRadius: 5, backgroundColor: 'secondary.main', boxShadow: ' 0 0 20px rgba(48,168,90,0.1)' }} disabled={isSubmitting}>
             {isSubmitting ? <CircularProgress /> : 'Sign In'}
           </Button>
         </Box>
