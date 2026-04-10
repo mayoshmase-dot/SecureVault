@@ -1,7 +1,8 @@
 import { createTheme } from "@mui/material";
 
 const getTheme = (mode) => {
-    return  createTheme({
+    return (
+        createTheme({
             palette: {
                 mode: mode,
                 primary: {
@@ -9,9 +10,11 @@ const getTheme = (mode) => {
                 },
                 secondary: {
                     main: 'rgb(48, 168, 90)',
-                    dark : 'rgb(53, 241, 119)'
+                    dark: 'rgb(53, 241, 119)'
                 }
             }
         })
+    )
 }
+
 export default getTheme;

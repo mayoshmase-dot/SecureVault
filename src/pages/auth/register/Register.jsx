@@ -5,74 +5,96 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { RegisterSchema } from '../../../validation/RegisterSchema';
 import { useState } from 'react';
+import axios from 'axios';
+
+const textFieldSx = {
+  '& .MuiOutlinedInput-root': {
+    color: 'white',
+    '& fieldset': { borderColor: 'rgba(255,255,255,0.2)' },
+    '&:hover fieldset': { borderColor: 'rgba(255,255,255,0.5)' },
+    '&.Mui-focused fieldset': { borderColor: 'rgb(48,168,90)' },
+  },
+  '& .MuiInputLabel-root': { color: 'rgba(255,255,255,0.5)' },
+  '& .MuiInputLabel-root.Mui-focused': { color: 'rgb(53, 241, 119)' },
+  '& input:-webkit-autofill': {
+    WebkitBoxShadow: '0 0 0 1000px rgb(1, 6, 46) inset',
+    WebkitTextFillColor: 'white',
+  },
+};
 
 export default function Register() {
-  const [serverErrors, setserverErrors] = useState([])
-  const { register, handleSubmit, watch, formState: { errors, isSubmitting } } = useForm({
-    resolver: yupResolver(RegisterSchema)
+  const [serverErrors, setServerErrors] = useState('')
+  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm({
+    resolver: yupResolver(RegisterSchema), mode: 'all'
   });
 
-  const RegisterForm = (data) => {
-    setserverErrors(data)
+  const RegisterForm = async (values) => {
+    try {
+      const response = await axios.post('https://backend-project-nwve.onrender.com/api/auth/register', values)
+      console.log(response)
+    }
+    catch (error) {
+      setServerErrors(error.response.data.message)
+    }
   }
+
   return (
     <Container maxWidth='xs'>
       <Box display={'flex'} flexDirection={'column'} gap={2} my={5} p={5}
         sx={{
           borderRadius: 3, backgroundColor: 'primary.main', userSelect: 'none',
           boxShadow: `0 10px 30px rgba(0,0,0,0.7),0 0 20px rgba(34,197,94,0.15)`
-        }} >
+        }}>
         <Box display={'flex'} flexDirection={'column'} gap={1}>
-          <Box display={'flex'} alignItems={'center'} >
+          <Box display={'flex'} alignItems={'center'}>
             <Box component={'img'} src={logoSecure} height={50} />
             <Typography sx={{ color: 'white', fontWeight: 600, fontSize: 22 }}>
               Sign Up
             </Typography>
           </Box>
 
-          <Typography variant='body2' sx={{ color: 'rgb(255, 255, 255)' }}>
+          <Typography variant='body2' sx={{ color: 'rgba(255,255,255,0.7)' }}>
             Already have an account? {' '}
-            <Link component={ReactLink} to={'/login'} underline='none' sx={{ color: 'secondary.main', fontWeight: 600 }}>
+            <Link component={ReactLink} to={'/login'} underline='none' sx={{ color: 'secondary.dark', fontWeight: 600 }}>
               Sign In
             </Link>
           </Typography>
         </Box>
-        {serverErrors?.length > 0 && (
-          <Box mt={1} color={'red'}>
-            {serverErrors.map((error) => {
-              <Typography>{error}</Typography>
-            })}
-          </Box>
+
+        {serverErrors && (
+          <Typography color={'error'} variant='body2'>
+            {serverErrors}
+          </Typography>
         )}
+
         <Box component={'form'} onSubmit={handleSubmit(RegisterForm)}
           display={'flex'} flexDirection={'column'} gap={2.5}>
 
-          <TextField {...register('fullName')} fullWidth label="Full Name" variant="outlined"
-            error={errors.fullName} helperText={errors.fullName?.message} />
+          <TextField {...register('name')} fullWidth label="Name" variant="outlined"
+            error={!!errors.name} helperText={errors.name?.message} sx={textFieldSx} />
 
           <TextField {...register('email')} fullWidth label="Email" variant="outlined"
-            sx={{
-              input: { color: 'white' }, label: { color: 'rgb(255, 255, 255)' },
-              '& .MuiOutlinedInput-root': {
-                '& fieldset': { borderColor: 'rgba(255,255,255,0.2)' },
-                '&.Mui-focused fieldset': { borderColor: '#22C55E' },
-                '&:hover fieldset': { borderColor: '#22C55E' },
-              }
-            }}
-            error={errors.email} helperText={errors.email?.message} />
+            error={!!errors.email} helperText={errors.email?.message} sx={textFieldSx} />
 
           <TextField {...register('password')} fullWidth label="Password" type="password" variant="outlined"
-
-            error={errors.password} helperText={errors.password?.message} />
+            error={!!errors.password} helperText={errors.password?.message} sx={textFieldSx} />
 
           <TextField {...register('confirmPassword')} fullWidth label="Confirm password" type="password" variant="outlined"
+            error={!!errors.confirmPassword} helperText={errors.confirmPassword?.message} sx={textFieldSx} />
 
-            error={errors.confirmPassword} helperText={errors.confirmPassword?.message} />
-          <Button type='submit' variant="contained" sx={{ borderRadius: 5, backgroundColor: 'secondary.main', boxShadow: '0 0 20px rgba(48,168,90,0.1)' }} disabled={isSubmitting}>
-            {isSubmitting ? <CircularProgress /> : 'Create Account'}
+          <Button type='submit' variant="contained" sx={{
+            borderRadius: 5, p: 1.5,
+            backgroundColor: 'secondary.main',
+            color: 'white',
+            fontWeight: 700,
+            letterSpacing: 1,
+            boxShadow: '0 0 20px rgba(48,168,90,0.3)',
+            '&:hover': { backgroundColor: 'secondary.dark', boxShadow: '0 0 30px rgba(53,241,119,0.4)' }
+          }} disabled={isSubmitting}>
+            {isSubmitting ? <CircularProgress size={24} sx={{ color: 'white' }} /> : 'Create Account'}
           </Button>
         </Box>
       </Box>
     </Container>
   )
-};
+}

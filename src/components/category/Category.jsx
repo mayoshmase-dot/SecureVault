@@ -2,7 +2,7 @@ import { Box, Card, Container, Grid, Typography } from '@mui/material'
 
 export default function Category() {
     return (
-        <Box mb={5}>secondary.main
+        <Box mb={5}>
             <Container maxWidth={'lg'}>
                 <Grid container spacing={2}>
                     <Grid item xs={4} md={2}>
