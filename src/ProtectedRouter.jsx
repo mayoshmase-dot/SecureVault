@@ -1,8 +1,7 @@
-import React from 'react'
 import useAuthStore from './store/useAuthStore'
 import { Navigate } from 'react-router-dom';
 
-export default function ProtectedRouter({children}) {
+export default function protectedRouter({children}) {
     const token = useAuthStore((state)=>state.token)
 
     if(!token){
