@@ -4,7 +4,7 @@ import Home from "./pages/home/Home";
 import Login from "./pages/auth/login/Login";
 import Register from "./pages/auth/register/Register";
 import Dashboard from "./pages/dashboard/Dashboard";
-import ProtectedRouter from "./protectedRouter.jsx"
+import ProtectedRouter from "./ProtectedRouter";
 
 const router = createBrowserRouter([
     {
@@ -26,10 +26,9 @@ const router = createBrowserRouter([
             {
                 path: 'dashboard',
                 element:
-                  <ProtectedRouter>
-                    <Dashboard />
-                  </ProtectedRouter>
-
+                    <ProtectedRouter >
+                        <Dashboard />
+                    </ProtectedRouter>
             },
         ]
     }
