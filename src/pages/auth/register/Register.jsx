@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { RegisterSchema } from '../../../validation/RegisterSchema';
 import { useState } from 'react';
-import axios from 'axios';
+import axiosInstance from '../../../api/axiosInstance';
 
 const textFieldSx = {
   '& .MuiOutlinedInput-root': {
@@ -28,10 +28,12 @@ export default function Register() {
     resolver: yupResolver(RegisterSchema), mode: 'all'
   });
 
-  const RegisterForm = async (values) => {
+  const RegisterForm = async (data) => {
     try {
-      const response = await axios.post('https://backend-project-nwve.onrender.com/api/auth/register', values)
+      const response = await axiosInstance.post('/auth/register', data)
       console.log(response)
+
+    
     }
     catch (error) {
       setServerErrors(error.response.data.message)

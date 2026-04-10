@@ -7,13 +7,16 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import LogoSecure from '../../assets/img/LogoSecure.png'
 import { Link } from '@mui/material';
-import { Link as ReactLink } from 'react-router-dom'
+import { Link as ReactLink, useNavigate } from 'react-router-dom'
+import useAuthStore from '../../store/useAuthStore';
 
 export default function Navbar() {
-  const scrollToFeatures = () => {
-    document.getElementById("features")?.scrollIntoView({
-      behavior: "smooth",
-    })
+  const token = useAuthStore((state) => state.token)
+  const logout = useAuthStore((state) => state.logout)
+  const navigate = useNavigate();
+  const handleLogout = ()=>{
+logout();
+navigate('/login')
   }
   return (
     <AppBar position="static" sx={{ backgroundColor: 'primary.main' }}>
@@ -26,13 +29,27 @@ export default function Navbar() {
         </Box>
         <Box sx={{ display: { xs: 'none', md: 'flex' } }} alignItems={'center'} gap={4}>
           <Link component={ReactLink} to='/' underline='none' color="inherit">Home</Link>
-          <Link component={ReactLink} onClick={scrollToFeatures} underline='none' color="inherit">Features</Link>
-          <Link component={ReactLink} to='/login' underline='none' color="inherit">
-            Sign In
-          </Link>
-          <Link component={ReactLink} to='/register' underline='none' >
-            <Button variant="contained" sx={{ borderRadius: 5, px: 2, backgroundColor: 'secondary.main', boxShadow: ' 0 0 20px rgba(48, 168, 90, 0.1) ' }}>Sign up</Button>
-          </Link>
+          {token ? (
+            <>
+              <Link component={ReactLink} to='/dashboard' underline='none' color="inherit">
+                Dashboard
+              </Link>
+              <Link component={Button} onClick={handleLogout} underline='none' color="inherit">
+                Logout
+              </Link>
+            </>
+          )
+            : (
+              <>
+                <Link component={ReactLink} to='/login' underline='none' color="inherit">
+                  Sign In
+                </Link>
+                <Link component={ReactLink} to='/register' underline='none' >
+                  <Button variant="contained" sx={{ borderRadius: 5, px: 2, backgroundColor: 'secondary.main', boxShadow: ' 0 0 20px rgba(48, 168, 90, 0.1) ' }}>Sign up</Button>
+                </Link>
+              </>)}
+
+
         </Box>
         <IconButton edge="start" color="inherit" aria-label="menu" sx={{ display: { xs: 'block', md: 'none' } }}>
           <MenuIcon />

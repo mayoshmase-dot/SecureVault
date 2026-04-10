@@ -5,38 +5,45 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { LoginSchema } from '../../../validation/LoginSchema';
 import { useState } from 'react';
-
-const textFieldSx = {
-  '& .MuiOutlinedInput-root': {
-    color: 'white',
-    '& fieldset': { borderColor: 'rgba(255,255,255,0.2)' },
-    '&:hover fieldset': { borderColor: 'rgba(255,255,255,0.5)' },
-    '&.Mui-focused fieldset': { borderColor: 'rgb(48,168,90)' },
-  },
-  '& .MuiInputLabel-root': { color: 'rgba(255,255,255,0.5)' },
-  '& .MuiInputLabel-root.Mui-focused': { color: 'rgb(53, 241, 119)' },
-  '& input:-webkit-autofill': {
-    WebkitBoxShadow: '0 0 0 1000px rgb(1, 6, 46) inset',
-    WebkitTextFillColor: 'white',
-  },
-};
+import axiosInstance from '../../../api/axiosInstance';
+import useAuthStore from '../../../store/useAuthStore';
 
 export default function Login() {
   const [serverErrors, setServerErrors] = useState('')
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm({
     resolver: yupResolver(LoginSchema), mode: "all"
   });
-  const navigate = useNavigate();
-
-  const LoginForm = (data) => {
+  const navigate = useNavigate()
+  const setToken = useAuthStore((state) => state.setToken)
+  const LoginForm = async (data) => {
     try {
-      setServerErrors('')
-      navigate('/dashboard')
-    } catch (error) {
+      const response = await axiosInstance.post('/auth/login', data)
+      if (response.status === 200) {
+        console.log(response)
+        setToken(response.data.token)
+        navigate('/dashboard')
+      }
+    }
+    catch (error) {
       setServerErrors(error.response.data.message)
     }
   }
 
+
+  const textFieldSx = {
+    '& .MuiOutlinedInput-root': {
+      color: 'white',
+      '& fieldset': { borderColor: 'rgba(255,255,255,0.2)' },
+      '&:hover fieldset': { borderColor: 'rgba(255,255,255,0.5)' },
+      '&.Mui-focused fieldset': { borderColor: 'rgb(48,168,90)' },
+    },
+    '& .MuiInputLabel-root': { color: 'rgba(255,255,255,0.5)' },
+    '& .MuiInputLabel-root.Mui-focused': { color: 'rgb(53, 241, 119)' },
+    '& input:-webkit-autofill': {
+      WebkitBoxShadow: '0 0 0 1000px rgb(1, 6, 46) inset',
+      WebkitTextFillColor: 'white',
+    },
+  };
   return (
     <Container maxWidth='xs'>
       <Box display={'flex'} flexDirection={'column'} gap={2} my={8} p={5}
