@@ -2,6 +2,7 @@ import { } from '@mui/material';
 import StatCard from '../../components/statCard/StatCard';
 import VaultControl from '../../components/vaultControl/VaultControl';
 import Category from '../../components/category/Category';
+import Credentials from '../../components/credentials/Credentials';
 
 export default function Dashboard() {
   return (
@@ -9,6 +10,7 @@ export default function Dashboard() {
       <StatCard />
       <VaultControl />
       <Category />
+      <Credentials />
     </>
   );
 }

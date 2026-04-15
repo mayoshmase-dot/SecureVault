@@ -5,6 +5,7 @@ import Login from "./pages/auth/login/Login";
 import Register from "./pages/auth/register/Register";
 import Dashboard from "./pages/dashboard/Dashboard";
 import ProtectedRouter from "./ProtectedRouter";
+import AddCredentials from "./pages/credentials/AddCredentials";
 
 const router = createBrowserRouter([
     {
@@ -28,6 +29,13 @@ const router = createBrowserRouter([
                 element:
                     <ProtectedRouter >
                         <Dashboard />
+                    </ProtectedRouter>
+            },
+            {
+                path: 'addCredentials',
+                element:
+                    <ProtectedRouter >
+                        <AddCredentials />
                     </ProtectedRouter>
             },
         ]
