@@ -1,11 +1,19 @@
 import axios from 'axios'
 
-const token = localStorage.getItem("token")
 const AuthAxiosInstance = axios.create({
     baseURL: "https://backend-project-nwve.onrender.com/api",
     headers: {
         "Accept-Language": "en",
-        Authorization: `Bearer ${token}`
     }
 })
-export default AuthAxiosInstance;
+
+// interceptor بياخذ التوكن دايماً من localStorage وقت الطلب مش وقت الـ import
+AuthAxiosInstance.interceptors.request.use((config) => {
+    const token = localStorage.getItem("token")
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`
+    }
+    return config
+})
+
+export default AuthAxiosInstance

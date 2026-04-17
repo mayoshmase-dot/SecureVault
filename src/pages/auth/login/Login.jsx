@@ -15,28 +15,28 @@ export default function Login() {
   });
   const navigate = useNavigate()
   const setToken = useAuthStore((state) => state.setToken)
+
   const LoginForm = async (data) => {
     try {
       const response = await axiosInstance.post('/auth/login', data)
       if (response.status === 200) {
 
-         if (response.status === 200) {
-      if (response.data.requires2FA) {
-        localStorage.setItem("tempToken", response.data.tempToken);
+        if (response.data.requires2FA) {
+          // نحفظ التوكن المؤقت في localStorage بس ما نحطه في الـ store
+          // عشان المستخدم ما يقدر يدخل الداشبورد قبل الـ 2FA
+          localStorage.setItem("tempToken", response.data.token)
+          navigate("/verify2FA")
+        } else {
+          // 2FA مش مفعلة — نحط التوكن الحقيقي مباشرة
+          setToken(response.data.token)
+          navigate("/dashboard")
+        }
 
-        navigate("/verify2FA");
-      } else {
-        setToken(response.data.token);
-        navigate("/dashboard");
       }
-    }
-      }
-    }
-    catch (error) {
-      setServerErrors(error.response.data.message)
+    } catch (error) {
+      setServerErrors(error.response?.data?.message || 'Something went wrong')
     }
   }
-
 
   const textFieldSx = {
     '& .MuiOutlinedInput-root': {
@@ -52,9 +52,10 @@ export default function Login() {
       WebkitTextFillColor: 'white',
     },
   };
+
   return (
     <Box sx={{ backgroundColor: 'primary.main', p: 7 }}>
-      <Container maxWidth='xs' >
+      <Container maxWidth='xs'>
         <Box display={'flex'} flexDirection={'column'} gap={2} p={5}
           sx={{
             borderRadius: 3, backgroundColor: 'primary.main', userSelect: 'none',
@@ -70,7 +71,7 @@ export default function Login() {
             </Box>
 
             <Typography variant='body2' sx={{ color: 'rgba(255,255,255,0.7)' }}>
-              Don't have an account yet? {' '}
+              Don't have an account yet?{' '}
               <Link component={ReactLink} to={'/register'} underline='none' sx={{ color: 'secondary.dark', fontWeight: 600 }}>
                 Sign Up
               </Link>
