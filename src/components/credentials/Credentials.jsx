@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function Credentials() {
     const { data, isError, isLoading, error } = useGetCredentials();
-const navigate =useNavigate();
+    const navigate = useNavigate();
     if (isLoading) return <Loader />;
     if (isError) return <Box color="error.main">{error.message}</Box>;
 
@@ -86,7 +86,7 @@ const navigate =useNavigate();
                                         <ContentCopyIcon fontSize="small" />
                                     </IconButton>
 
-                                    <IconButton size="small" sx={{ color: "secondary.main" }}onClick={() => {
+                                    <IconButton size="small" sx={{ color: "secondary.main" }} onClick={() => {
                                         navigate('/addCredentials');
                                     }} >
                                         <OpenInNewIcon fontSize="small" />

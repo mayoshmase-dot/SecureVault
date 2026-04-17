@@ -6,6 +6,10 @@ import Register from "./pages/auth/register/Register";
 import Dashboard from "./pages/dashboard/Dashboard";
 import ProtectedRouter from "./ProtectedRouter";
 import AddCredentials from "./pages/credentials/AddCredentials";
+import ProfileInfo from "./pages/profile/ProfileInfo";
+import Profile2FA from "./pages/profile/Profile2FA";
+import ProfileLanguage from "./pages/profile/ProfileLanguage";
+import Profile from "./pages/profile/profile";
 
 const router = createBrowserRouter([
     {
@@ -37,6 +41,28 @@ const router = createBrowserRouter([
                     <ProtectedRouter >
                         <AddCredentials />
                     </ProtectedRouter>
+            },
+            {
+                path: 'profile',
+                element:
+                    <ProtectedRouter>
+                        <Profile />
+                    </ProtectedRouter>,
+                children: [
+                    {
+                        path: 'profileInfo',
+                        element: <ProfileInfo />
+                    },
+                    {
+                        path: '2FA',
+                        element: <Profile2FA />
+                    },
+                    
+                    {
+                        path: 'language',
+                        element: <ProfileLanguage />
+                    }
+                ]
             },
         ]
     }

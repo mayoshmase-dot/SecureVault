@@ -6,8 +6,8 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import LogoSecure from '../../assets/img/LogoSecure.png'
-import { Avatar, Divider, Drawer, List, ListItem, ListItemButton, ListItemText, Menu, MenuItem } from '@mui/material';
-import { Link as ReactLink, useNavigate } from 'react-router-dom'
+import {  Divider, Drawer, List, ListItem, ListItemButton, ListItemText, Menu, MenuItem } from '@mui/material';
+import { Link as RouterLink, useNavigate } from 'react-router-dom'
 import useAuthStore from '../../store/useAuthStore';
 import { useState } from 'react';
 import HomeIcon from '@mui/icons-material/Home';
@@ -15,6 +15,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 export default function Navbar() {
   const token = useAuthStore((state) => state.token)
@@ -47,32 +48,34 @@ export default function Navbar() {
       <AppBar position="static" sx={{ backgroundColor: 'primary.main' }}>
         <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
 
-          <Box display={'flex'} alignItems={'center'} component={ReactLink} to='/' sx={{ textDecoration: 'none', color: 'inherit' }}>
+          <Box display={'flex'} alignItems={'center'} component={RouterLink} to='/' sx={{ textDecoration: 'none', color: 'inherit' }}>
             <Box component={'img'} src={LogoSecure} alt="SecureVault Logo" sx={{ height: 50 }} />
             <Typography variant="h6" fontWeight={700}>SecureVault</Typography>
           </Box>
 
           <Box sx={{ display: { xs: 'none', md: 'flex' } }} alignItems={'center'} gap={3}>
-            <Button component={ReactLink} to='/' color="inherit" startIcon={<HomeIcon />}>
+            <Button component={RouterLink} to='/' color="inherit" startIcon={<HomeIcon />}>
               Home
             </Button>
 
             {token ? (
               <>
-                <Button component={ReactLink} to='/dashboard' color="inherit" startIcon={<DashboardIcon />}>
+                <Button component={RouterLink} to='/dashboard' color="inherit" startIcon={<DashboardIcon />}>
                   Dashboard
                 </Button>
                 <Button component={Button} onClick={handleLogout} color="inherit" startIcon={<LoginIcon />}>
                   Logout
                 </Button>
+                <IconButton component={RouterLink} to='/profile' sx={{ color: 'primary.main' }}><AccountCircleIcon /></IconButton>
+
               </>
             ) : (
               <>
-                <Button component={ReactLink} to='/login' color="inherit" startIcon={<LoginIcon />}>
+                <Button component={RouterLink} to='/login' color="inherit" startIcon={<LoginIcon />}>
                   Sign In
                 </Button>
                 <Button
-                  component={ReactLink} to='/register'
+                  component={RouterLink} to='/register'
                   variant="contained"
                   startIcon={<PersonAddIcon />}
                   sx={{
@@ -120,7 +123,7 @@ export default function Navbar() {
           {[...navLinks, ...authLinks].map((item) => (
             <ListItem key={item.label} disablePadding>
               <ListItemButton
-                component={ReactLink}
+                component={RouterLink}
                 to={item.to}
                 onClick={() => setDrawerOpen(false)}
                 sx={{ gap: 1.5, '&:hover': { backgroundColor: 'rgba(255,255,255,0.05)' } }}
