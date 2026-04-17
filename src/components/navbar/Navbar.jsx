@@ -6,10 +6,21 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import LogoSecure from '../../assets/img/LogoSecure.png'
-import {  Divider, Drawer, List, ListItem, ListItemButton, ListItemText, Menu, MenuItem } from '@mui/material';
+
+import {
+  Divider,
+  Drawer,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  ListItemIcon
+} from '@mui/material';
+
 import { Link as RouterLink, useNavigate } from 'react-router-dom'
 import useAuthStore from '../../store/useAuthStore';
 import { useState } from 'react';
+
 import HomeIcon from '@mui/icons-material/Home';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import LoginIcon from '@mui/icons-material/Login';
@@ -18,73 +29,73 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 export default function Navbar() {
+
   const token = useAuthStore((state) => state.token)
   const logout = useAuthStore((state) => state.logout)
   const navigate = useNavigate();
   const [drawerOpen, setDrawerOpen] = useState(false)
-  const [anchorEl, setAnchorEl] = useState(null)
 
   const handleLogout = () => {
     logout();
     navigate('/login')
   }
 
-  const handleAvatarClick = (e) => setAnchorEl(e.currentTarget)
-  const handleMenuClose = () => setAnchorEl(null)
-
-  const navLinks = [
-    { label: 'Home', to: '/', icon: <HomeIcon fontSize="small" /> },
-  ]
-
-  const authLinks = token
-    ? [{ label: 'Dashboard', to: '/dashboard', icon: <DashboardIcon fontSize="small" /> }]
-    : [
-      { label: 'Sign In', to: '/login', icon: <LoginIcon fontSize="small" /> },
-      { label: 'Sign Up', to: '/register', icon: <PersonAddIcon fontSize="small" /> },
-    ]
-
   return (
     <>
       <AppBar position="static" sx={{ backgroundColor: 'primary.main' }}>
-        <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
 
-          <Box display={'flex'} alignItems={'center'} component={RouterLink} to='/' sx={{ textDecoration: 'none', color: 'inherit' }}>
-            <Box component={'img'} src={LogoSecure} alt="SecureVault Logo" sx={{ height: 50 }} />
-            <Typography variant="h6" fontWeight={700}>SecureVault</Typography>
+          <Box display="flex" alignItems="center" component={RouterLink} to='/' sx={{ textDecoration: 'none', color: 'white' }}>
+            <Box component="img" src={LogoSecure} sx={{ height: 50 }} />
+            <Typography fontWeight={700}>SecureVault</Typography>
           </Box>
 
-          <Box sx={{ display: { xs: 'none', md: 'flex' } }} alignItems={'center'} gap={3}>
-            <Button component={RouterLink} to='/' color="inherit" startIcon={<HomeIcon />}>
+          <Box sx={{ display: { xs: 'none', md: 'flex' } }} alignItems="center" gap={3}>
+
+            <Button component={RouterLink} to='/' color="inherit" startIcon={<HomeIcon />}
+              sx={{ '&:hover': { color: 'secondary.main' } }}>
               Home
             </Button>
 
             {token ? (
               <>
-                <Button component={RouterLink} to='/dashboard' color="inherit" startIcon={<DashboardIcon />}>
+                <Button component={RouterLink} to='/dashboard' color="inherit" startIcon={<DashboardIcon />}
+                  sx={{ '&:hover': { color: 'secondary.main' } }}>
                   Dashboard
                 </Button>
-                <Button component={Button} onClick={handleLogout} color="inherit" startIcon={<LoginIcon />}>
+
+                <Button onClick={handleLogout} color="inherit" startIcon={<LogoutIcon />}
+                  sx={{ '&:hover': { color: 'secondary.main' } }}>
                   Logout
                 </Button>
-                <IconButton component={RouterLink} to='/profile' sx={{ color: 'primary.main' }}><AccountCircleIcon /></IconButton>
 
+                <Button component={RouterLink} to='/profile' startIcon={<AccountCircleIcon />}
+                  sx={{ color: 'white', '&:hover': { color: 'secondary.main' } }}>
+                  Profile
+                </Button>
               </>
             ) : (
               <>
-                <Button component={RouterLink} to='/login' color="inherit" startIcon={<LoginIcon />}>
+                <Button component={RouterLink} to='/login' color="inherit" startIcon={<LoginIcon />}
+                  sx={{ '&:hover': { color: 'secondary.main' } }}>
                   Sign In
                 </Button>
+
                 <Button
-                  component={RouterLink} to='/register'
+                  component={RouterLink}
+                  to='/register'
                   variant="contained"
                   startIcon={<PersonAddIcon />}
                   sx={{
-                    borderRadius: 5, px: 2,
+                    borderRadius: 5,
+                    px: 2,
                     backgroundColor: 'secondary.main',
                     fontWeight: 700,
-                    boxShadow: '0 0 20px rgba(48,168,90,0.2)',
-                    '&:hover': { backgroundColor: 'secondary.dark', boxShadow: '0 0 30px rgba(53,241,119,0.4)' }
-                  }}>
+                    '&:hover': {
+                      backgroundColor: 'secondary.dark'
+                    }
+                  }}
+                >
                   Sign Up
                 </Button>
               </>
@@ -92,12 +103,12 @@ export default function Navbar() {
           </Box>
 
           <IconButton
-            edge="start" color="inherit" aria-label="menu"
-            sx={{ display: { xs: 'block', md: 'none' } }}
+            sx={{ color: 'white', display: { xs: 'flex', md: 'none' } }}
             onClick={() => setDrawerOpen(true)}
           >
             <MenuIcon />
           </IconButton>
+
         </Toolbar>
       </AppBar>
 
@@ -107,48 +118,158 @@ export default function Navbar() {
         onClose={() => setDrawerOpen(false)}
         PaperProps={{
           sx: {
-            width: 250,
-            backgroundColor: 'rgb(1, 5, 36)',
-            color: 'white',
-            borderLeft: '1px solid rgba(255,255,255,0.1)',
+            width: 240,
+            backgroundColor: 'primary.main',
+            boxShadow: '0 20px 60px rgba(0,0,0,0.4)',
+            border: '1px solid rgba(255,255,255,0.08)',
+            color: 'white'
           }
         }}
       >
-        <Box p={2} display="flex" alignItems="center" gap={1}>
-          <Box component={'img'} src={LogoSecure} height={40} />
-          <Typography fontWeight={700}>SecureVault</Typography>
-        </Box>
-        <Divider sx={{ borderColor: 'rgba(255,255,255,0.1)' }} />
-        <List>
-          {[...navLinks, ...authLinks].map((item) => (
-            <ListItem key={item.label} disablePadding>
+        <Box sx={{ width: 240 }}>
+
+          <Box p={2}>
+            <Typography variant={'h6'} fontWeight={'bold'}>
+              SecureVault
+            </Typography>
+          </Box>
+
+          <Divider sx={{ borderColor: 'rgba(255,255,255,0.1)' }} />
+
+          <List>
+
+            <ListItem disablePadding>
               <ListItemButton
                 component={RouterLink}
-                to={item.to}
+                to='/'
                 onClick={() => setDrawerOpen(false)}
-                sx={{ gap: 1.5, '&:hover': { backgroundColor: 'rgba(255,255,255,0.05)' } }}
+                sx={{
+                  '&:hover': {
+                    backgroundColor: 'rgba(48,168,90,0.15)',
+                    color: 'secondary.main',
+                  }
+                }}
               >
-                {item.icon}
-                <ListItemText primary={item.label} />
+                <ListItemIcon sx={{ color: 'white' }}>
+                  <HomeIcon />
+                </ListItemIcon>
+                <ListItemText primary="Home" />
               </ListItemButton>
             </ListItem>
-          ))}
 
-          {token && (
-            <>
-              <Divider sx={{ borderColor: 'rgba(255,255,255,0.1)', my: 1 }} />
-              <ListItem disablePadding>
-                <ListItemButton
-                  onClick={() => { setDrawerOpen(false); handleLogout(); }}
-                  sx={{ gap: 1.5, color: 'error.main', '&:hover': { backgroundColor: 'rgba(239,68,68,0.1)' } }}
-                >
-                  <LogoutIcon fontSize="small" />
-                  <ListItemText primary="Logout" />
-                </ListItemButton>
-              </ListItem>
-            </>
-          )}
-        </List>
+            <Divider sx={{ borderColor: 'rgba(255,255,255,0.1)', my: 1 }} />
+
+            {token ? (
+              <>
+                <ListItem disablePadding>
+                  <ListItemButton
+                    component={RouterLink}
+                    to='/profile'
+                    onClick={() => setDrawerOpen(false)}
+                    sx={{
+                      '&:hover': {
+                        backgroundColor: 'rgba(48,168,90,0.15)',
+                        color: 'secondary.main',
+                      }
+                    }}
+                  >
+                    <ListItemIcon sx={{ color: 'white' }}>
+                      <AccountCircleIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Profile" />
+                  </ListItemButton>
+                </ListItem>
+
+                <ListItem disablePadding>
+                  <ListItemButton
+                    component={RouterLink}
+                    to='/dashboard'
+                    onClick={() => setDrawerOpen(false)}
+                    sx={{
+                      '&:hover': {
+                        backgroundColor: 'rgba(48,168,90,0.15)',
+                        color: 'secondary.main',
+                       
+                      }
+                    }}
+                  >
+                    <ListItemIcon sx={{ color: 'white' }}>
+                      <DashboardIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Dashboard" />
+                  </ListItemButton>
+                </ListItem>
+
+                <ListItem disablePadding>
+                  <ListItemButton
+                    onClick={() => {
+                      handleLogout();
+                      setDrawerOpen(false);
+                    }}
+                   sx={{
+                      '&:hover': {
+                        backgroundColor: 'rgba(48,168,90,0.15)',
+                        color: 'secondary.main',
+                      }
+                    }}
+                  >
+                    <ListItemIcon sx={{ color: 'white' }}>
+                      <LogoutIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Logout" />
+                  </ListItemButton>
+                </ListItem>
+              </>
+            ) : (
+              <>
+                <ListItem disablePadding>
+                  <ListItemButton
+                    component={RouterLink}
+                    to='/login'
+                    onClick={() => setDrawerOpen(false)}
+                    sx={{
+                      '&:hover': {
+                        backgroundColor: 'rgba(48,168,90,0.15)',
+                        color: 'secondary.main',
+                        '& .MuiListItemIcon-root': {
+                          color: 'secondary.main'
+                        }
+                      }
+                    }}
+                  >
+                    <ListItemIcon sx={{ color: 'white' }}>
+                      <LoginIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Sign In" />
+                  </ListItemButton>
+                </ListItem>
+
+                <ListItem disablePadding>
+                  <ListItemButton
+                    component={RouterLink}
+                    to='/register'
+                    onClick={() => setDrawerOpen(false)}
+                    sx={{
+                      '&:hover': {
+                        backgroundColor: 'rgba(48,168,90,0.15)',
+                        color: 'secondary.main',
+                        '& .MuiListItemIcon-root': {
+                          color: 'secondary.main'
+                        }
+                      }
+                    }}
+                  >
+                    <ListItemIcon sx={{ color: 'white' }}>
+                      <PersonAddIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Sign Up" />
+                  </ListItemButton>
+                </ListItem>
+              </>
+            )}
+
+          </List>
+        </Box>
       </Drawer>
     </>
   );

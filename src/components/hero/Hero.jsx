@@ -1,4 +1,4 @@
-import heroImg from '../../assets/img/heroImg.webp'
+import heroImg from '../../assets/img/hero.webp'
 
 import { Box, Link, Typography } from '@mui/material'
 import { Link as LinkReact } from 'react-router-dom'

@@ -6,7 +6,6 @@ const AuthAxiosInstance = axios.create({
     headers: {
         "Accept-Language": "en",
         Authorization: `Bearer ${token}`
-
     }
 })
 export default AuthAxiosInstance;

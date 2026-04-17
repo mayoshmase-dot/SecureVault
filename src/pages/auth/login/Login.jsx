@@ -19,9 +19,17 @@ export default function Login() {
     try {
       const response = await axiosInstance.post('/auth/login', data)
       if (response.status === 200) {
-        console.log(response)
-        setToken(response.data.token)
-        navigate('/dashboard')
+
+         if (response.status === 200) {
+      if (response.data.requires2FA) {
+        localStorage.setItem("tempToken", response.data.tempToken);
+
+        navigate("/verify2FA");
+      } else {
+        setToken(response.data.token);
+        navigate("/dashboard");
+      }
+    }
       }
     }
     catch (error) {

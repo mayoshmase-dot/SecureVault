@@ -10,6 +10,7 @@ import ProfileInfo from "./pages/profile/ProfileInfo";
 import Profile2FA from "./pages/profile/Profile2FA";
 import ProfileLanguage from "./pages/profile/ProfileLanguage";
 import Profile from "./pages/profile/profile";
+import Verify2FA from "./pages/2FA/Verify2FA";
 
 const router = createBrowserRouter([
     {
@@ -27,6 +28,11 @@ const router = createBrowserRouter([
             {
                 path: 'register',
                 element: <Register />
+            }, {
+                path: 'verify2FA',
+                element: (
+                        <Verify2FA />
+                )
             },
             {
                 path: 'dashboard',
@@ -57,7 +63,7 @@ const router = createBrowserRouter([
                         path: '2FA',
                         element: <Profile2FA />
                     },
-                    
+
                     {
                         path: 'language',
                         element: <ProfileLanguage />

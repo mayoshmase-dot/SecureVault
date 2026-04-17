@@ -7,10 +7,9 @@ export default function useAddCredentials() {
     const queryClient = useQueryClient();
     const navigate = useNavigate();
     const mutation = useMutation({
-        mutationFn: async (newCredential) => {
+        mutationFn: async () => {
             const response = await AuthAxiosInstance.post(
                 "/vault/credentials",
-                newCredential
             );
             return response.data;
         },
