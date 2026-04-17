@@ -33,7 +33,7 @@ export default function Register() {
       const response = await axiosInstance.post('/auth/register', data)
       console.log(response)
 
-    
+
     }
     catch (error) {
       setServerErrors(error.response.data.message)
@@ -41,62 +41,67 @@ export default function Register() {
   }
 
   return (
-    <Container maxWidth='xs'>
-      <Box display={'flex'} flexDirection={'column'} gap={2} my={5} p={5}
-        sx={{
-          borderRadius: 3, backgroundColor: 'primary.main', userSelect: 'none',
-          boxShadow: `0 10px 30px rgba(0,0,0,0.7),0 0 20px rgba(34,197,94,0.15)`
-        }}>
-        <Box display={'flex'} flexDirection={'column'} gap={1}>
-          <Box display={'flex'} alignItems={'center'}>
-            <Box component={'img'} src={logoSecure} height={50} />
-            <Typography sx={{ color: 'white', fontWeight: 600, fontSize: 22 }}>
-              Sign Up
+    <Box sx={{ backgroundColor: 'rgb(1, 6, 46)', p: 5 }}>
+      <Container maxWidth='xs'>
+        <Box display={'flex'} flexDirection={'column'} gap={2} p={5}
+          sx={{
+            borderRadius: 3, backgroundColor: 'primary.main', userSelect: 'none',
+            boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
+            border: '1px solid rgba(255,255,255,0.07)',
+
+          }}>
+          <Box display={'flex'} flexDirection={'column'} gap={1}>
+            <Box display={'flex'} alignItems={'center'}>
+              <Box component={'img'} src={logoSecure} height={50} />
+              <Typography sx={{ color: 'white', fontWeight: 600, fontSize: 22 }}>
+                Sign Up
+              </Typography>
+            </Box>
+
+            <Typography variant='body2' sx={{ color: 'rgba(255,255,255,0.7)' }}>
+              Already have an account? {' '}
+              <Link component={ReactLink} to={'/login'} underline='none' sx={{ color: 'secondary.dark', fontWeight: 600 }}>
+                Sign In
+              </Link>
             </Typography>
           </Box>
 
-          <Typography variant='body2' sx={{ color: 'rgba(255,255,255,0.7)' }}>
-            Already have an account? {' '}
-            <Link component={ReactLink} to={'/login'} underline='none' sx={{ color: 'secondary.dark', fontWeight: 600 }}>
-              Sign In
-            </Link>
-          </Typography>
+          {serverErrors && (
+            <Typography color={'error'} variant='body2'>
+              {serverErrors}
+            </Typography>
+          )}
+
+          <Box component={'form'} onSubmit={handleSubmit(RegisterForm)}
+            display={'flex'} flexDirection={'column'} gap={2.5}>
+
+            <TextField {...register('name')} fullWidth label="Name" variant="outlined"
+              error={!!errors.name} helperText={errors.name?.message} sx={textFieldSx} />
+
+            <TextField {...register('email')} fullWidth label="Email" variant="outlined"
+              error={!!errors.email} helperText={errors.email?.message} sx={textFieldSx} />
+
+            <TextField {...register('password')} fullWidth label="Password" type="password" variant="outlined"
+              error={!!errors.password} helperText={errors.password?.message} sx={textFieldSx} />
+
+            <TextField {...register('confirmPassword')} fullWidth label="Confirm password" type="password" variant="outlined"
+              error={!!errors.confirmPassword} helperText={errors.confirmPassword?.message} sx={textFieldSx} />
+
+            <Button type='submit' variant="contained" sx={{
+              borderRadius: 5, p: 1.5,
+              backgroundColor: 'secondary.main',
+              color: 'white',
+              fontWeight: 700,
+              letterSpacing: 1,
+              boxShadow: '0 0 20px rgba(48,168,90,0.3)',
+              '&:hover': { backgroundColor: 'secondary.dark', boxShadow: '0 0 30px rgba(53,241,119,0.4)' }
+            }} disabled={isSubmitting}>
+              {isSubmitting ? <CircularProgress size={24} sx={{ color: 'white' }} /> : 'Create Account'}
+            </Button>
+          </Box>
         </Box>
+      </Container>
+    </Box>
 
-        {serverErrors && (
-          <Typography color={'error'} variant='body2'>
-            {serverErrors}
-          </Typography>
-        )}
-
-        <Box component={'form'} onSubmit={handleSubmit(RegisterForm)}
-          display={'flex'} flexDirection={'column'} gap={2.5}>
-
-          <TextField {...register('name')} fullWidth label="Name" variant="outlined"
-            error={!!errors.name} helperText={errors.name?.message} sx={textFieldSx} />
-
-          <TextField {...register('email')} fullWidth label="Email" variant="outlined"
-            error={!!errors.email} helperText={errors.email?.message} sx={textFieldSx} />
-
-          <TextField {...register('password')} fullWidth label="Password" type="password" variant="outlined"
-            error={!!errors.password} helperText={errors.password?.message} sx={textFieldSx} />
-
-          <TextField {...register('confirmPassword')} fullWidth label="Confirm password" type="password" variant="outlined"
-            error={!!errors.confirmPassword} helperText={errors.confirmPassword?.message} sx={textFieldSx} />
-
-          <Button type='submit' variant="contained" sx={{
-            borderRadius: 5, p: 1.5,
-            backgroundColor: 'secondary.main',
-            color: 'white',
-            fontWeight: 700,
-            letterSpacing: 1,
-            boxShadow: '0 0 20px rgba(48,168,90,0.3)',
-            '&:hover': { backgroundColor: 'secondary.dark', boxShadow: '0 0 30px rgba(53,241,119,0.4)' }
-          }} disabled={isSubmitting}>
-            {isSubmitting ? <CircularProgress size={24} sx={{ color: 'white' }} /> : 'Create Account'}
-          </Button>
-        </Box>
-      </Box>
-    </Container>
   )
 }

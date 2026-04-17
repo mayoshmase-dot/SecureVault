@@ -6,8 +6,9 @@ import FlashOnIcon from '@mui/icons-material/FlashOn';
 
 export default function Features() {
   return (
+        <Box sx={{backgroundColor:'primary.main' , p:5}}>
     <Container maxWidth="lg">
-      <Box mt={5} mb={15}>
+      <Box  mb={15}>
         <Typography id="features" variant="h2" color="secondary.main" fontWeight="bold" textAlign="center">
           Features
         </Typography>
@@ -39,8 +40,8 @@ export default function Features() {
             <Card key={i}
               sx={{
                 backgroundColor: "primary.main", color: "white", py: 3, height: "100%", display: "flex", flexDirection: "column", justifyContent: "space-between",
-                boxShadow: "0 10px 30px rgba(0,0,0,.6), 0 0 20px rgba(0,102,255,.15)",
-                transition: "0.3s",
+          boxShadow: `0 10px 30px rgba(36, 35, 99, 0.6),0 0 20px rgba(34,197,94,0.15)`
+                ,transition: "0.3s",
                 minHeight: { xs: 200, sm: 220, md: 240 },
                 "&:hover": {
                   transform: "translateY(-6px)",
@@ -64,5 +65,6 @@ export default function Features() {
         </Box>
       </Box>
     </Container>
+    </Box>
   )
 }

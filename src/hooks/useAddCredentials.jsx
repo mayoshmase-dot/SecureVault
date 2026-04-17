@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function useAddCredentials() {
     const queryClient = useQueryClient();
-const navigate = useNavigate();
+    const navigate = useNavigate();
     const mutation = useMutation({
         mutationFn: async (newCredential) => {
             const response = await AuthAxiosInstance.post(

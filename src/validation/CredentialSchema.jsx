@@ -1,9 +1,7 @@
 import * as yup from 'yup'
 
-const CATEGORIES = ["Personal", "Work", "Finance", "Social", "Other"];
-
 export const CredentialSchema = yup.object({
-  
+
   title: yup
     .string()
     .required("Title is required")
@@ -26,10 +24,8 @@ export const CredentialSchema = yup.object({
 
   category: yup
     .string()
-    .oneOf(CATEGORIES, "Invalid category")
     .optional()
     .transform((value) => value === "" ? undefined : value),
-
   tags: yup
     .array()
     .of(yup.string())
