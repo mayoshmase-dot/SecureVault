@@ -1,4 +1,4 @@
-import { Box, Button, CircularProgress, Container, Link, TextField, Typography,Grid ,Checkbox } from '@mui/material';
+import { Box, Button, CircularProgress, Container, Link, TextField, Typography, Grid, Checkbox } from '@mui/material';
 import logoSecure from '../../../assets/img/LogoSecure.png'
 import { Link as ReactLink, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form';
@@ -7,9 +7,14 @@ import { LoginSchema } from '../../../validation/LoginSchema';
 import { useState } from 'react';
 import axiosInstance from '../../../api/axiosInstance';
 import useAuthStore from '../../../store/useAuthStore';
+import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 export default function Login() {
   const [serverErrors, setServerErrors] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm({
     resolver: yupResolver(LoginSchema), mode: "all"
   });
@@ -81,8 +86,18 @@ export default function Login() {
             <TextField {...register('email')} fullWidth label="Email" variant="outlined"
               error={!!errors.email} helperText={errors.email?.message} sx={textFieldSx} />
 
-            <TextField {...register('password')} fullWidth label="Password" type="password" variant="outlined"
-              error={!!errors.password} helperText={errors.password?.message} sx={textFieldSx} />
+            <TextField {...register('password')} fullWidth label="Password"
+              type={showPassword ? 'text' : 'password'} variant="outlined"
+              error={!!errors.password} helperText={errors.password?.message} sx={textFieldSx}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={() => setShowPassword(p => !p)}>
+                      {showPassword ? <VisibilityIcon sx={{ color: 'white' }} /> : <VisibilityOffIcon sx={{ color: 'white' }} />}
+                    </IconButton>
+                  </InputAdornment>
+                )
+              }} />
 
             <Box display={'flex'} justifyContent={'space-between'} gap={1} alignItems={'center'} color={'white'} fontWeight={'bold'}>
               <Box sx={{ color: 'white', '&:hover': { color: 'secondary.main' } }}>

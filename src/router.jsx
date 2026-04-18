@@ -13,6 +13,7 @@ import Profile from "./pages/profile/Profile";
 import Verify2FA from "./pages/2FA/Verify2FA";
 import ForgotPassword from "./pages/auth/forgotPassword/ForgotPassword";
 import CredentialDetails from "./pages/credentials/CredentialDetails";
+import ResetPassword from "./pages/auth/resetPassword/ResetPassword";
 
 const router = createBrowserRouter([
     {
@@ -40,6 +41,12 @@ const router = createBrowserRouter([
                 path: 'forgotPassword',
                 element: (
                     <ForgotPassword />
+                )
+            },
+             {
+                path: 'reset-password',
+                element: (
+                    <ResetPassword />
                 )
             },
             {

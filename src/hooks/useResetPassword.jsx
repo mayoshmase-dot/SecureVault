@@ -1,19 +1,21 @@
 import { useMutation } from '@tanstack/react-query'
 import axiosInstance from '../api/axiosInstance'
+import { useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 
-export default function useForgotPassword() {
+export default function useResetPassword() {
+    const navigate = useNavigate()
     return useMutation({
-        mutationFn: async (email) => {
-            const response = await axiosInstance.post('/auth/forgot-password', { email })
+        mutationFn: async ({ token, newPassword }) => {
+            const response = await axiosInstance.post('/auth/reset-password', { token, newPassword })
             return response.data
         },
         onSuccess: () => {
             Swal.fire({
-                title: 'Check Your Email!',
-                text: 'We sent a reset link to your email, please click on it to reset your password.',
+                title: 'Done!',
+                text: 'Password reset successfully!',
                 icon: 'success'
-            })
+            }).then(() => navigate('/login'))
         },
         onError: (error) => {
             Swal.fire({

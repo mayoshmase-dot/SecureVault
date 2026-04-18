@@ -1,4 +1,4 @@
-import { Box, Button, CircularProgress, Container, Link, TextField, Typography } from '@mui/material';
+import { Box, Button, CircularProgress, Container, IconButton, InputAdornment, Link, TextField, Typography } from '@mui/material';
 import logoSecure from '../../../assets/img/LogoSecure.png'
 import { Link as ReactLink } from 'react-router-dom'
 import { useForm } from 'react-hook-form';
@@ -6,6 +6,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { RegisterSchema } from '../../../validation/RegisterSchema';
 import { useState } from 'react';
 import axiosInstance from '../../../api/axiosInstance';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 const textFieldSx = {
   '& .MuiOutlinedInput-root': {
@@ -24,6 +26,8 @@ const textFieldSx = {
 
 export default function Register() {
   const [serverErrors, setServerErrors] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirm, setShowConfirm] = useState(false)
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm({
     resolver: yupResolver(RegisterSchema), mode: 'all'
   });
@@ -32,10 +36,7 @@ export default function Register() {
     try {
       const response = await axiosInstance.post('/auth/register', data)
       console.log(response)
-
-
-    }
-    catch (error) {
+    } catch (error) {
       setServerErrors(error.response.data.message)
     }
   }
@@ -48,7 +49,6 @@ export default function Register() {
             borderRadius: 3, backgroundColor: 'primary.main', userSelect: 'none',
             boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
             border: '1px solid rgba(255,255,255,0.07)',
-
           }}>
           <Box display={'flex'} flexDirection={'column'} gap={1}>
             <Box display={'flex'} alignItems={'center'}>
@@ -57,7 +57,6 @@ export default function Register() {
                 Sign Up
               </Typography>
             </Box>
-
             <Typography variant='body2' sx={{ color: 'rgba(255,255,255,0.7)' }}>
               Already have an account? {' '}
               <Link component={ReactLink} to={'/login'} underline='none' sx={{ color: 'secondary.dark', fontWeight: 600 }}>
@@ -67,9 +66,7 @@ export default function Register() {
           </Box>
 
           {serverErrors && (
-            <Typography color={'error'} variant='body2'>
-              {serverErrors}
-            </Typography>
+            <Typography color={'error'} variant='body2'>{serverErrors}</Typography>
           )}
 
           <Box component={'form'} onSubmit={handleSubmit(RegisterForm)}
@@ -81,18 +78,43 @@ export default function Register() {
             <TextField {...register('email')} fullWidth label="Email" variant="outlined"
               error={!!errors.email} helperText={errors.email?.message} sx={textFieldSx} />
 
-            <TextField {...register('password')} fullWidth label="Password" type="password" variant="outlined"
-              error={!!errors.password} helperText={errors.password?.message} sx={textFieldSx} />
+            <TextField {...register('password')} fullWidth label="Password"
+              type={showPassword ? 'text' : 'password'} variant="outlined"
+              error={!!errors.password} helperText={errors.password?.message} sx={textFieldSx}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={() => setShowPassword(p => !p)}>
+                      {showPassword ? <VisibilityIcon sx={{ color: 'white' }} /> : <VisibilityOffIcon sx={{ color: 'white' }} />}
+                    </IconButton>
+                  </InputAdornment>
+                )
+              }} />
 
-            <TextField {...register('confirmPassword')} fullWidth label="Confirm password" type="password" variant="outlined"
-              error={!!errors.confirmPassword} helperText={errors.confirmPassword?.message} sx={textFieldSx} />
+            <TextField {...register('confirmPassword')} fullWidth label="Confirm Password"
+              type={showConfirm ? 'text' : 'password'} variant="outlined"
+              error={!!errors.confirmPassword} helperText={errors.confirmPassword?.message} sx={textFieldSx}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={() => setShowConfirm(p => !p)}>
+                      {showConfirm ? <VisibilityIcon sx={{ color: 'white' }} /> : <VisibilityOffIcon sx={{ color: 'white' }} />}
+                    </IconButton>
+                  </InputAdornment>
+                )
+              }} />
+
+            <Typography variant='body2' sx={{ color: 'rgba(255,255,255,0.5)', textAlign: 'center' }}>
+              By creating an account, you agree to our{' '}
+              <Link href='#' underline='none' sx={{ color: 'secondary.dark', fontWeight: 600 }}>Terms of Service</Link>
+              {' '}and{' '}
+              <Link href='#' underline='none' sx={{ color: 'secondary.dark', fontWeight: 600 }}>Privacy Policy</Link>
+            </Typography>
 
             <Button type='submit' variant="contained" sx={{
               borderRadius: 5, p: 1.5,
               backgroundColor: 'secondary.main',
-              color: 'white',
-              fontWeight: 700,
-              letterSpacing: 1,
+              color: 'white', fontWeight: 700, letterSpacing: 1,
               boxShadow: '0 0 20px rgba(48,168,90,0.3)',
               '&:hover': { backgroundColor: 'secondary.dark', boxShadow: '0 0 30px rgba(53,241,119,0.4)' }
             }} disabled={isSubmitting}>
@@ -102,6 +124,5 @@ export default function Register() {
         </Box>
       </Container>
     </Box>
-
   )
 }
