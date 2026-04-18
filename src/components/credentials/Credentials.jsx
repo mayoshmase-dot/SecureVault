@@ -1,10 +1,10 @@
-import { Box, Container, Typography, IconButton } from "@mui/material";
+import { Box, Container, Typography, IconButton, Tooltip } from "@mui/material";
 import useGetCredentials from "../../hooks/useGetCredentials";
 import Loader from "../../ui/Loader";
 import LanguageIcon from "@mui/icons-material/Language";
-import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import CloseIcon from "@mui/icons-material/Close";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useDeleteCredentials from "../../hooks/useDeleteCredentials";
@@ -65,34 +65,50 @@ export default function Credentials() {
                                         {new Date(credential.createdAt).toLocaleDateString()}
                                     </Typography>
 
-                                    <IconButton size="small"  sx={{
+                                    <Tooltip title="Details" componentsProps={{
+                                        tooltip: {
+                                             sx: {backgroundColor: 'secondary.main',color: 'white', fontSize: 12,p:1
+                                            } }, }}>
+                                        <IconButton size="small" sx={{
                                             color: "rgba(255,255,255,0.3)",
                                             '&:hover': { color: "secondary.main" }
                                         }}
-                                        onClick={() => navigator.clipboard.writeText(credential.website)}>
-                                        <ContentCopyIcon fontSize="small" />
-                                    </IconButton>
+                                            onClick={() => navigate(`/credential/${credential._id}`)}>
+                                            <OpenInNewIcon fontSize="small" />
+                                        </IconButton>
+                                    </Tooltip>
 
-                                    <IconButton size="small"  sx={{
-                                            color: "rgba(255,255,255,0.3)",
-                                            '&:hover': { color: "secondary.main" }
-                                        }}
-                                        onClick={() => navigate(`/credential/${credential._id}`)}>
-                                        <OpenInNewIcon fontSize="small" />
-                                    </IconButton>
+                                    <Tooltip title="Delete"  componentsProps={{
+                                        tooltip: {
+                                             sx: {backgroundColor: 'secondary.main',color: 'white', fontSize: 12,p:1
+                                            } }, }}>
+                                        <IconButton size="small"
+                                            disabled={deletingId === credential._id && isPending}
+                                            sx={{
+                                                color: "rgba(255,255,255,0.3)",
+                                                '&:hover': { color: "error.main" }
+                                            }}
+                                            onClick={() => {
+                                                setDeletingId(credential._id);
+                                                mutate(credential._id);
+                                            }}>
+                                            <CloseIcon fontSize="small" />
+                                        </IconButton>
+                                    </Tooltip>
 
-                                    <IconButton size="small"
-                                        disabled={deletingId === credential._id && isPending}
+                                    <Tooltip title="Edit Credential" componentsProps={{
+                                        tooltip: {
+                                            sx: { backgroundColor: 'secondary.main',
+                                                color: 'white',fontSize: 12,p: 1
+                                            }},}}>
+                                             <IconButton size="small"
                                         sx={{
                                             color: "rgba(255,255,255,0.3)",
-                                            '&:hover': { color: "error.main" }
-                                        }}
-                                        onClick={() => {
-                                            setDeletingId(credential._id);
-                                            mutate(credential._id);
+                                            '&:hover': { color: "secondary.main" }
                                         }}>
-                                        <CloseIcon fontSize="small" />
-                                    </IconButton>
+                                            <MoreHorizIcon fontSize="small" />
+                                        </IconButton>
+                                    </Tooltip>
                                 </Box>
                             </Box>
                         ))}
