@@ -42,10 +42,9 @@ export default function AddCredential() {
     const { register, handleSubmit, formState: { errors, isSubmitting }, } = useForm({
         resolver: yupResolver(CredentialSchema), mode: 'all'
     });
-    const onSubmit = async (data) => {
-        mutate(data);
-        console.log(data)
-    };
+   const onSubmit = async (data) => {
+    mutate({ ...data, category: selectedCategory });
+};
     return (
         <Box sx={{
             backgroundColor: 'primary.main', display: 'flex', flexDirection: 'column', px: { xs: 2, sm: 3 }, pt: 1, pb: 5

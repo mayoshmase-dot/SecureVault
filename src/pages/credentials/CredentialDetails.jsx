@@ -125,26 +125,26 @@ export default function CredentialDetails() {
                         </Box>
                     </Box>
 
-                 {credential?.notes && (
-    <Box sx={cardStyle} mb={2}>
-        <Box display="flex" alignItems="center" gap={1.5}>
-            <NoteIcon sx={{ color: "secondary.main" }} />
-            <Typography color="white">Notes</Typography>
-        </Box>
+                    {credential?.notes && (
+                        <Box sx={cardStyle} mb={2}>
+                            <Box display="flex" alignItems="center" gap={1.5}>
+                                <NoteIcon sx={{ color: "secondary.main" }} />
+                                <Typography color="white">Notes</Typography>
+                            </Box>
 
-        <Box display="flex" alignItems="center" gap={1}>
-            <Typography sx={{ color: "rgba(255,255,255,0.6)", fontSize: 14 }}>
-                {credential.notes}
-            </Typography>
-            <Tooltip title="Copy">
-                <IconButton size="small" sx={{ color: "secondary.main" }}
-                    onClick={() => navigator.clipboard.writeText(credential.notes)}>
-                    <ContentCopyIcon fontSize="small" />
-                </IconButton>
-            </Tooltip>
-        </Box>
-    </Box>
-)}
+                            <Box display="flex" alignItems="center" gap={1}>
+                                <Typography sx={{ color: "rgba(255,255,255,0.6)", fontSize: 14 }}>
+                                    {credential.notes}
+                                </Typography>
+                                <Tooltip title="Copy">
+                                    <IconButton size="small" sx={{ color: "secondary.main" }}
+                                        onClick={() => navigator.clipboard.writeText(credential.notes)}>
+                                        <ContentCopyIcon fontSize="small" />
+                                    </IconButton>
+                                </Tooltip>
+                            </Box>
+                        </Box>
+                    )}
                     <Box sx={cardStyle} mb={3}>
                         <Box display="flex" alignItems="center" gap={1.5}>
                             <CategoryIcon sx={{ color: "secondary.main" }} />

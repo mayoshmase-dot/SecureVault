@@ -13,7 +13,7 @@ export default function useAddCredentials() {
             return response.data;
         },
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["credentials"] });
+            queryClient.invalidateQueries({ queryKey: ["credential"] });
             Swal.fire({
                 icon: "success",
                 title: "Success",

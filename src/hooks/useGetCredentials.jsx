@@ -9,7 +9,7 @@ console.log("response" , response)
     }
 
     const query = useQuery({
-        queryKey: ['credentials'],
+        queryKey: ['credential'],
         queryFn: getCredentials,
         staleTime: 1000 * 60 * 5
     });
