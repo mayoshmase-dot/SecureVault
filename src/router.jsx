@@ -12,6 +12,7 @@ import ProfileLanguage from "./pages/profile/ProfileLanguage";
 import Profile from "./pages/profile/Profile";
 import Verify2FA from "./pages/2FA/Verify2FA";
 import ForgotPassword from "./pages/auth/forgotPassword/ForgotPassword";
+import CredentialDetails from "./pages/credentials/CredentialDetails";
 
 const router = createBrowserRouter([
     {
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
                     <ProtectedRouter >
                         <AddCredentials />
                     </ProtectedRouter>
+            },
+            {
+                path: 'credential/:id',
+                element: <CredentialDetails />
             },
             {
                 path: 'profile',

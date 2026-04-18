@@ -86,9 +86,7 @@ export default function Credentials() {
                                         <ContentCopyIcon fontSize="small" />
                                     </IconButton>
 
-                                    <IconButton size="small" sx={{ color: "secondary.main" }} onClick={() => {
-                                        navigate('/addCredentials');
-                                    }} >
+                                    <IconButton size="small" sx={{ color: "secondary.main" }} onClick={() => navigate(`/credential/${credential._id}`)} >
                                         <OpenInNewIcon fontSize="small" />
                                     </IconButton>
 

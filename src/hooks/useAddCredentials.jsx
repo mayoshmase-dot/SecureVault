@@ -6,11 +6,10 @@ import { useNavigate } from "react-router-dom";
 export default function useAddCredentials() {
     const queryClient = useQueryClient();
     const navigate = useNavigate();
-    const mutation = useMutation({
-        mutationFn: async () => {
-            const response = await AuthAxiosInstance.post(
-                "/vault/credentials",
-            );
+
+    return useMutation({
+        mutationFn: async (data) => {
+            const response = await AuthAxiosInstance.post("/vault/credentials", data);
             return response.data;
         },
         onSuccess: () => {
@@ -19,21 +18,14 @@ export default function useAddCredentials() {
                 icon: "success",
                 title: "Success",
                 text: "Credential added successfully ✅",
-
-            }).then(() => {
-                navigate("/dashboard");
-            });
+            }).then(() => navigate("/dashboard"));
         },
-
-
         onError: (error) => {
-            error.response?.data?.message || "Something went wrong";
             Swal.fire({
                 icon: "error",
                 title: "Error",
-                text: message,
-            })
+                text: error.response?.data?.message || "Something went wrong",
+            });
         }
-    })
-    return mutation;
+    });
 }
