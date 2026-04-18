@@ -1,4 +1,4 @@
-import { Box, Button, CircularProgress, Container, Link, TextField, Typography } from '@mui/material';
+import { Box, Button, CircularProgress, Container, Link, TextField, Typography,Grid ,Checkbox } from '@mui/material';
 import logoSecure from '../../../assets/img/LogoSecure.png'
 import { Link as ReactLink, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form';
@@ -15,28 +15,20 @@ export default function Login() {
   });
   const navigate = useNavigate()
   const setToken = useAuthStore((state) => state.setToken)
-
   const LoginForm = async (data) => {
     try {
       const response = await axiosInstance.post('/auth/login', data)
       if (response.status === 200) {
-
-        if (response.data.requires2FA) {
-          // نحفظ التوكن المؤقت في localStorage بس ما نحطه في الـ store
-          // عشان المستخدم ما يقدر يدخل الداشبورد قبل الـ 2FA
-          localStorage.setItem("tempToken", response.data.token)
-          navigate("/verify2FA")
-        } else {
-          // 2FA مش مفعلة — نحط التوكن الحقيقي مباشرة
-          setToken(response.data.token)
-          navigate("/dashboard")
-        }
-
+        console.log(response)
+        setToken(response.data.token)
+        navigate('/dashboard')
       }
-    } catch (error) {
-      setServerErrors(error.response?.data?.message || 'Something went wrong')
+    }
+    catch (error) {
+      setServerErrors(error.response.data.message)
     }
   }
+
 
   const textFieldSx = {
     '& .MuiOutlinedInput-root': {
@@ -52,10 +44,9 @@ export default function Login() {
       WebkitTextFillColor: 'white',
     },
   };
-
   return (
-    <Box sx={{ backgroundColor: 'primary.main', p: 7 }}>
-      <Container maxWidth='xs'>
+    <Box sx={{ backgroundColor: 'primary.main', p: 5 }}>
+      <Container maxWidth='xs' >
         <Box display={'flex'} flexDirection={'column'} gap={2} p={5}
           sx={{
             borderRadius: 3, backgroundColor: 'primary.main', userSelect: 'none',
@@ -71,7 +62,7 @@ export default function Login() {
             </Box>
 
             <Typography variant='body2' sx={{ color: 'rgba(255,255,255,0.7)' }}>
-              Don't have an account yet?{' '}
+              Don't have an account yet? {' '}
               <Link component={ReactLink} to={'/register'} underline='none' sx={{ color: 'secondary.dark', fontWeight: 600 }}>
                 Sign Up
               </Link>
@@ -93,6 +84,16 @@ export default function Login() {
             <TextField {...register('password')} fullWidth label="Password" type="password" variant="outlined"
               error={!!errors.password} helperText={errors.password?.message} sx={textFieldSx} />
 
+            <Box display={'flex'} justifyContent={'space-between'} gap={1} alignItems={'center'} color={'white'} fontWeight={'bold'}>
+              <Box sx={{ color: 'white', '&:hover': { color: 'secondary.main' } }}>
+                <Checkbox sx={{ color: 'white', '&:hover': { color: 'secondary.main' } }} />Remember me
+              </Box>
+              <Box item display={{ xs: 'block', md: 'flex' }} sx={{ color: 'white', '&:hover': { color: 'secondary.main' } }}>
+                <Typography sx={{ cursor: 'pointer' }} variant={'p'} onClick={() => navigate('/forgotPassword')}>
+                  Forgot Password?
+                </Typography>
+              </Box>
+            </Box>
             <Button type='submit' variant="contained" sx={{
               borderRadius: 5, p: 1.5,
               backgroundColor: 'secondary.main',
