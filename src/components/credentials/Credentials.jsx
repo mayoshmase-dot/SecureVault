@@ -21,7 +21,7 @@ export default function Credentials() {
     return (
         <Box sx={{ backgroundColor: 'primary.main', pt: 3, pb: 5 }}>
             <Container maxWidth="md">
-                <Box pb={5}>
+                <Box py={5}>
                     <Typography variant="h5" fontWeight="700" sx={{ color: "secondary.main", mb: 2 }}>
                         Credentials Vault
                     </Typography>
@@ -65,10 +65,7 @@ export default function Credentials() {
                                         {new Date(credential.createdAt).toLocaleDateString()}
                                     </Typography>
 
-                                    <Tooltip title="Details" componentsProps={{
-                                        tooltip: {
-                                             sx: {backgroundColor: 'secondary.main',color: 'white', fontSize: 12,p:1
-                                            } }, }}>
+                                    <Tooltip title="Details">
                                         <IconButton size="small" sx={{
                                             color: "rgba(255,255,255,0.3)",
                                             '&:hover': { color: "secondary.main" }
@@ -78,10 +75,7 @@ export default function Credentials() {
                                         </IconButton>
                                     </Tooltip>
 
-                                    <Tooltip title="Delete"  componentsProps={{
-                                        tooltip: {
-                                             sx: {backgroundColor: 'secondary.main',color: 'white', fontSize: 12,p:1
-                                            } }, }}>
+                                    <Tooltip title="Delete" >
                                         <IconButton size="small"
                                             disabled={deletingId === credential._id && isPending}
                                             sx={{
@@ -98,14 +92,17 @@ export default function Credentials() {
 
                                     <Tooltip title="Edit Credential" componentsProps={{
                                         tooltip: {
-                                            sx: { backgroundColor: 'secondary.main',
-                                                color: 'white',fontSize: 12,p: 1
-                                            }},}}>
-                                             <IconButton size="small"
-                                        sx={{
-                                            color: "rgba(255,255,255,0.3)",
-                                            '&:hover': { color: "secondary.main" }
-                                        }}>
+                                            sx: {
+                                                backgroundColor: 'secondary.main',
+                                                color: 'white', fontSize: 12, p: 1
+                                            }
+                                        },
+                                    }}>
+                                        <IconButton size="small"
+                                            sx={{
+                                                color: "rgba(255,255,255,0.3)",
+                                                '&:hover': { color: "secondary.main" }
+                                            }}>
                                             <MoreHorizIcon fontSize="small" />
                                         </IconButton>
                                     </Tooltip>

@@ -1,7 +1,7 @@
 import { Box, Button, CircularProgress, Divider, IconButton, InputAdornment, TextField, Typography, } from '@mui/material';
 import {
     ArrowBack, NotesOutlined, ShieldOutlined, PersonOutline, LockOutlined, LanguageOutlined, TitleOutlined, Visibility, VisibilityOff, SaveOutlined, PersonRounded,
-    WorkOutline, AccountBalanceOutlined, GroupOutlined, MoreHorizOutlined,
+    WorkOutline, AccountBalanceOutlined, GroupOutlined, MoreHorizOutlined, Tag
 } from '@mui/icons-material';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
@@ -42,9 +42,9 @@ export default function AddCredential() {
     const { register, handleSubmit, formState: { errors, isSubmitting }, } = useForm({
         resolver: yupResolver(CredentialSchema), mode: 'all'
     });
-   const onSubmit = async (data) => {
-    mutate({ ...data, category: selectedCategory });
-};
+    const onSubmit = async (data) => {
+        mutate({ ...data, category: selectedCategory });
+    };
     return (
         <Box sx={{
             backgroundColor: 'primary.main', display: 'flex', flexDirection: 'column', px: { xs: 2, sm: 3 }, pt: 1, pb: 5
@@ -155,6 +155,20 @@ export default function AddCredential() {
                                 startAdornment: (
                                     <InputAdornment position="start" >
                                         <NotesOutlined sx={{ fontSize: 18, color: 'white' }} />
+                                    </InputAdornment>
+                                )
+                            }} />
+                    </Box>
+                    <Box mb={1}>
+                        <Typography sx={{ color: 'white', fontSize: 12.5, mb: 0.75, fontWeight: 500 }}>
+                            Tags (Optional)
+                        </Typography>
+                        <TextField  {...register('tags')} fullWidth placeholder="Write a tag..." variant="outlined"
+                            error={!!errors.tags} helperText={errors.tags?.message} sx={inputSx}
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start" >
+                                        <Tag sx={{ fontSize: 18, color: 'white' }} />
                                     </InputAdornment>
                                 )
                             }} />

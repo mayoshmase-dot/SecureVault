@@ -26,11 +26,7 @@ export const CredentialSchema = yup.object({
     .string()
     .optional()
     .transform((value) => value === "" ? undefined : value),
-  tags: yup
-    .array()
-    .of(yup.string())
-    .optional(),
-
+  tags: yup.string().optional(),
   notes: yup
     .string()
     .max(1000, "Notes must be at most 1000 characters")

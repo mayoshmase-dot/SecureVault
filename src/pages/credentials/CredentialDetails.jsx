@@ -10,7 +10,7 @@ import {
 import { useParams } from "react-router-dom";
 import useCredentialDetails from "../../hooks/useCredentialDetails";
 import Loader from "../../ui/Loader";
-
+import TagIcon from '@mui/icons-material/Tag';
 import LanguageIcon from "@mui/icons-material/Language";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import PersonIcon from "@mui/icons-material/Person";
@@ -145,6 +145,28 @@ export default function CredentialDetails() {
                             </Box>
                         </Box>
                     )}
+                    <Box sx={cardStyle} mb={2}>
+                        <Box display="flex" alignItems="center" gap={1.5}>
+                            <TagIcon sx={{ color: "secondary.main" }} />
+                            <Typography color="white">Tags</Typography>
+                        </Box>
+
+                        <Box display="flex" alignItems="center" gap={1}>
+                            <Typography sx={{ color: "rgba(255,255,255,0.6)", fontSize: 14 }}>
+                                {credential?.tags}
+                            </Typography>
+
+                            <Tooltip title="Copy">
+                                <IconButton
+                                    size="small"
+                                    sx={{ color: "secondary.main" }}
+                                    onClick={() => navigator.clipboard.writeText(credential?.tags)}
+                                >
+                                    <ContentCopyIcon fontSize="small" />
+                                </IconButton>
+                            </Tooltip>
+                        </Box>
+                    </Box>
                     <Box sx={cardStyle} mb={3}>
                         <Box display="flex" alignItems="center" gap={1.5}>
                             <CategoryIcon sx={{ color: "secondary.main" }} />

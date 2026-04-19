@@ -13,8 +13,9 @@ export default function App() {
     <>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={getTheme(mode)}>
-          <RouterProvider router={router} />
           <CssBaseline />
+          <RouterProvider router={router} />
+
         </ThemeProvider>
       </QueryClientProvider>
 

@@ -7,11 +7,12 @@ import { Link } from 'react-router-dom';
 
 export default function VaultControl() {
     return (
-        <Box mb={5}>
+        <Box bgcolor={'primary.main'}>
             <Container>
-                <Box display={'flex'} flexDirection={{ xs: 'column', md: 'row' }} justifyContent={'space-between'} alignItems={'center'} gap={5}>
+                <Box display={'flex'} py={5} flexDirection={{ xs: 'column', md: 'row' }} justifyContent={'space-between'} alignItems={'center'} gap={5}>
 
-                    <Box display={'flex'} alignItems={'center'} border={2} p={1} bgcolor={'rgb(1,6,46)'} flex={.5} borderRadius={3} >
+                    <Box display={'flex'} alignItems={'center'} border={2} p={1} bgcolor={'rgb(1,6,46)'} flex={.5} borderRadius={3} sx={{ boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
+            border: '1px solid rgba(255,255,255,0.07)',}} >
                         <SearchIcon sx={{ color: "secondary.main", mr: 1 }} />
                         <InputBase fullWidth placeholder="Search your vault..."
                             sx={{
