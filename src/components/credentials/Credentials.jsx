@@ -65,7 +65,14 @@ export default function Credentials() {
                                         {new Date(credential.createdAt).toLocaleDateString()}
                                     </Typography>
 
-                                    <Tooltip title="Details">
+                                    <Tooltip title="Details" componentsProps={{
+                                        tooltip: {
+                                            sx: {
+                                                backgroundColor: 'secondary.main',
+                                                color: 'white', fontSize: 12, p: 1
+                                            }
+                                        },
+                                    }}>
                                         <IconButton size="small" sx={{
                                             color: "rgba(255,255,255,0.3)",
                                             '&:hover': { color: "secondary.main" }
@@ -75,7 +82,14 @@ export default function Credentials() {
                                         </IconButton>
                                     </Tooltip>
 
-                                    <Tooltip title="Delete" >
+                                    <Tooltip title="Delete" componentsProps={{
+                                        tooltip: {
+                                            sx: {
+                                                backgroundColor: 'secondary.main',
+                                                color: 'white', fontSize: 12, p: 1
+                                            }
+                                        },
+                                    }}>
                                         <IconButton size="small"
                                             disabled={deletingId === credential._id && isPending}
                                             sx={{
