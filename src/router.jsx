@@ -15,6 +15,7 @@ import ForgotPassword from "./pages/auth/forgotPassword/ForgotPassword";
 import CredentialDetails from "./pages/credentials/CredentialDetails";
 import ResetPassword from "./pages/auth/resetPassword/ResetPassword";
 import GeneratePassword from "./pages/genaratePassword/GenaratePassword";
+import UpdateCredential from "./pages/credentials/UpdateCredential";
 
 const router = createBrowserRouter([
     {
@@ -75,6 +76,13 @@ const router = createBrowserRouter([
                 element:
                     <ProtectedRouter>
                         <CredentialDetails />
+                    </ProtectedRouter>
+            },
+            {
+                path: 'update/:id',
+                element:
+                    <ProtectedRouter>
+                        <UpdateCredential />
                     </ProtectedRouter>
             },
             {

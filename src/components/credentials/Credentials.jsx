@@ -116,7 +116,10 @@ export default function Credentials() {
                                             sx={{
                                                 color: "rgba(255,255,255,0.3)",
                                                 '&:hover': { color: "secondary.main" }
-                                            }}>
+                                            }}
+                                            onClick={() =>
+                                                navigate(`/update/${credential._id}`)
+                                            }>
                                             <MoreHorizIcon fontSize="small" />
                                         </IconButton>
                                     </Tooltip>

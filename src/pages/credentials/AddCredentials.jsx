@@ -91,7 +91,7 @@ export default function AddCredential() {
                             error={!!errors.title} helperText={errors.title?.message} sx={inputSx} InputProps={{
                                 startAdornment: (
                                     <InputAdornment position="start">
-                                        <TitleOutlined sx={{ fontSize: 18, color: 'white' }} />
+                                        <TitleOutlined sx={{ fontSize: 18, color: 'secondary.dark' }} />
                                     </InputAdornment>
                                 ),
                             }} />
@@ -105,7 +105,7 @@ export default function AddCredential() {
                             InputProps={{
                                 startAdornment: (
                                     <InputAdornment position="start">
-                                        <PersonOutline sx={{ fontSize: 18, color: 'white' }} />
+                                        <PersonOutline sx={{ fontSize: 18, color: 'secondary.dark' }} />
                                     </InputAdornment>
                                 ),
                             }} />
@@ -119,7 +119,7 @@ export default function AddCredential() {
                             InputProps={{
                                 startAdornment: (
                                     <InputAdornment position="start">
-                                        <LockOutlined sx={{ fontSize: 18, color: 'white' }} />
+                                        <LockOutlined sx={{ fontSize: 18, color: 'secondary.dark' }} />
                                     </InputAdornment>
                                 ),
                                 endAdornment: (
@@ -140,7 +140,7 @@ export default function AddCredential() {
                             InputProps={{
                                 startAdornment: (
                                     <InputAdornment position="start">
-                                        <LanguageOutlined sx={{ fontSize: 18, color: 'white' }} />
+                                        <LanguageOutlined sx={{ fontSize: 18, color: 'secondary.dark' }} />
                                     </InputAdornment>
                                 ),
                             }} />
@@ -154,7 +154,7 @@ export default function AddCredential() {
                             InputProps={{
                                 startAdornment: (
                                     <InputAdornment position="start" >
-                                        <NotesOutlined sx={{ fontSize: 18, color: 'white' }} />
+                                        <NotesOutlined sx={{ fontSize: 18, color: 'secondary.dark' }} />
                                     </InputAdornment>
                                 )
                             }} />
@@ -168,7 +168,7 @@ export default function AddCredential() {
                             InputProps={{
                                 startAdornment: (
                                     <InputAdornment position="start" >
-                                        <Tag sx={{ fontSize: 18, color: 'white' }} />
+                                        <Tag sx={{ fontSize: 18, color: 'secondary.dark' }} />
                                     </InputAdornment>
                                 )
                             }} />

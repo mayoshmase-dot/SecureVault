@@ -23,7 +23,7 @@ export default function useDeleteCredentials() {
     return response.data;
 },
 onSuccess: () => {
-    queryClient.invalidateQueries({ queryKey: ["credentials"] });
+    queryClient.invalidateQueries({ queryKey: ["credential"] });
     Swal.fire({
         icon: "success",
         title: "Deleted!",
@@ -31,7 +31,6 @@ onSuccess: () => {
     }).then(() => navigate("/dashboard"));
 },
 onError: (error) => {
-    if (error.message === "cancelled") return;
     Swal.fire({
         icon: "error",
         title: "Error",

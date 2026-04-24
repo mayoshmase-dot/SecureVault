@@ -1,12 +1,4 @@
-import {
-    Box,
-    Container,
-    Typography,
-    IconButton,
-    Divider,
-    Tooltip
-} from "@mui/material";
-
+import {Box,Container,Typography,IconButton,Divider,Tooltip} from "@mui/material";
 import { useParams } from "react-router-dom";
 import useCredentialDetails from "../../hooks/useCredentialDetails";
 import Loader from "../../ui/Loader";
