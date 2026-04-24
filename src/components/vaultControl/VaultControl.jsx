@@ -11,8 +11,10 @@ export default function VaultControl() {
             <Container>
                 <Box display={'flex'} py={5} flexDirection={{ xs: 'column', md: 'row' }} justifyContent={'space-between'} alignItems={'center'} gap={5}>
 
-                    <Box display={'flex'} alignItems={'center'} border={2} p={1} bgcolor={'rgb(1,6,46)'} flex={.5} borderRadius={3} sx={{ boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
-            border: '1px solid rgba(255,255,255,0.07)',}} >
+                    <Box display={'flex'} alignItems={'center'} border={2} p={1} bgcolor={'rgb(1,6,46)'} flex={.5} borderRadius={3} sx={{
+                        boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
+                        border: '1px solid rgba(255,255,255,0.07)',
+                    }} >
                         <SearchIcon sx={{ color: "secondary.main", mr: 1 }} />
                         <InputBase fullWidth placeholder="Search your vault..."
                             sx={{
@@ -20,7 +22,8 @@ export default function VaultControl() {
                             }} />
                     </Box>
                     <Box display={'flex'} gap={3} flexDirection={{ xs: 'column', md: 'row' }}>
-                        <Button sx={{ backgroundColor: 'secondary.main', borderRadius: 3, fontWeight: 'bold', color: 'white',
+                        <Button component={Link}  to="/generatePassword" sx={{
+                            backgroundColor: 'secondary.main', borderRadius: 3, fontWeight: 'bold', color: 'white',
                             px: 3, py: 1, textTransform: 'none', '&:hover': { backgroundColor: 'secondary.dark', }
                         }} startIcon={<VpnKeyOutlinedIcon />}>
                             Generator</Button>

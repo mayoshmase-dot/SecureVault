@@ -6,6 +6,7 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import LogoSecure from '../../assets/img/LogoSecure.png'
+import VpnKeyIcon from '@mui/icons-material/VpnKey';
 
 import {
   Divider,
@@ -50,7 +51,7 @@ export default function Navbar() {
             <Typography fontWeight={700}>SecureVault</Typography>
           </Box>
 
-          <Box sx={{ display: { xs: 'none', md: 'flex' } }} alignItems="center" gap={3}>
+          <Box sx={{ display: { xs: 'none', md: 'flex' } }} alignItems="center" gap={2}>
 
             <Button component={RouterLink} to='/' color="inherit" startIcon={<HomeIcon />}
               sx={{ '&:hover': { color: 'secondary.main' } }}>
@@ -68,7 +69,10 @@ export default function Navbar() {
                   sx={{ '&:hover': { color: 'secondary.main' } }}>
                   Logout
                 </Button>
-
+                <Button component={RouterLink} to='/generatePassword' startIcon={<VpnKeyIcon />}
+                  sx={{ color: 'white', '&:hover': { color: 'secondary.main' } }}>
+                  Genarate
+                </Button>
                 <Button component={RouterLink} to='/profile' startIcon={<AccountCircleIcon />}
                   sx={{ color: 'white', '&:hover': { color: 'secondary.main' } }}>
                   Profile
@@ -189,7 +193,7 @@ export default function Navbar() {
                       '&:hover': {
                         backgroundColor: 'rgba(48,168,90,0.15)',
                         color: 'secondary.main',
-                       
+
                       }
                     }}
                   >
@@ -199,14 +203,31 @@ export default function Navbar() {
                     <ListItemText primary="Dashboard" />
                   </ListItemButton>
                 </ListItem>
-
+                <ListItem disablePadding>
+                  <ListItemButton
+                    component={RouterLink}
+                    to='/generatePassword'
+                    onClick={() => setDrawerOpen(false)}
+                    sx={{
+                      '&:hover': {
+                        backgroundColor: 'rgba(48,168,90,0.15)',
+                        color: 'secondary.main',
+                      }
+                    }}
+                  >
+                    <ListItemIcon sx={{ color: 'white' }}>
+                      <VpnKeyIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Generate" />
+                  </ListItemButton>
+                </ListItem>
                 <ListItem disablePadding>
                   <ListItemButton
                     onClick={() => {
                       handleLogout();
                       setDrawerOpen(false);
                     }}
-                   sx={{
+                    sx={{
                       '&:hover': {
                         backgroundColor: 'rgba(48,168,90,0.15)',
                         color: 'secondary.main',

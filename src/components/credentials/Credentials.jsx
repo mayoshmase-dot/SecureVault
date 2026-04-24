@@ -16,7 +16,7 @@ export default function Credentials() {
     const navigate = useNavigate();
 
     if (isLoading) return <Loader />;
-    if (isError) return <Box color="error.main">{error.message}</Box>;
+    if (isError) return <Box color="error.main" bgcolor={'primary.main'}>{error.message}</Box>;
 
     return (
         <Box sx={{ backgroundColor: 'primary.main', pt: 3, pb: 5 }}>

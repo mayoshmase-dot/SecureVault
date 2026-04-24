@@ -14,6 +14,7 @@ import Verify2FA from "./pages/2FA/Verify2FA";
 import ForgotPassword from "./pages/auth/forgotPassword/ForgotPassword";
 import CredentialDetails from "./pages/credentials/CredentialDetails";
 import ResetPassword from "./pages/auth/resetPassword/ResetPassword";
+import GeneratePassword from "./pages/genaratePassword/GenaratePassword";
 
 const router = createBrowserRouter([
     {
@@ -43,11 +44,17 @@ const router = createBrowserRouter([
                     <ForgotPassword />
                 )
             },
-             {
+            {
                 path: 'reset-password',
                 element: (
                     <ResetPassword />
                 )
+            }, {
+                path: 'generatePassword',
+                element:
+                    <ProtectedRouter >
+                        <GeneratePassword />
+                    </ProtectedRouter>
             },
             {
                 path: 'dashboard',
@@ -65,7 +72,10 @@ const router = createBrowserRouter([
             },
             {
                 path: 'credential/:id',
-                element: <CredentialDetails />
+                element:
+                    <ProtectedRouter>
+                        <CredentialDetails />
+                    </ProtectedRouter>
             },
             {
                 path: 'profile',
