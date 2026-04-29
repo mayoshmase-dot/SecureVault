@@ -1,16 +1,55 @@
 import AuthAxiosInstance from '../api/AuthAxiosInstance'
-import axiosInstance from '../api/axiosInstance'
 import { useQuery } from '@tanstack/react-query'
+import { useEffect, useState, useCallback } from 'react'
+import useVaultStore from '../store/useVaultStore'
+import { decrypt, safeParse, isEncrypted } from '../crypto'
+
+const decryptField = async (field, masterPassword) => {
+    if (!field) return ''
+    if (isEncrypted(field)) {
+        return await decrypt(safeParse(field), masterPassword)
+    }
+    return field
+}
 
 export default function useCredentialDetails({ id }) {
-    const getCredentialDetails = async () => {
-        const response = await AuthAxiosInstance.get(`/vault/credentials/${id}`)
-        return response.data
-    }
+    const { masterPassword } = useVaultStore()
+    const [decryptedData, setDecryptedData] = useState(null)
+    const [isDecrypting, setIsDecrypting] = useState(false)
+    const [decryptError, setDecryptError] = useState(null)
+
     const query = useQuery({
         queryKey: ['credential', id],
-        queryFn: getCredentialDetails,
+        queryFn: async () => {
+            const response = await AuthAxiosInstance.get(`/vault/credentials/${id}`)
+            return response.data
+        },
         staleTime: 100 * 60 * 5
     })
-    return query
+
+    useEffect(() => {
+        const credential = query.data?.data
+        if (!credential || !masterPassword) return
+
+        const decryptCredential = async () => {
+            setIsDecrypting(true)
+            setDecryptError(null)
+            try {
+                const [username, password, notes] = await Promise.all([
+                    decryptField(credential.username, masterPassword),
+                    decryptField(credential.password, masterPassword),
+                    decryptField(credential.notes, masterPassword),
+                ])
+                setDecryptedData({ ...credential, username, password, notes })
+            } catch (err) {
+                setDecryptError(err)
+            } finally {
+                setIsDecrypting(false)
+            }
+        }
+
+        decryptCredential()
+    }, [query.data, masterPassword])
+
+    return { ...query, decryptedData, isDecrypting, decryptError }
 }

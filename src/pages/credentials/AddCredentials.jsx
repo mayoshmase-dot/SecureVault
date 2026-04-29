@@ -46,9 +46,15 @@ export default function AddCredential() {
         mutate({ ...data, category: selectedCategory });
     };
     return (
-        <Box sx={{
-            backgroundColor: 'primary.main', display: 'flex', flexDirection: 'column', px: { xs: 2, sm: 3 }, pt: 1, pb: 5
-        }}>
+        <Box sx={{ backgroundColor: "primary.main", display: "flex", flexDirection: "column", px: { xs: 2, sm: 3 }, pt: 1, pb: 5 }}>
+            <Button
+                startIcon={<ArrowBack />}
+                onClick={() => navigate("/dashboard")}
+                sx={{ display: "flex", justifyContent: "flex-start", cursor: "pointer", color: "white", mb: 3, '& .MuiTouchRipple-root': { display: 'none' } }}
+            >
+                Back to Dashboard
+            </Button>
+            
             <Button startIcon={<ArrowBack />} onClick={() => navigate('/dashboard')}
                 sx={{
                     display: 'flex', justifyContent: 'flex-start', color: 'rgb(255, 255, 255)', textTransform: 'none', mb: 3,
@@ -114,7 +120,7 @@ export default function AddCredential() {
                         <Typography sx={{ color: 'white', fontSize: 12.5, mb: 0.75, fontWeight: 500 }}>
                             Password
                         </Typography>
-                        <TextField {...register('password')} fullWidth placeholder="••••••••" type={showPassword ? 'password' : 'text'} variant="outlined"
+                        <TextField {...register('password')} fullWidth placeholder="••••••••" type={showPassword ? 'text' : 'password'} variant="outlined"
                             error={!!errors.password} helperText={errors.password?.message} sx={inputSx}
                             InputProps={{
                                 startAdornment: (
@@ -125,7 +131,7 @@ export default function AddCredential() {
                                 endAdornment: (
                                     <InputAdornment position="end">
                                         <IconButton onClick={() => setShowPassword(p => !p)}>
-                                            {showPassword ? <VisibilityOff sx={{ color: 'white' }} /> : <Visibility sx={{ color: 'white' }} />}
+                                            {showPassword ? <Visibility sx={{ color: 'white' }} /> : <VisibilityOff sx={{ color: 'white' }} />}
                                         </IconButton>
                                     </InputAdornment>
                                 ),
@@ -135,7 +141,7 @@ export default function AddCredential() {
                         <Typography sx={{ color: 'white', fontSize: 12.5, mb: 0.75, fontWeight: 500 }}>
                             Website URL (Optional)
                         </Typography>
-                        <TextField {...register('website')} fullWidth placeholder="https://example.com" type={showPassword ? 'password' : 'text'} variant="outlined"
+                        <TextField {...register('website')} fullWidth placeholder="https://example.com" variant="outlined"
                             error={!!errors.website} helperText={errors.website?.message} sx={inputSx}
                             InputProps={{
                                 startAdornment: (

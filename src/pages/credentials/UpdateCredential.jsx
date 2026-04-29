@@ -1,38 +1,9 @@
-import {
-    Box,
-    Button,
-    CircularProgress,
-    Divider,
-    IconButton,
-    InputAdornment,
-    TextField,
-    Tooltip,
-    Typography,
-} from "@mui/material";
-
-import {
-    ArrowBack,
-    NotesOutlined,
-    ShieldOutlined,
-    PersonOutline,
-    LockOutlined,
-    LanguageOutlined,
-    TitleOutlined,
-    Visibility,
-    VisibilityOff,
-    SaveOutlined,
-    PersonRounded,
-    WorkOutline,
-    AccountBalanceOutlined,
-    GroupOutlined,
-    MoreHorizOutlined,
-    Tag, ContentCopy
-} from "@mui/icons-material";
-
+import {Box, Button, CircularProgress, Divider, IconButton, InputAdornment, TextField, Tooltip, Typography,} from "@mui/material";
+import {ArrowBack, NotesOutlined, ShieldOutlined, PersonOutline,LockOutlined, LanguageOutlined, TitleOutlined, Visibility,
+    VisibilityOff, SaveOutlined, PersonRounded, WorkOutline, AccountBalanceOutlined, GroupOutlined, MoreHorizOutlined,Tag, ContentCopy} from "@mui/icons-material";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-
 import useCredentialDetails from "../../hooks/useCredentialDetails";
 import useUpdateCredential from "../../hooks/useUpdateCredential";
 import Loader from "../../ui/Loader";
@@ -65,69 +36,65 @@ const inputSx = {
 export default function UpdateCredential() {
     const { id } = useParams();
     const navigate = useNavigate();
-    const { data, isLoading, isError, error } = useCredentialDetails({ id });
+    const { data, isLoading, isError, error, decryptedData, isDecrypting } = useCredentialDetails({ id });
     const { mutate, isPending } = useUpdateCredential({ id });
-
     const credential = data?.data || {};
-
-    const [showPassword, setShowPassword] = useState(true);
+    const [showPassword, setShowPassword] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState(null);
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-    } = useForm({
-        values: {
-            title: credential.title,
-            username: credential.username,
-            password: credential.password,
-            website: credential.website,
-            notes: credential.notes,
-            tags: credential.tags,
-        },
-    });
 
-    const onSubmit = (formData) => {
+    const { register, handleSubmit, reset, formState: { errors } } = useForm();
+
+    useEffect(() => {
+        if (!decryptedData) return;
+        reset({
+            title: decryptedData.title,
+            username: decryptedData.username,
+            password: decryptedData.password,
+            website: decryptedData.website,
+            notes: decryptedData.notes,
+            tags: Array.isArray(decryptedData.tags)
+                ? decryptedData.tags.join(", ")
+                : decryptedData.tags,
+        });
+        setSelectedCategory(decryptedData.category);
+    }, [decryptedData]);
+
+    const onSubmit = async (formData) => {
         const category = selectedCategory || credential.category;
-        const original = { title: credential.title, username: credential.username, password: credential.password, website: credential.website, notes: credential.notes, tags: credential.tags, category: credential.category };
-        const updated = { ...formData, category };
 
-        if (JSON.stringify(original) === JSON.stringify(updated)) {
-            Swal.fire({ icon: 'info', title: 'No Changes', text: 'You have not made any changes.' });
+        const hasChanges =
+            formData.title !== decryptedData?.title ||
+            formData.username !== decryptedData?.username ||
+            formData.password !== decryptedData?.password ||
+            formData.website !== decryptedData?.website ||
+            formData.notes !== decryptedData?.notes ||
+            formData.tags !== decryptedData?.tags ||
+            category !== decryptedData?.category;
+
+        if (!hasChanges) {
+            Swal.fire({ icon: "info", title: "No Changes", text: "You have not made any changes." });
             return;
         }
 
-        mutate(updated);
+        mutate({
+            title: formData.title,
+            username: formData.username,
+            password: formData.password,
+            website: formData.website,
+            notes: formData.notes || "",
+            tags: formData.tags,
+            category,
+        });
     };
-
-    if (isLoading) return <Loader />;
+    if (isLoading || isDecrypting) return <Loader />;
     if (isError) return <Box color="error.main">{error.message}</Box>;
 
-
     return (
-        <Box
-            sx={{
-                backgroundColor: "primary.main",
-                display: "flex",
-                flexDirection: "column",
-                px: { xs: 2, sm: 3 },
-                pt: 1,
-                pb: 5,
-            }}
-        >
+        <Box sx={{ backgroundColor: "primary.main", display: "flex", flexDirection: "column", px: { xs: 2, sm: 3 }, pt: 1, pb: 5 }}>
             <Button
                 startIcon={<ArrowBack />}
                 onClick={() => navigate("/dashboard")}
-                sx={{
-                    display: "flex",
-                    justifyContent: "flex-start",
-                    cursor: "pointer",
-
-                    color: "white",
-                    mb: 3,
-                    '& .MuiTouchRipple-root': { display: 'none' },
-
-                }}
+                sx={{ display: "flex", justifyContent: "flex-start", cursor: "pointer", color: "white", mb: 3, '& .MuiTouchRipple-root': { display: 'none' } }}
             >
                 Back to Dashboard
             </Button>
@@ -136,321 +103,102 @@ export default function UpdateCredential() {
                 <Box
                     component="form"
                     onSubmit={handleSubmit(onSubmit)}
-                    sx={{
-                        backgroundColor: "primary.main",
-                        borderRadius: "16px",
-                        border: "1px solid rgba(255,255,255,0.07)",
-                        p: { xs: 2.5, sm: 3 },
-                        maxWidth: 460,
-                        width: "100%",
-                        boxShadow: "0 20px 60px rgba(0,0,0,0.5)",
-                    }}
+                    sx={{ backgroundColor: "primary.main", borderRadius: "16px", border: "1px solid rgba(255,255,255,0.07)", p: { xs: 2.5, sm: 3 }, maxWidth: 460, width: "100%", boxShadow: "0 20px 60px rgba(0,0,0,0.5)" }}
                 >
                     <Box display="flex" alignItems="center" gap={1.5}>
-                        <Box
-                            sx={{
-                                width: 38,
-                                height: 38,
-                                borderRadius: "10px",
-                                border: "1.5px solid rgba(48,168,90,0.5)",
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                color: "secondary.main",
-                            }}
-                        >
+                        <Box sx={{ width: 38, height: 38, borderRadius: "10px", border: "1.5px solid rgba(48,168,90,0.5)", display: "flex", alignItems: "center", justifyContent: "center", color: "secondary.main" }}>
                             <ShieldOutlined sx={{ fontSize: 20 }} />
                         </Box>
-
                         <Box>
-                            <Typography
-                                variant="h6"
-                                sx={{
-                                    color: "white",
-                                    fontWeight: "bold",
-                                }}
-                            >
-                                Update Credential
-                            </Typography>
-
-                            <Typography
-                                variant="subtitle2"
-                                sx={{
-                                    color: "rgba(255,255,255,0.35)",
-                                }}
-                            >
-                                Update your saved credentials
-                            </Typography>
+                            <Typography variant="h6" sx={{ color: "white", fontWeight: "bold" }}>Update Credential</Typography>
+                            <Typography variant="subtitle2" sx={{ color: "rgba(255,255,255,0.35)" }}>Update your saved credentials</Typography>
                         </Box>
                     </Box>
 
-                    <Divider
-                        sx={{
-                            backgroundColor: "secondary.main",
-                            my: 2,
-                        }}
-                    />
+                    <Divider sx={{ backgroundColor: "secondary.main", my: 2 }} />
 
-                    <TextField {...register("title")}
-                        fullWidth
-                        placeholder="e.g. Google, Netflix, Work Email"
-                        variant="outlined"
-                        error={!!errors.title}
-                        helperText={errors.title?.message}
-                        sx={inputSx}
+                    <TextField {...register("title")} fullWidth placeholder="e.g. Google, Netflix, Work Email" variant="outlined"
+                        error={!!errors.title} helperText={errors.title?.message} sx={inputSx}
                         InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <TitleOutlined
-                                        sx={{
-                                            fontSize: 18,
-                                            color: "secondary.dark",
-                                        }}
-                                    />
-                                </InputAdornment>
-                            ),
+                            startAdornment: <InputAdornment position="start"><TitleOutlined sx={{ fontSize: 18, color: "secondary.dark" }} /></InputAdornment>,
                             endAdornment: (
                                 <InputAdornment position="end">
-                                    <Tooltip title="Copy" componentsProps={{
-                                        tooltip: {
-                                            sx: {
-                                                backgroundColor: 'secondary.main',
-                                                color: 'white', fontSize: 12, p: 1
-                                            }
-                                        },
-                                    }}>
-                                        <IconButton size="small" sx={{ color: "secondary.main" }}
-                                            onClick={() => navigator.clipboard.writeText(credential?.title)}>
-                                            <ContentCopy fontSize="small" />
-                                        </IconButton>
-                                    </Tooltip>
+                                    <Tooltip title="Copy"><IconButton size="small" sx={{ color: "secondary.main" }} onClick={() => navigator.clipboard.writeText(decryptedData?.title ?? '')}><ContentCopy fontSize="small" /></IconButton></Tooltip>
                                 </InputAdornment>
                             ),
                         }} />
 
-                    <TextField {...register("username")}
-                        fullWidth
-                        placeholder="Username or email"
-                        variant="outlined"
-                        error={!!errors.username}
-                        helperText={errors.username?.message}
-                        sx={{ ...inputSx, mt: 2 }}
+                    <TextField {...register("username")} fullWidth placeholder="Username or email" variant="outlined"
+                        error={!!errors.username} helperText={errors.username?.message} sx={{ ...inputSx, mt: 2 }}
                         InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <PersonOutline
-                                        sx={{
-                                            fontSize: 18,
-                                            color: "secondary.dark",
-                                        }}
-                                    />
-                                </InputAdornment>
-                            ), endAdornment: (
+                            startAdornment: <InputAdornment position="start"><PersonOutline sx={{ fontSize: 18, color: "secondary.dark" }} /></InputAdornment>,
+                            endAdornment: (
                                 <InputAdornment position="end">
-                                    <Tooltip title="Copy" componentsProps={{
-                                        tooltip: {
-                                            sx: {
-                                                backgroundColor: 'secondary.main',
-                                                color: 'white', fontSize: 12, p: 1
-                                            }
-                                        },
-                                    }}>
-                                        <IconButton size="small" sx={{ color: "secondary.main" }}
-                                            onClick={() => navigator.clipboard.writeText(credential?.title)}>
-                                            <ContentCopy fontSize="small" />
-                                        </IconButton>
-                                    </Tooltip>
+                                    <Tooltip title="Copy"><IconButton size="small" sx={{ color: "secondary.main" }} onClick={() => navigator.clipboard.writeText(decryptedData?.username ?? '')}><ContentCopy fontSize="small" /></IconButton></Tooltip>
                                 </InputAdornment>
                             ),
                         }} />
 
-                    <TextField {...register("password")}
-                        fullWidth
-                        placeholder="••••••••"
-                        type={showPassword ? "password" : "text"}
-                        variant="outlined"
-                        error={!!errors.password}
-                        helperText={errors.password?.message}
-                        sx={{ ...inputSx, mt: 2 }}
+                    <TextField {...register("password")} fullWidth placeholder="••••••••" type={showPassword ? "text" : "password"} variant="outlined"
+                        error={!!errors.password} helperText={errors.password?.message} sx={{ ...inputSx, mt: 2 }}
                         InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <LockOutlined
-                                        sx={{
-                                            fontSize: 18,
-                                            color: "secondary.dark",
-                                        }}
-                                    />
-                                </InputAdornment>
-                            ),
+                            startAdornment: <InputAdornment position="start"><LockOutlined sx={{ fontSize: 18, color: "secondary.dark" }} /></InputAdornment>,
                             endAdornment: (
                                 <InputAdornment position="end">
-                                    <IconButton
-                                        onClick={() =>
-                                            setShowPassword((prev) => !prev)
-                                        }
-                                    >
-                                        {showPassword ? (
-                                            <VisibilityOff
-                                                sx={{ color: "white" }}
-                                            />
-                                        ) : (
-                                            <Visibility
-                                                sx={{ color: "white" }}
-                                            />
-                                        )}
+                                    <IconButton onClick={() => setShowPassword(p => !p)}>
+                                        {showPassword ? <Visibility sx={{ color: 'secondary.main' }} /> : <VisibilityOff sx={{ color: 'secondary.main' }} />}
                                     </IconButton>
                                 </InputAdornment>
                             ),
                         }} />
 
-                    <TextField {...register("website")}
-                        fullWidth
-                        placeholder="https://example.com"
-                        variant="outlined"
-                        error={!!errors.website}
-                        helperText={errors.website?.message}
-                        sx={{ ...inputSx, mt: 2 }}
+                    <TextField {...register("website")} fullWidth placeholder="https://example.com" variant="outlined"
+                        error={!!errors.website} helperText={errors.website?.message} sx={{ ...inputSx, mt: 2 }}
                         InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <LanguageOutlined
-                                        sx={{
-                                            fontSize: 18,
-                                            color: "secondary.dark",
-                                        }}
-                                    />
-                                </InputAdornment>
-                            ),
+                            startAdornment: <InputAdornment position="start"><LanguageOutlined sx={{ fontSize: 18, color: "secondary.dark" }} /></InputAdornment>,
                             endAdornment: (
                                 <InputAdornment position="end">
-                                    <Tooltip title="Copy" componentsProps={{
-                                        tooltip: {
-                                            sx: {
-                                                backgroundColor: 'secondary.main',
-                                                color: 'white', fontSize: 12, p: 1
-                                            }
-                                        },
-                                    }}>
-                                        <IconButton size="small" sx={{ color: "secondary.main" }}
-                                            onClick={() => navigator.clipboard.writeText(credential?.title)}>
-                                            <ContentCopy fontSize="small" />
-                                        </IconButton>
-                                    </Tooltip>
+                                    <Tooltip title="Copy"><IconButton size="small" sx={{ color: "secondary.main" }} onClick={() => navigator.clipboard.writeText(decryptedData?.website ?? '')}><ContentCopy fontSize="small" /></IconButton></Tooltip>
                                 </InputAdornment>
                             ),
                         }} />
 
-                    <TextField {...register("notes")}
-                        fullWidth
-                        placeholder="Write a note..."
-                        variant="outlined"
-                        error={!!errors.notes}
-                        helperText={errors.notes?.message}
-                        sx={{ ...inputSx, mt: 2 }}
+                    <TextField {...register("notes")} fullWidth placeholder="Write a note..." variant="outlined"
+                        error={!!errors.notes} helperText={errors.notes?.message} sx={{ ...inputSx, mt: 2 }}
                         InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <NotesOutlined
-                                        sx={{
-                                            fontSize: 18,
-                                            color: "secondary.dark",
-                                        }}
-                                    />
-                                </InputAdornment>
-                            ),
+                            startAdornment: <InputAdornment position="start"><NotesOutlined sx={{ fontSize: 18, color: "secondary.dark" }} /></InputAdornment>,
                             endAdornment: (
                                 <InputAdornment position="end">
-                                    <Tooltip title="Copy" componentsProps={{
-                                        tooltip: {
-                                            sx: {
-                                                backgroundColor: 'secondary.main',
-                                                color: 'white', fontSize: 12, p: 1
-                                            }
-                                        },
-                                    }}>
-                                        <IconButton size="small" sx={{ color: "secondary.main" }}
-                                            onClick={() => navigator.clipboard.writeText(credential?.title)}>
-                                            <ContentCopy fontSize="small" />
-                                        </IconButton>
-                                    </Tooltip>
+                                    <Tooltip title="Copy"><IconButton size="small" sx={{ color: "secondary.main" }} onClick={() => navigator.clipboard.writeText(decryptedData?.notes ?? '')}><ContentCopy fontSize="small" /></IconButton></Tooltip>
                                 </InputAdornment>
                             ),
                         }} />
 
-                    <TextField {...register("tags")}
-                        fullWidth
-                        placeholder="Write tags..."
-                        variant="outlined"
-                        error={!!errors.tags}
-                        helperText={errors.tags?.message}
-                        sx={{ ...inputSx, mt: 2 }}
+                    <TextField {...register("tags")} fullWidth placeholder="Write tags..." variant="outlined"
+                        error={!!errors.tags} helperText={errors.tags?.message} sx={{ ...inputSx, mt: 2 }}
                         InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <Tag
-                                        sx={{
-                                            fontSize: 18,
-                                            color: "secondary.dark",
-                                        }}
-                                    />
-                                </InputAdornment>
-                            ),
+                            startAdornment: <InputAdornment position="start"><Tag sx={{ fontSize: 18, color: "secondary.dark" }} /></InputAdornment>,
                             endAdornment: (
                                 <InputAdornment position="end">
-                                    <Tooltip title="Copy" componentsProps={{
-                                        tooltip: {
-                                            sx: {
-                                                backgroundColor: 'secondary.main',
-                                                color: 'white', fontSize: 12, p: 1
-                                            }
-                                        },
-                                    }}>
-                                        <IconButton size="small" sx={{ color: "secondary.main" }}
-                                            onClick={() => navigator.clipboard.writeText(credential?.title)}>
-                                            <ContentCopy fontSize="small" />
-                                        </IconButton>
-                                    </Tooltip>
+                                    <Tooltip title="Copy"><IconButton size="small" sx={{ color: "secondary.main" }} onClick={() => navigator.clipboard.writeText(decryptedData?.tags ?? '')}><ContentCopy fontSize="small" /></IconButton></Tooltip>
                                 </InputAdornment>
                             ),
                         }} />
 
                     <Box mt={3}>
-                        <Typography
-                            sx={{ color: "white", fontSize: 12.5, mb: 1, }}>
-                            Category
-                        </Typography>
-
+                        <Typography sx={{ color: "white", fontSize: 12.5, mb: 1 }}>Category</Typography>
                         <Box display="flex" gap={1}>
                             {CATEGORIES.map(({ label, icon }) => {
-                                const active = selectedCategory === label;
-
+                                const active = (selectedCategory || credential.category) === label;
                                 return (
-                                    <Button
-                                        key={label}
-                                        onClick={() =>
-                                            setSelectedCategory(label)
-                                        }
-                                        startIcon={icon}
+                                    <Button key={label} onClick={() => setSelectedCategory(label)} startIcon={icon}
                                         sx={{
-                                            flex: 1,
-                                            flexDirection: "column",
-                                            fontSize: 11,
-                                            borderRadius: 2,
-                                            border: active
-                                                ? "1.5px solid rgb(48,168,90)"
-                                                : "1px solid rgba(255,255,255,0.1)",
-                                            backgroundColor: active
-                                                ? "rgba(48,168,90,0.12)"
-                                                : "rgba(255,255,255,0.03)",
-                                            color: active
-                                                ? "rgb(53,241,119)"
-                                                : "rgb(255,255,255)",
-                                            "& .MuiButton-startIcon": {
-                                                margin: 0,
-                                            },
-                                        }}
-                                    >
+                                            flex: 1, flexDirection: "column", fontSize: 11, borderRadius: 2,
+                                            border: active ? "1.5px solid rgb(48,168,90)" : "1px solid rgba(255,255,255,0.1)",
+                                            backgroundColor: active ? "rgba(48,168,90,0.12)" : "rgba(255,255,255,0.03)",
+                                            color: active ? "rgb(53,241,119)" : "rgb(255,255,255)",
+                                            "& .MuiButton-startIcon": { margin: 0 },
+                                        }}>
                                         {label}
                                     </Button>
                                 );
@@ -458,30 +206,9 @@ export default function UpdateCredential() {
                         </Box>
                     </Box>
 
-                    <Button
-                        type="submit"
-                        fullWidth
-                        disabled={isPending}
-                        startIcon={<SaveOutlined />}
-                        sx={{
-                            mt: 3,
-                            py: 1.5,
-                            borderRadius: "10px",
-                            backgroundColor: "rgb(48,168,90)",
-                            color: "white",
-                            "&:hover": {
-                                backgroundColor: "rgb(40,148,78)",
-                            },
-                        }}
-                    >
-                        {isPending ? (
-                            <CircularProgress
-                                size={22}
-                                sx={{ color: "white" }}
-                            />
-                        ) : (
-                            "Update Credential"
-                        )}
+                    <Button type="submit" fullWidth disabled={isPending} startIcon={<SaveOutlined />}
+                        sx={{ mt: 3, py: 1.5, borderRadius: "10px", backgroundColor: "rgb(48,168,90)", color: "white", "&:hover": { backgroundColor: "rgb(40,148,78)" } }}>
+                        {isPending ? <CircularProgress size={22} sx={{ color: "white" }} /> : "Update Credential"}
                     </Button>
                 </Box>
             </Box>

@@ -4,7 +4,6 @@ import { useQuery } from '@tanstack/react-query';
 export default function useGetCredentials() {
     const getCredentials = async () => {
         const response = await AuthAxiosInstance.get('/vault/credentials');
-        console.log("response", response)
         return response.data;
     }
 

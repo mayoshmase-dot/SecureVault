@@ -5,8 +5,18 @@ import { Link as LinkReact } from 'react-router-dom'
 
 export default function Hero() {
   return (
-    <Box sx={{ position: 'relative', height: "100vh", userSelect: 'none', backgroundImage: `url(${heroImg})`, backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat" }}>
-
+    <Box
+      aria-label="Hero background image"
+      sx={{
+        position: 'relative',
+        height: "100vh",
+        userSelect: 'none',
+        backgroundImage: `url(${heroImg})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
       <Box color="white" position="absolute" top={0} left={0} right={0} bottom={0}
         sx={{
           display: "flex", flexDirection: "column", justifyContent: "center",

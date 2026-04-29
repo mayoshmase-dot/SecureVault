@@ -18,13 +18,13 @@ export default function Login() {
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm({
     resolver: yupResolver(LoginSchema), mode: "all"
   });
+  
   const navigate = useNavigate()
   const setToken = useAuthStore((state) => state.setToken)
   const LoginForm = async (data) => {
     try {
       const response = await axiosInstance.post('/auth/login', data)
       if (response.status === 200) {
-        console.log(response)
         setToken(response.data.token)
         navigate('/dashboard')
       }
