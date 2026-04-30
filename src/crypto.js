@@ -13,7 +13,7 @@ async function getKey(masterPassword, salt) {
   return crypto.subtle.deriveKey(
     {
       name: "PBKDF2",
-      salt: salt, // salt ديناميكي مش ثابت
+      salt: salt, 
       iterations: 100000,
       hash: "SHA-256",
     },
@@ -25,7 +25,7 @@ async function getKey(masterPassword, salt) {
 }
 
 export async function encrypt(text, masterPassword) {
-  const salt = crypto.getRandomValues(new Uint8Array(16)); // salt عشوائي لكل عملية
+  const salt = crypto.getRandomValues(new Uint8Array(16)); 
   const iv = crypto.getRandomValues(new Uint8Array(12));
   const key = await getKey(masterPassword, salt);
 
@@ -36,7 +36,7 @@ export async function encrypt(text, masterPassword) {
   );
 
   return {
-    salt: Array.from(salt), // نحفظ salt مع البيانات
+    salt: Array.from(salt),
     iv: Array.from(iv),
     data: Array.from(new Uint8Array(encrypted)),
   };

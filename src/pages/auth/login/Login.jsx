@@ -1,73 +1,78 @@
-import { Box, Button, CircularProgress, Container, Link, TextField, Typography, Grid, Checkbox } from '@mui/material';
-import logoSecure from '../../../assets/img/LogoSecure.png'
-import { Link as ReactLink, useNavigate } from 'react-router-dom'
+import {
+  Box, Button, CircularProgress, Container, Link, TextField, Typography, Checkbox,
+  IconButton, InputAdornment
+} from '@mui/material';
+
+import { Link as ReactLink, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { LoginSchema } from '../../../validation/LoginSchema';
 import { useState } from 'react';
 import axiosInstance from '../../../api/axiosInstance';
 import useAuthStore from '../../../store/useAuthStore';
-import IconButton from '@mui/material/IconButton';
-import InputAdornment from '@mui/material/InputAdornment';
+
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import { LockOutlined, LanguageOutlined, PersonOutline } from '@mui/icons-material';
+
+import { inputSx, iconBox } from '../../../constants/styles';
 
 export default function Login() {
-  const [serverErrors, setServerErrors] = useState('')
-  const [showPassword, setShowPassword] = useState(false)
+  const [serverErrors, setServerErrors] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
+  const setToken = useAuthStore((state) => state.setToken);
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm({
-    resolver: yupResolver(LoginSchema), mode: "all"
+    resolver: yupResolver(LoginSchema),
+    mode: "all"
   });
-  
-  const navigate = useNavigate()
-  const setToken = useAuthStore((state) => state.setToken)
+
   const LoginForm = async (data) => {
     try {
-      const response = await axiosInstance.post('/auth/login', data)
+      const response = await axiosInstance.post('/auth/login', data);
       if (response.status === 200) {
-        setToken(response.data.token)
-        navigate('/dashboard')
+        setToken(response.data.token);
+        navigate('/dashboard');
       }
+    } catch (error) {
+      setServerErrors(error.response.data.message);
     }
-    catch (error) {
-      setServerErrors(error.response.data.message)
-    }
-  }
-
-
-  const textFieldSx = {
-    '& .MuiOutlinedInput-root': {
-      color: 'white',
-      '& fieldset': { borderColor: 'rgba(255,255,255,0.2)' },
-      '&:hover fieldset': { borderColor: 'rgba(255,255,255,0.5)' },
-      '&.Mui-focused fieldset': { borderColor: 'rgb(48,168,90)' },
-    },
-    '& .MuiInputLabel-root': { color: 'rgba(255,255,255,0.5)' },
-    '& .MuiInputLabel-root.Mui-focused': { color: 'rgb(53, 241, 119)' },
-    '& input:-webkit-autofill': {
-      WebkitBoxShadow: '0 0 0 1000px rgb(1, 6, 46) inset',
-      WebkitTextFillColor: 'white',
-    },
   };
+
   return (
-    <Box sx={{ backgroundColor: 'primary.main', p: 5 }}>
-      <Container maxWidth='xs' >
-        <Box display={'flex'} flexDirection={'column'} gap={2} p={5}
+    <Box sx={{ backgroundColor: 'primary.main', py: 5 }}>
+      <Container maxWidth='xs'>
+        <Box
           sx={{
-            borderRadius: 3, backgroundColor: 'primary.main', userSelect: 'none',
+            borderRadius: 3,
+            backgroundColor: 'primary.main',
+            userSelect: 'none',
             boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
             border: '1px solid rgba(255,255,255,0.07)',
-          }}>
-          <Box display={'flex'} flexDirection={'column'} gap={1}>
-            <Box display={'flex'} alignItems={'center'}>
-              <Box component={'img'} src={logoSecure} height={50} />
-              <Typography sx={{ color: 'white', fontWeight: 600, fontSize: 22 }}>
-                Sign In
-              </Typography>
+            p: 4
+          }}
+        >
+
+          <Box display="flex" flexDirection="column" gap={1} mb={2}>
+            <Box display="flex" alignItems="center" gap={1.5}>
+
+              <Box sx={iconBox}>
+                <PersonOutline sx={{ fontSize: 20 }} />
+              </Box>
+
+              <Box>
+                <Typography sx={{ color: 'white', fontWeight: 600, fontSize: 22 }}>
+                  Sign In
+                </Typography>
+                <Typography sx={{ color: 'rgba(255,255,255,0.4)', fontSize: 12 }}>
+                  Access your secure vault
+                </Typography>
+              </Box>
+
             </Box>
 
             <Typography variant='body2' sx={{ color: 'rgba(255,255,255,0.7)' }}>
-              Don't have an account yet? {' '}
+              Don't have an account yet?{' '}
               <Link component={ReactLink} to={'/register'} underline='none' sx={{ color: 'secondary.dark', fontWeight: 600 }}>
                 Sign Up
               </Link>
@@ -75,54 +80,93 @@ export default function Login() {
           </Box>
 
           {serverErrors && (
-            <Typography color={'error'} variant='body2'>
+            <Typography color={'error'} variant='body2' mb={1}>
               {serverErrors}
             </Typography>
           )}
 
-          <Box component={'form'} onSubmit={handleSubmit(LoginForm)}
-            display={'flex'} flexDirection={'column'} gap={2.5}>
+          <Box
+            component={'form'}
+            onSubmit={handleSubmit(LoginForm)}
+            display={'flex'}
+            flexDirection={'column'}
+            gap={1.5}
+          >
 
-            <TextField {...register('email')} fullWidth label="Email" variant="outlined"
-              error={!!errors.email} helperText={errors.email?.message} sx={textFieldSx} />
-
-            <TextField {...register('password')} fullWidth label="Password"
-              type={showPassword ? 'text' : 'password'} variant="outlined"
-              error={!!errors.password} helperText={errors.password?.message} sx={textFieldSx}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton onClick={() => setShowPassword(p => !p)}>
-                      {showPassword ? <VisibilityIcon sx={{ color: 'white' }} /> : <VisibilityOffIcon sx={{ color: 'white' }} />}
-                    </IconButton>
-                  </InputAdornment>
-                )
-              }} />
-
-            <Box display={'flex'} justifyContent={'space-between'} gap={1} alignItems={'center'} color={'white'} fontWeight={'bold'}>
-              <Box sx={{ color: 'white', '&:hover': { color: 'secondary.main' } }}>
-                <Checkbox sx={{ color: 'white', '&:hover': { color: 'secondary.main' } }} />Remember me
-              </Box>
-              <Box item display={{ xs: 'block', md: 'flex' }} sx={{ color: 'white', '&:hover': { color: 'secondary.main' } }}>
-                <Typography sx={{ cursor: 'pointer' }} variant={'p'} onClick={() => navigate('/forgotPassword')}>
-                  Forgot Password?
-                </Typography>
-              </Box>
+            <Box>
+              <Typography sx={{ color: 'secondary.dark', fontSize: 12.5, mb: 0.5 }}>
+                Email
+              </Typography>
+              <TextField
+                {...register('email')}
+                fullWidth
+                placeholder="Enter your email"
+                error={!!errors.email}
+                helperText={errors.email?.message}
+                sx={inputSx}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <LanguageOutlined sx={{ fontSize: 18, color: 'secondary.dark' }} />
+                    </InputAdornment>
+                  )
+                }}
+              />
             </Box>
-            <Button type='submit' variant="contained" sx={{
-              borderRadius: 5, p: 1.5,
-              backgroundColor: 'secondary.main',
-              color: 'white',
-              fontWeight: 700,
-              letterSpacing: 1,
-              boxShadow: '0 0 20px rgba(48,168,90,0.3)',
-              '&:hover': { backgroundColor: 'secondary.dark', boxShadow: '0 0 30px rgba(53,241,119,0.4)' }
-            }} disabled={isSubmitting}>
-              {isSubmitting ? <CircularProgress size={24} sx={{ color: 'white' }} /> : 'Sign In'}
+
+            <Box>
+              <Typography sx={{ color: 'secondary.dark', fontSize: 12.5, mb: 0.5 }}>
+                Password
+              </Typography>
+              <TextField
+                {...register('password')}
+                fullWidth
+                type={showPassword ? 'text' : 'password'}
+                placeholder="••••••••"
+                error={!!errors.password}
+                helperText={errors.password?.message}
+                sx={inputSx}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <LockOutlined sx={{ fontSize: 18, color: 'secondary.dark' }} />
+                    </InputAdornment>
+                  ),
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton onClick={() => setShowPassword(p => !p)}>
+                        {showPassword
+                          ? <VisibilityIcon sx={{ color: 'white' }} />
+                          : <VisibilityOffIcon sx={{ color: 'white' }} />}
+                      </IconButton>
+                    </InputAdornment>
+                  )}}/>
+            </Box>
+
+            <Box display="flex" justifyContent="space-between" alignItems="center">
+              <Box display="flex" alignItems="center" sx={{ color: 'white' }}>
+                <Checkbox sx={{ color: 'white', '&:hover': { color: 'secondary.main' } }} />
+                Remember me
+              </Box>
+
+              <Typography
+                sx={{ cursor: 'pointer', color: 'white', '&:hover': { color: 'secondary.main' } }}
+                onClick={() => navigate('/forgotPassword')}>
+                Forgot Password?
+              </Typography>
+            </Box>
+
+            <Button type='submit' disabled={isSubmitting}
+              sx={{mt: 1,borderRadius: 3,py: 1.5,
+                backgroundColor: 'secondary.main',color: 'white',fontWeight: 700,letterSpacing: 1 }}>
+              {isSubmitting
+                ? <CircularProgress size={24} sx={{ color: 'white' }} />
+                : 'Sign In'}
             </Button>
+
           </Box>
         </Box>
       </Container>
     </Box>
-  )
+  );
 }
