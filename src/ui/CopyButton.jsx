@@ -9,7 +9,7 @@ export default function CopyButton({ value }) {
                     size="small"
                     sx={{ color: "secondary.main" }}
                     onClick={() => navigator.clipboard.writeText(value ?? '')}>
-                    <ContentCopyIcon fontSize="small" />
+                    <ContentCopyIcon  fontSize="small" />
                 </IconButton>
             </Tooltip>
         </InputAdornment>

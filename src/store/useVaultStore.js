@@ -5,15 +5,12 @@ const useVaultStore = create(
   persist(
     (set) => ({
       masterPassword: "",
-
-      setMasterPassword: (password) =>
-        set({ masterPassword: password }),
-
-      clearMasterPassword: () =>
-        set({ masterPassword: "" }),
+      setMasterPassword: (password) => set({ masterPassword: password }),
+      clearMasterPassword: () => set({ masterPassword: "" }),
     }),
     {
       name: "vault-storage",
+      partialize: (state) => ({}), 
     }
   )
 );

@@ -87,15 +87,17 @@ export default function UpdateCredential() {
                             endAdornment: <CopyButton value={decryptedData?.username} />,
                         }} />
 
-                   <TextField {...register("password")} fullWidth placeholder="••••••••" type={showPassword ? "text" : "password"} variant="outlined"
+                    <TextField {...register("password")} fullWidth placeholder="••••••••" type={showPassword ? "text" : "password"} variant="outlined"
                         error={!!errors.password} helperText={errors.password?.message} sx={{ ...inputSx, mt: 2 }}
                         InputProps={{
                             startAdornment: <InputAdornment position="start"><LockOutlined sx={{ fontSize: 18, color: "secondary.dark" }} /></InputAdornment>,
                             endAdornment: (
                                 <InputAdornment position="end">
-                                    <IconButton onClick={() => setShowPassword(p => !p)}>
+                                    <IconButton  onClick={() => setShowPassword(p => !p)}>
                                         {showPassword ? <Visibility sx={{ color: 'secondary.main' }} /> : <VisibilityOff sx={{ color: 'secondary.main' }} />}
                                     </IconButton>
+                                    <CopyButton value={decryptedData?.password} />
+
                                 </InputAdornment>
                             ),
                         }} />

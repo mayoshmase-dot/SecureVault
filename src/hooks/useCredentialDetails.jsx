@@ -1,6 +1,7 @@
 import AuthAxiosInstance from '../api/AuthAxiosInstance'
 import { useQuery } from '@tanstack/react-query'
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import useVaultStore from '../store/useVaultStore'
 import { decrypt, safeParse, isEncrypted } from '../crypto'
 
@@ -14,9 +15,14 @@ const decryptField = async (field, masterPassword) => {
 
 export default function useCredentialDetails({ id }) {
     const { masterPassword } = useVaultStore()
+    const navigate = useNavigate()
     const [decryptedData, setDecryptedData] = useState(null)
     const [isDecrypting, setIsDecrypting] = useState(false)
     const [decryptError, setDecryptError] = useState(null)
+
+    useEffect(() => {
+        if (!masterPassword) navigate('/login')
+    }, [masterPassword])
 
     const query = useQuery({
         queryKey: ['credential', id],

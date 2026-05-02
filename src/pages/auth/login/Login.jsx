@@ -10,18 +10,19 @@ import { LoginSchema } from '../../../validation/LoginSchema';
 import { useState } from 'react';
 import axiosInstance from '../../../api/axiosInstance';
 import useAuthStore from '../../../store/useAuthStore';
-
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { LockOutlined, LanguageOutlined, PersonOutline } from '@mui/icons-material';
-
 import { inputSx, iconBox } from '../../../constants/styles';
+import useVaultStore from '../../../store/useVaultStore';
 
 export default function Login() {
   const [serverErrors, setServerErrors] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const setToken = useAuthStore((state) => state.setToken);
+  const setMasterPassword = useVaultStore((state) => state.setMasterPassword);
+  
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm({
     resolver: yupResolver(LoginSchema),
     mode: "all"
@@ -32,6 +33,7 @@ export default function Login() {
       const response = await axiosInstance.post('/auth/login', data);
       if (response.status === 200) {
         setToken(response.data.token);
+        setMasterPassword(data.password);
         navigate('/dashboard');
       }
     } catch (error) {
