@@ -38,7 +38,7 @@ export default function Profile() {
 
                     <ListItemButton
                         component={Link}
-                        to={'profileInfo'}
+                        to={'/profile'}
                         sx={{
                             borderRadius: 2,
                             my: 0.5,

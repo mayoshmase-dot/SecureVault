@@ -93,7 +93,7 @@ const router = createBrowserRouter([
                     </ProtectedRouter>,
                 children: [
                     {
-                        path: 'profileInfo',
+                        index: true,
                         element: <ProfileInfo />
                     },
                     {

@@ -4,15 +4,6 @@ export const RegisterSchema = yup.object({
   name: yup.string()
     .required("Name is required")
     .trim()
-    .test(
-      "is-triple-name",
-      "Enter your full triple name",
-      value => {
-        if (!value) return false;
-        const parts = value.trim().split(/\s+/).filter(Boolean);
-        return parts.length === 3;
-      }
-    )
     .matches(
       /^[A-Za-z\u0600-\u06FF\s]+$/,
       "Name can only contain letters"

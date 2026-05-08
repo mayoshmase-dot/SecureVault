@@ -17,34 +17,20 @@ export default function useAddCredentials() {
             }
 
             const encryptedUsername = await encrypt(data.username, masterPassword);
-
-            const encryptedPassword = await encrypt(
-                data.password,
-                masterPassword
-            );
-
-            const encryptedNotes = await encrypt(
-                data.notes || "",
-                masterPassword
-            );
+            const encryptedPassword = await encrypt(data.password, masterPassword);
+            const encryptedNotes = await encrypt(data.notes || "", masterPassword);
 
             const payload = {
                 title: data.title,
-                username: JSON.stringify(encryptedUsername),
-                
-                password: JSON.stringify(encryptedPassword),
-                notes: JSON.stringify(encryptedNotes),
+                username: encryptedUsername,
+                password: encryptedPassword,
+                notes: encryptedNotes,
                 website: data.website || "",
                 tags: data.tags || "",
                 category: data.category,
             };
 
-
-            const response = await AuthAxiosInstance.post(
-                "/vault/credentials",
-                payload
-            );
-
+            const response = await AuthAxiosInstance.post("/vault/credentials", payload);
             return response.data;
         },
 

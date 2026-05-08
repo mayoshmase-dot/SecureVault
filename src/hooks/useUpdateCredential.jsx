@@ -14,9 +14,9 @@ export default function useUpdateCredential({ id }) {
         mutationFn: async (data) => {
             const encryptedData = {
                 ...data,
-                username: JSON.stringify(await encrypt(data.username, masterPassword)),
-                password: JSON.stringify(await encrypt(data.password, masterPassword)),
-                notes: data.notes ? JSON.stringify(await encrypt(data.notes, masterPassword)) : '',
+                username: await encrypt(data.username, masterPassword),
+                password: await encrypt(data.password, masterPassword),
+                notes: data.notes ? await encrypt(data.notes, masterPassword) : '',
             };
             const response = await AuthAxiosInstance.put(`/vault/credentials/${id}`, encryptedData);
             return response.data;

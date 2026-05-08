@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { createJSONStorage, persist } from "zustand/middleware";
 
 const useVaultStore = create(
   persist(
@@ -10,7 +10,8 @@ const useVaultStore = create(
     }),
     {
       name: "vault-storage",
-      partialize: (state) => ({}), 
+      storage: createJSONStorage(() => sessionStorage),
+      
     }
   )
 );

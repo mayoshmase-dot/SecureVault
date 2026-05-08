@@ -4,7 +4,6 @@ import Loader from "../../ui/Loader";
 import EmailIcon from '@mui/icons-material/Email';
 import PersonIcon from '@mui/icons-material/Person';
 import SecurityIcon from '@mui/icons-material/Security';
-import LoginIcon from '@mui/icons-material/Login';
 
 export default function Profile() {
 
@@ -93,34 +92,6 @@ export default function Profile() {
                         </Typography>
                         <Typography fontWeight='medium' color='white'>
                             {data.data?.twoFactorEnabled ? "Enabled" : "Disabled"}
-                        </Typography>
-                    </Box>
-                </Box>
-
-                <Divider sx={{ borderColor: 'rgba(255,255,255,0.1)' }} />
-
-                <Box display='flex' alignItems='center' gap={2} my={2}>
-                    <LoginIcon sx={{ color: 'primary.main' }} />
-                    <Box>
-                        <Typography variant='body2' color='secondary.main'>
-                            Last Login
-                        </Typography>
-                        <Typography fontWeight='medium' color='white'>
-                            {data.data?.lastLogin}
-                        </Typography>
-                    </Box>
-                </Box>
-
-                <Divider sx={{ borderColor: 'rgba(255,255,255,0.1)' }} />
-
-                <Box display='flex' alignItems='center' gap={2} mt={2}>
-                    <LoginIcon sx={{ color: 'primary.main' }} />
-                    <Box>
-                        <Typography variant='body2' color='secondary.main'>
-                            Created At
-                        </Typography>
-                        <Typography fontWeight='medium' color='white'>
-                            {data.data?.createdAt}
                         </Typography>
                     </Box>
                 </Box>

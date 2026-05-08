@@ -3,12 +3,12 @@ import { useQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import useVaultStore from '../store/useVaultStore'
-import { decrypt, safeParse, isEncrypted } from '../crypto'
+import { decrypt, isEncrypted } from '../crypto'
 
 const decryptField = async (field, masterPassword) => {
     if (!field) return ''
     if (isEncrypted(field)) {
-        return await decrypt(safeParse(field), masterPassword)
+        return await decrypt(field, masterPassword)
     }
     return field
 }
@@ -47,8 +47,8 @@ export default function useCredentialDetails({ id }) {
                     decryptField(credential.notes, masterPassword),
                 ])
                 setDecryptedData({ ...credential, username, password, notes })
-            } catch (err) {
-                setDecryptError(err)
+            } catch (error) {
+                setDecryptError(error)
             } finally {
                 setIsDecrypting(false)
             }

@@ -13,7 +13,7 @@ async function getKey(masterPassword, salt) {
   return crypto.subtle.deriveKey(
     {
       name: "PBKDF2",
-      salt: salt, 
+      salt: salt,
       iterations: 100000,
       hash: "SHA-256",
     },
@@ -25,7 +25,7 @@ async function getKey(masterPassword, salt) {
 }
 
 export async function encrypt(text, masterPassword) {
-  const salt = crypto.getRandomValues(new Uint8Array(16)); 
+  const salt = crypto.getRandomValues(new Uint8Array(16));
   const iv = crypto.getRandomValues(new Uint8Array(12));
   const key = await getKey(masterPassword, salt);
 
@@ -35,27 +35,34 @@ export async function encrypt(text, masterPassword) {
     encoder.encode(text)
   );
 
-  return {
-    salt: Array.from(salt),
-    iv: Array.from(iv),
-    data: Array.from(new Uint8Array(encrypted)),
-  };
+  // دمج salt(16) + iv(12) + data في buffer واحد
+  const combined = new Uint8Array(16 + 12 + encrypted.byteLength);
+  combined.set(salt, 0);
+  combined.set(iv, 16);
+  combined.set(new Uint8Array(encrypted), 28);
+
+  return btoa(String.fromCharCode(...combined));
 }
 
 export async function decrypt(payload, masterPassword) {
-  if (!payload?.salt || !payload?.iv || !payload?.data) {
+  if (!payload || typeof payload !== "string") {
     throw new Error("Invalid encrypted payload");
   }
 
-  const key = await getKey(masterPassword, new Uint8Array(payload.salt));
+  const combined = new Uint8Array(
+    atob(payload).split("").map((c) => c.charCodeAt(0))
+  );
+
+  const salt = combined.slice(0, 16);
+  const iv   = combined.slice(16, 28);
+  const data = combined.slice(28);
+
+  const key = await getKey(masterPassword, salt);
 
   const decrypted = await crypto.subtle.decrypt(
-    {
-      name: "AES-GCM",
-      iv: new Uint8Array(payload.iv),
-    },
+    { name: "AES-GCM", iv },
     key,
-    new Uint8Array(payload.data)
+    data
   );
 
   return decoder.decode(decrypted);
@@ -70,9 +77,10 @@ export function safeParse(value) {
 }
 
 export function isEncrypted(value) {
+  if (typeof value !== "string") return false;
   try {
-    const v = typeof value === "string" ? JSON.parse(value) : value;
-    return !!(v?.iv && v?.data && v?.salt);
+    atob(value);
+    return value.length > 40;
   } catch {
     return false;
   }
