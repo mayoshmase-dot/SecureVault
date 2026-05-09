@@ -1,13 +1,4 @@
-import {
-    Box,
-    Button,
-    CircularProgress,
-    Container,
-    InputAdornment,
-    TextField,
-    Typography
-} from '@mui/material'
-
+import { Box, Button, CircularProgress, Container, InputAdornment, TextField, Typography } from '@mui/material'
 import { KeyOutlined, ShieldOutlined } from '@mui/icons-material'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -19,15 +10,12 @@ import { iconBox, inputSx } from '../../constants/styles'
 
 export default function Verify2FA() {
     const [code, setCode] = useState('')
-
     const navigate = useNavigate()
     const queryClient = useQueryClient()
-
     const { mutate, isPending } = useVerify2FACode()
-
-    const tempToken = useAuthStore((s) => s.tempToken)
-    const setToken = useAuthStore((s) => s.setToken)
-
+    const tempToken = useAuthStore((state) => state.tempToken)
+    const setToken = useAuthStore((state) => state.setToken)
+    const clearTempToken = useAuthStore((state) => state.clearTempToken)
     const handleVerify = () => {
         if (code.length !== 6 || !tempToken) return
 
@@ -35,7 +23,8 @@ export default function Verify2FA() {
             { code, token: tempToken },
             {
                 onSuccess: (res) => {
-                    setToken(res.token)
+                    setToken(res.accessToken)
+                    clearTempToken()
                     queryClient.invalidateQueries({ queryKey: ['profile'] })
                     Swal.fire({
                         icon: 'success',
@@ -46,13 +35,9 @@ export default function Verify2FA() {
                     }).then(() => {
                         navigate('/dashboard')
                     })
-
-
                 }
-            }
-        )
+            })
     }
-
     return (
         <Box sx={{
             backgroundColor: 'primary.main',

@@ -3,6 +3,7 @@ import { Link, Outlet } from 'react-router-dom'
 import ShieldOutlinedIcon from '@mui/icons-material/ShieldOutlined';
 import PersonIcon from '@mui/icons-material/Person';
 import LanguageIcon from '@mui/icons-material/Language';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 export default function Profile() {
     return (
@@ -23,12 +24,7 @@ export default function Profile() {
                 p: 2,
                 boxShadow: '0 20px 60px rgba(0, 0, 0, 0)',
             }}>
-                <Typography
-                    variant='h6'
-                    textAlign='center'
-                    fontWeight='bold'
-                    my={2}
-                >
+                <Typography variant='h6' textAlign='center' fontWeight='bold' my={2}>
                     Profile
                 </Typography>
 
@@ -36,66 +32,30 @@ export default function Profile() {
 
                 <List>
 
-                    <ListItemButton
-                        component={Link}
-                        to={'/profile'}
-                        sx={{
-                            borderRadius: 2,
-                            my: 0.5,
-                            '&:hover': {
-                                backgroundColor: 'secondary.dark'
-                            }
-                        }}
-                    >
-                        <ListItemIcon sx={{ color: 'white' }}>
-                            <PersonIcon />
-                        </ListItemIcon>
+                    <ListItemButton component={Link} to={'/profile'} sx={{ borderRadius: 2, my: 1, '&:hover': { backgroundColor: 'secondary.dark' } }}>
+                        <ListItemIcon sx={{ color: 'white' }}><PersonIcon /></ListItemIcon>
                         <ListItemText primary={'Info'} />
                     </ListItemButton>
 
-                    <ListItemButton
-                        component={Link}
-                        to={'2FA'}
-                        sx={{
-                            borderRadius: 2,
-                            my: 0.5,
-                            '&:hover': {
-                                backgroundColor: 'secondary.dark'
-                            }
-                        }}
-                    >
-                        <ListItemIcon sx={{ color: 'white' }}>
-                            <ShieldOutlinedIcon />
-                        </ListItemIcon>
+                    <ListItemButton component={Link} to={'2FA'} sx={{ borderRadius: 2, my: 1, '&:hover': { backgroundColor: 'secondary.dark' } }}>
+                        <ListItemIcon sx={{ color: 'white' }}><ShieldOutlinedIcon /></ListItemIcon>
                         <ListItemText primary={'Two-Factor Authentication'} />
                     </ListItemButton>
 
-                    <ListItemButton
-                        component={Link}
-                        to={'language'}
-                        sx={{
-                            borderRadius: 2,
-                            my: 0.5,
-                            '&:hover': {
-                                backgroundColor: 'secondary.dark'
-                            }
-                        }}
-                    >
-                        <ListItemIcon sx={{ color: 'white' }}>
-                            <LanguageIcon />
-                        </ListItemIcon>
+                    <ListItemButton component={Link} to={'language'} sx={{ borderRadius: 2, my: 1, '&:hover': { backgroundColor: 'secondary.dark' } }}>
+                        <ListItemIcon sx={{ color: 'white' }}><LanguageIcon /></ListItemIcon>
                         <ListItemText primary={'Language'} />
+                    </ListItemButton>
+
+                    <ListItemButton component={Link} to={'deleteAccount'} sx={{ borderRadius: 2, my: 1, '&:hover': { backgroundColor: 'secondary.dark' } }}>
+                        <ListItemIcon sx={{ color: 'white' }}><DeleteOutlineIcon /></ListItemIcon>
+                        <ListItemText primary={'Delete Account'} primaryTypographyProps={{ sx: { color: 'white' } }} />
                     </ListItemButton>
 
                 </List>
             </Box>
 
-            <Box sx={{
-                flex: 1,
-                backgroundColor: 'primary.main',
-                p: 2,
-                boxShadow: '0 20px 60px rgba(0, 0, 0, 0)',
-            }}>
+            <Box sx={{ flex: 1, backgroundColor: 'primary.main', p: 2 }}>
                 <Outlet />
             </Box>
 

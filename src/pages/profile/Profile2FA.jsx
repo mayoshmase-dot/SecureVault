@@ -1,5 +1,4 @@
 import {Box,Button,CircularProgress,Container,InputAdornment,TextField,Typography} from '@mui/material'
-
 import { SecurityOutlined, KeyOutlined } from '@mui/icons-material'
 import { useState } from 'react'
 import Swal from 'sweetalert2'
@@ -7,32 +6,30 @@ import useProfile from '../../hooks/useProfile'
 import useGetQRCode from '../../hooks/useGetQRCode'
 import useConfirm2FA from '../../hooks/useConfirm2FA'
 import useDisable2FA from '../../hooks/useDisable2FA'
+import useGetBackupCodes from '../../hooks/useGetBackupCodes'
 import Loader from '../../ui/Loader'
 import { iconBox, inputSx } from '../../constants/styles'
 import { useQueryClient } from '@tanstack/react-query'
 
 export default function Profile2FA() {
   const queryClient = useQueryClient()
-
   const [code, setCode] = useState('')
   const [qrCode, setQrCode] = useState('')
 
   const { data, isLoading, isError, error } = useProfile()
-
   const { mutate: getQR, isPending: qrLoading } = useGetQRCode()
   const { mutate: confirm, isPending: confirmLoading } = useConfirm2FA()
   const { mutate: disable, isPending: disableLoading } = useDisable2FA()
+  const { refetch: fetchBackupCodes } = useGetBackupCodes()
 
-const enabled = data?.data?.twoFactorEnabled
-
-if (isLoading) return <Loader />
+  if (isLoading) return <Loader />
   if (isError) return <Box color="red">{error.message}</Box>
+
+  const enabled = data?.data?.twoFactorEnabled
 
   const handleEnable = () => {
     getQR(undefined, {
-      onSuccess: (res) => {
-        setQrCode(res.qrCode)
-      }
+      onSuccess: (res) => setQrCode(res.qrCode)
     })
   }
 
@@ -40,16 +37,45 @@ if (isLoading) return <Loader />
     if (code.length !== 6) return
 
     confirm(code, {
-      onSuccess: (res) => {
+      onSuccess: async (res) => {
         setQrCode('')
         setCode('')
-
         queryClient.invalidateQueries({ queryKey: ['profile'] })
 
-        Swal.fire({
+        await Swal.fire({
           title: '2FA Enabled',
           text: res.message,
-          icon: 'success'
+          icon: 'success',
+          confirmButtonColor: '#7c3aed'
+        })
+
+        const { data: backupRes } = await fetchBackupCodes()
+        const codes = backupRes?.data || []
+
+        Swal.fire({
+          title: 'Backup Codes',
+          html: `
+            <p style="color:rgba(255,255,255,0.5);font-size:13px;margin-bottom:16px">
+              Save these — they won't show again
+            </p>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+              ${codes.map(c => `
+                <div style="
+                  background:#1e1b4b;
+                  padding:10px;
+                  border-radius:8px;
+                  color:#a5b4fc;
+                  font-family:monospace;
+                  font-size:13px;
+                  letter-spacing:1px;
+                  text-align:center
+                ">${c}</div>
+              `).join('')}
+            </div>
+          `,
+          background: '#111827',
+          confirmButtonText: 'Done',
+          confirmButtonColor: '#7c3aed'
         })
       }
     })
@@ -65,25 +91,18 @@ if (isLoading) return <Loader />
       confirmButtonColor: '#dc2626'
     }).then((r) => {
       if (!r.isConfirmed) return
-
       disable(undefined, {
         onSuccess: (res) => {
           queryClient.invalidateQueries({ queryKey: ['profile'] })
-
-          Swal.fire({
-            title: 'Disabled',
-            text: res.message,
-            icon: 'success'
-          })
+          Swal.fire({ title: 'Disabled', text: res.message, icon: 'success', confirmButtonColor: '#7c3aed' })
         }
       })
     })
   }
 
   return (
-    <Box sx={{ backgroundColor: 'primary.main', py: 5 }}>
+    <Box sx={{ backgroundColor: 'primary.main', minHeight: '80vh', display: 'flex', alignItems: 'center' }}>
       <Container maxWidth="xs">
-
         <Box sx={{
           borderRadius: 3,
           backgroundColor: 'primary.main',
@@ -96,7 +115,6 @@ if (isLoading) return <Loader />
             <Box sx={iconBox}>
               <SecurityOutlined sx={{ fontSize: 20 }} />
             </Box>
-
             <Box>
               <Typography sx={{ color: 'white', fontWeight: 600 }}>
                 Two-Factor Authentication
@@ -108,25 +126,17 @@ if (isLoading) return <Loader />
           </Box>
 
           {!enabled && !qrCode && (
-            <Button
-              fullWidth
-              disabled={qrLoading}
-              onClick={handleEnable}
-              sx={{
-                borderRadius: 3,
-                py: 1.5,
-                backgroundColor: 'secondary.main',
-                color: 'white',
-                fontWeight: 700
-              }}
-            >
+            <Button fullWidth disabled={qrLoading} onClick={handleEnable} sx={{
+              borderRadius: 3, py: 1.5,
+              backgroundColor: 'secondary.main',
+              color: 'white', fontWeight: 700
+            }}>
               {qrLoading ? <CircularProgress size={22} /> : 'Enable 2FA'}
             </Button>
           )}
 
           {qrCode && (
             <Box display="flex" flexDirection="column" gap={2}>
-
               <Box sx={{ backgroundColor: '#fff', borderRadius: 4, p: 2, mx: 'auto' }}>
                 <img src={qrCode} width={180} height={180} alt="QR" />
               </Box>
@@ -135,69 +145,44 @@ if (isLoading) return <Loader />
                 fullWidth
                 placeholder="6-digit code"
                 value={code}
-                onChange={(e) =>
-                  setCode(e.target.value.replace(/\D/g, '').slice(0, 6))
-                }
+                onChange={(e) => setCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
                 sx={inputSx}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <KeyOutlined sx={{ fontSize: 18  , col: 'secondary.main' }} />
+                      <KeyOutlined sx={{ fontSize: 18, color: 'secondary.dark' }} />
                     </InputAdornment>
                   )
                 }}
               />
 
-              <Button
-                fullWidth
-                disabled={code.length !== 6 || confirmLoading}
-                onClick={handleConfirm}
-                sx={{
-                  borderRadius: 3,
-                  py: 1.5,
-                  backgroundColor: 'secondary.main',
-                  color: 'white',
-                  fontWeight: 700
-                }}
-              >
+              <Button fullWidth disabled={code.length !== 6 || confirmLoading} onClick={handleConfirm} sx={{
+                borderRadius: 3, py: 1.5,
+                backgroundColor: 'secondary.main',
+                color: 'white', fontWeight: 700
+              }}>
                 {confirmLoading ? <CircularProgress size={22} /> : 'Verify'}
               </Button>
 
-              <Button
-                fullWidth
-                onClick={() => {
-                  setQrCode('')
-                  setCode('')
-                }}
-                sx={{ color: 'rgba(255,255,255,0.4)' }}
-              >
+              <Button fullWidth onClick={() => { setQrCode(''); setCode('') }} sx={{ color: 'rgba(255,255,255,0.4)' }}>
                 Cancel
               </Button>
-
             </Box>
           )}
 
           {enabled && !qrCode && (
             <Box display="flex" flexDirection="column" gap={2}>
-
               <Typography sx={{ color: 'white', fontSize: 14 }}>
                 2FA is enabled
               </Typography>
 
-              <Button
-                fullWidth
-                disabled={disableLoading}
-                onClick={handleDisable}
-                sx={{
-                  borderRadius: 3,
-                  py: 1.5,
-                  backgroundColor: 'rgba(220,38,38,0.15)',
-                  color: '#f87171'
-                }}
-              >
+              <Button fullWidth disabled={disableLoading} onClick={handleDisable} sx={{
+                borderRadius: 3, py: 1.5,
+                backgroundColor: 'rgba(220,38,38,0.15)',
+                color: '#f87171'
+              }}>
                 {disableLoading ? <CircularProgress size={22} /> : 'Disable'}
               </Button>
-
             </Box>
           )}
 

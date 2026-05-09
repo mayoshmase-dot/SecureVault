@@ -16,6 +16,7 @@ import CredentialDetails from "./pages/credentials/CredentialDetails";
 import ResetPassword from "./pages/auth/resetPassword/ResetPassword";
 import GeneratePassword from "./pages/genaratePassword/GenaratePassword";
 import UpdateCredential from "./pages/credentials/UpdateCredential";
+import ProfileDelete from "./pages/profile/ProfileDelete";
 
 const router = createBrowserRouter([
     {
@@ -104,7 +105,7 @@ const router = createBrowserRouter([
                     {
                         path: 'language',
                         element: <ProfileLanguage />
-                    }
+                    },
                 ]
             },
         ]

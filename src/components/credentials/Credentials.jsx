@@ -11,6 +11,7 @@ import useDeleteCredentials from "../../hooks/useDeleteCredentials";
 
 export default function Credentials() {
     const { data, isError, isLoading, error } = useGetCredentials();
+    console.log('data' , data)
     const { mutate, isPending } = useDeleteCredentials();
     const [deletingId, setDeletingId] = useState(null);
     const navigate = useNavigate();

@@ -1,4 +1,4 @@
-import {Box, Button, CircularProgress, Container, Link, TextField, Typography, Checkbox,IconButton, InputAdornment} from '@mui/material';
+import { Box, Button, CircularProgress, Container, Link, TextField, Typography, Checkbox, IconButton, InputAdornment } from '@mui/material';
 import { Link as ReactLink, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -17,6 +17,7 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const setToken = useAuthStore((state) => state.setToken);
+  const setTempToken = useAuthStore((state) => state.setTempToken);
   const setMasterPassword = useVaultStore((state) => state.setMasterPassword);
 
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm({
@@ -24,38 +25,34 @@ export default function Login() {
     mode: "all"
   });
 
-  const LoginForm = async (data) => {
-    try {
-      const response = await axiosInstance.post('/auth/login', data);
-      console.log(response.data);
-      if (response.status === 200) {
-        setToken(response.data.token);
-        setMasterPassword(data.password);
-        navigate('/dashboard');
-      }
-    } catch (error) {
-      setServerErrors(error.response.data.message);
+const LoginForm = async (data) => {
+  try {
+    const response = await axiosInstance.post('/auth/login', data);
+
+    if (response.data.requires2FA) {
+      setTempToken(response.data.tempToken);
+      setMasterPassword(data.password);
+
+      navigate('/verify2FA');
+      return;
     }
-  };
 
-//   const setTempToken = useAuthStore((s) => s.setTempToken)
-//   const setToken = useAuthStore((s) => s.setToken)
-//   const setMasterPassword = useVaultStore((s) => s.setMasterPassword)
+    if (response.data.accessToken) {
+      localStorage.setItem("token", response.data.accessToken);
+      localStorage.setItem("refreshToken", response.data.refreshToken);
 
-//  const onSubmit = async (data) => {
-//     try {
-//       const { data: res } = await axiosInstance.post('/auth/login', data)
-//       if (res.requires2FA) {
-//         setTempToken(res.token)
-//         navigate('/verify2FA')
-//         return
-//       }
+      setToken(response.data.accessToken);
+      setMasterPassword(data.password);
 
-//       setToken(res.token)
-//       setMasterPassword(data.password)
-//       navigate('/dashboard')
+      navigate('/dashboard');
+    }
 
-//     }
+  } catch (error) {
+    setServerErrors(error?.response?.data?.message || 'Something went wrong');
+  }
+};
+
+
   return (
     <Box sx={{ backgroundColor: 'primary.main', py: 5 }}>
       <Container maxWidth='xs'>
@@ -157,7 +154,8 @@ export default function Login() {
                           : <VisibilityOffIcon sx={{ color: 'white' }} />}
                       </IconButton>
                     </InputAdornment>
-                  )}}/>
+                  )
+                }} />
             </Box>
 
             <Box display="flex" justifyContent="space-between" alignItems="center">
@@ -174,8 +172,10 @@ export default function Login() {
             </Box>
 
             <Button type='submit' disabled={isSubmitting}
-              sx={{mt: 1,borderRadius: 3,py: 1.5,
-                backgroundColor: 'secondary.main',color: 'white',fontWeight: 700,letterSpacing: 1 }}>
+              sx={{
+                mt: 1, borderRadius: 3, py: 1.5,
+                backgroundColor: 'secondary.main', color: 'white', fontWeight: 700, letterSpacing: 1
+              }}>
               {isSubmitting
                 ? <CircularProgress size={24} sx={{ color: 'white' }} />
                 : 'Sign In'}
