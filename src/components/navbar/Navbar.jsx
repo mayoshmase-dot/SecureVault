@@ -36,7 +36,9 @@ export default function Navbar() {
         <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
 
           <Box display="flex" alignItems="center" component={RouterLink} to='/' sx={{ textDecoration: 'none', color: 'white' }}>
-            <Box component="img" src={LogoSecure} sx={{ height: 50 }} />
+            <Box component="img" src={LogoSecure} width="70px"
+              height="50"
+              alt="logo" />
             <Typography fontWeight={700}>SecureVault</Typography>
           </Box>
 

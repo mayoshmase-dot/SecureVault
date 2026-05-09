@@ -1,125 +1,132 @@
 import {
-  Box,
-  Button,
-  CircularProgress,
-  Container,
-  InputAdornment,
-  TextField,
-  Typography
+    Box,
+    Button,
+    CircularProgress,
+    Container,
+    InputAdornment,
+    TextField,
+    Typography
 } from '@mui/material'
 
 import { KeyOutlined, ShieldOutlined } from '@mui/icons-material'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useQueryClient } from '@tanstack/react-query'
-
+import Swal from 'sweetalert2'
 import useVerify2FACode from '../../hooks/useVerify2FACode'
 import useAuthStore from '../../store/useAuthStore'
 import { iconBox, inputSx } from '../../constants/styles'
 
 export default function Verify2FA() {
-  const [code, setCode] = useState('')
+    const [code, setCode] = useState('')
 
-  const navigate = useNavigate()
-  const queryClient = useQueryClient()
+    const navigate = useNavigate()
+    const queryClient = useQueryClient()
 
-  const { mutate, isPending } = useVerify2FACode()
+    const { mutate, isPending } = useVerify2FACode()
 
-  const tempToken = useAuthStore((s) => s.tempToken)
-  const setToken = useAuthStore((s) => s.setToken)
-  const logout = useAuthStore((s) => s.logout)
+    const tempToken = useAuthStore((s) => s.tempToken)
+    const setToken = useAuthStore((s) => s.setToken)
 
-  const handleVerify = () => {
-    if (code.length !== 6 || !tempToken) return
+    const handleVerify = () => {
+        if (code.length !== 6 || !tempToken) return
 
-    mutate(
-      { code, token: tempToken },
-      {
-        onSuccess: (res) => {
-          setToken(res.token)
-          queryClient.invalidateQueries({ queryKey: ['profile'] })
-          navigate('/dashboard')
-        }
-      }
-    )
-  }
+        mutate(
+            { code, token: tempToken },
+            {
+                onSuccess: (res) => {
+                    setToken(res.token)
+                    queryClient.invalidateQueries({ queryKey: ['profile'] })
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Verified Successfully',
+                        text: 'Redirecting to dashboard...',
+                        timer: 1500,
+                        showConfirmButton: false
+                    }).then(() => {
+                        navigate('/dashboard')
+                    })
 
-  return (
-    <Box sx={{
-      backgroundColor: 'primary.main',
-      minHeight: '100vh',
-      display: 'flex',
-      alignItems: 'center',
-      py: 5
-    }}>
-      <Container maxWidth="xs">
 
-        <Box sx={{
-          borderRadius: 3,
-          backgroundColor: 'primary.main',
-          boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
-          border: '1px solid rgba(255,255,255,0.07)',
-          p: 4
-        }}>
-
-          {/* HEADER */}
-          <Box display="flex" alignItems="center" gap={1.5} mb={3}>
-            <Box sx={iconBox}>
-              <ShieldOutlined sx={{ fontSize: 20 }} />
-            </Box>
-
-            <Box>
-              <Typography sx={{ color: 'white', fontWeight: 600 }}>
-                Two-Factor Authentication
-              </Typography>
-              <Typography sx={{ color: 'rgba(255,255,255,0.4)', fontSize: 12 }}>
-                Enter your 6-digit code
-              </Typography>
-            </Box>
-          </Box>
-
-          {/* INPUT */}
-          <TextField
-            fullWidth
-            placeholder="6-digit code"
-            value={code}
-            onChange={(e) =>
-              setCode(e.target.value.replace(/\D/g, '').slice(0, 6))
+                }
             }
-            onKeyDown={(e) => e.key === 'Enter' && handleVerify()}
-            sx={inputSx}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <KeyOutlined sx={{ fontSize: 18, color: 'secondary.main' }} />
-                </InputAdornment>
-              )
-            }}
-          />
+        )
+    }
 
-          {/* BUTTON */}
-          <Button
-            fullWidth
-            onClick={handleVerify}
-            disabled={code.length !== 6 || isPending}
-            sx={{
-              borderRadius: 3,
-              py: 1.5,
-              backgroundColor: 'secondary.main',
-              color: 'white',
-              fontWeight: 700,
-              mt: 2
-            }}
-          >
-            {isPending ? (
-              <CircularProgress size={22} sx={{ color: 'white' }} />
-            ) : (
-              'Verify'
-            )}
-          </Button>
+    return (
+        <Box sx={{
+            backgroundColor: 'primary.main',
+            minHeight: '100vh',
+            display: 'flex',
+            alignItems: 'center',
+            py: 5
+        }}>
+            <Container maxWidth="xs">
 
+                <Box sx={{
+                    borderRadius: 3,
+                    backgroundColor: 'primary.main',
+                    boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
+                    border: '1px solid rgba(255,255,255,0.07)',
+                    p: 4
+                }}>
+
+                    <Box display="flex" alignItems="center" gap={1.5} mb={3}>
+                        <Box sx={iconBox}>
+                            <ShieldOutlined sx={{ fontSize: 20 }} />
+                        </Box>
+
+                        <Box>
+                            <Typography sx={{ color: 'white', fontWeight: 600 }}>
+                                Two-Factor Authentication
+                            </Typography>
+                            <Typography sx={{ color: 'rgba(255,255,255,0.4)', fontSize: 12 }}>
+                                Enter your 6-digit code
+                            </Typography>
+                        </Box>
+                    </Box>
+
+                    <TextField
+                        fullWidth
+                        placeholder="6-digit code"
+                        value={code}
+                        onChange={(e) =>
+                            setCode(e.target.value.replace(/\D/g, '').slice(0, 6))
+                        }
+                        onKeyDown={(e) => e.key === 'Enter' && handleVerify()}
+                        sx={inputSx}
+                        InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <KeyOutlined sx={{ fontSize: 18, color: 'secondary.main' }} />
+                                </InputAdornment>
+                            )
+                        }}
+                    />
+
+                    {/* BUTTON */}
+                    <Button
+                        fullWidth
+                        onClick={handleVerify}
+                        disabled={code.length !== 6 || isPending}
+                        sx={{
+                            borderRadius: 3,
+                            py: 1.5,
+                            backgroundColor: 'secondary.main',
+                            color: 'white',
+                            fontWeight: 700,
+                            mt: 2
+                        }}
+                    >
+                        {isPending ? (
+                            <CircularProgress size={22} sx={{ color: 'white' }} />
+                        ) : (
+                            'Verify'
+                        )}
+                    </Button>
+
+                </Box>
+            </Container>
         </Box>
-      </Container>
-    </Box>
-  )
+    )
 }

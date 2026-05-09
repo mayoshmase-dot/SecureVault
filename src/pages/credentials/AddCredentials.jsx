@@ -9,6 +9,7 @@ import BackButton from '../../ui/BackButton';
 import CategorySelector from '../../ui/CategorySelector';
 import { inputSx } from '../../constants/styles';
 import CopyButton from "../../ui/CopyButton";
+import { passwordAnalyzer } from '../../utility/PasswordAnalyzer';
 
 export default function AddCredential() {
     const { mutate, isPending } = useAddCredentials();
@@ -18,10 +19,11 @@ export default function AddCredential() {
         resolver: yupResolver(CredentialSchema), mode: 'all'
     });
 
+    const passwordValue = watch('password') || ''
     const onSubmit = async (data) => {
         mutate({ ...data, category: selectedCategory });
     };
-
+    const passwordStrength = passwordAnalyzer(passwordValue)
     return (
         <Box sx={{ backgroundColor: "primary.main", display: "flex", flexDirection: "column", px: { xs: 2, sm: 3 }, pt: 1, pb: 5 }}>
             <BackButton />
@@ -77,6 +79,56 @@ export default function AddCredential() {
                                 ),
                             }} />
                     </Box>
+                    {passwordValue && (
+                        <Box mt={1}>
+                            <Typography sx={{ color: 'white', fontSize: 12 }}>
+                                Strength: {passwordStrength.level}
+                            </Typography>
+                            <Box
+                                sx={{
+                                    height: 6,
+                                    borderRadius: 5,
+                                    backgroundColor: 'rgba(255,255,255,0.08)',
+                                    overflow: 'hidden',
+                                    mt: 0.5
+                                }}
+                            >
+                                <Box
+                                    sx={{
+                                        width: `${passwordStrength.percentage}%`,
+                                        height: '100%',
+                                        borderRadius: 5,
+                                        background:
+                                            passwordStrength.isStrong
+                                                ? 'linear-gradient(90deg, #22c55e, #16a34a)'
+                                                : passwordStrength.percentage > 60
+                                                    ? 'linear-gradient(90deg, #fbbf24, #f59e0b)'
+                                                    : 'linear-gradient(90deg, #ef4444, #dc2626)',
+                                        transition: 'width 0.35s ease, background 0.3s ease'
+                                    }}
+                                />
+                            </Box>
+
+                            {passwordStrength.feedback?.length > 0 && (
+                                <Box mt={1}>
+                                    {passwordStrength.feedback.map((item, i) => (
+                                        <Typography
+                                            key={i}
+                                            sx={{
+                                                fontSize: 11,
+                                                color: 'rgba(255,255,255,0.65)',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                gap: 0.5
+                                            }}
+                                        >
+                                            • {item}
+                                        </Typography>
+                                    ))}
+                                </Box>
+                            )}
+                        </Box>
+                    )}
                     <Box mb={1}>
                         <Typography sx={{ color: 'white', fontSize: 12.5, mb: 0.75, fontWeight: 500 }}>Website URL (Optional)</Typography>
                         <TextField {...register('website')} fullWidth placeholder="https://example.com" variant="outlined"

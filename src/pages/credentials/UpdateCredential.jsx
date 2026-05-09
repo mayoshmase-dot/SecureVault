@@ -11,6 +11,7 @@ import BackButton from "../../ui/BackButton";
 import CategorySelector from "../../ui/CategorySelector";
 import { inputSx } from "../../constants/styles";
 import CopyButton from "../../ui/CopyButton";
+import { passwordAnalyzer } from "../../utility/PasswordAnalyzer";
 
 export default function UpdateCredential() {
     const { id } = useParams();
@@ -20,7 +21,7 @@ export default function UpdateCredential() {
     const [showPassword, setShowPassword] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState(null);
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
-
+    const passwordValue = watch('password') || ''
     useEffect(() => {
         if (!decryptedData) return;
         reset({
@@ -51,6 +52,7 @@ export default function UpdateCredential() {
         }
         mutate({ title: formData.title, username: formData.username, password: formData.password, website: formData.website, notes: formData.notes || "", tags: formData.tags, category });
     };
+    const passwordStrength = passwordAnalyzer(passwordValue)
 
     if (isLoading || isDecrypting) return <Loader />;
     if (isError) return <Box color="error.main">{error.message}</Box>;
@@ -93,7 +95,7 @@ export default function UpdateCredential() {
                             startAdornment: <InputAdornment position="start"><LockOutlined sx={{ fontSize: 18, color: "secondary.dark" }} /></InputAdornment>,
                             endAdornment: (
                                 <InputAdornment position="end">
-                                    <IconButton  onClick={() => setShowPassword(p => !p)}>
+                                    <IconButton onClick={() => setShowPassword(p => !p)}>
                                         {showPassword ? <Visibility sx={{ color: 'secondary.main' }} /> : <VisibilityOff sx={{ color: 'secondary.main' }} />}
                                     </IconButton>
                                     <CopyButton value={decryptedData?.password} />
@@ -101,7 +103,56 @@ export default function UpdateCredential() {
                                 </InputAdornment>
                             ),
                         }} />
+                    {passwordValue && (
+                        <Box mt={1}>
+                            <Typography sx={{ color: 'white', fontSize: 12 }}>
+                                Strength: {passwordStrength.level}
+                            </Typography>
+                            <Box
+                                sx={{
+                                    height: 6,
+                                    borderRadius: 5,
+                                    backgroundColor: 'rgba(255,255,255,0.08)',
+                                    overflow: 'hidden',
+                                    mt: 0.5
+                                }}
+                            >
+                                <Box
+                                    sx={{
+                                        width: `${passwordStrength.percentage}%`,
+                                        height: '100%',
+                                        borderRadius: 5,
+                                        background:
+                                            passwordStrength.isStrong
+                                                ? 'linear-gradient(90deg, #22c55e, #16a34a)'
+                                                : passwordStrength.percentage > 60
+                                                    ? 'linear-gradient(90deg, #fbbf24, #f59e0b)'
+                                                    : 'linear-gradient(90deg, #ef4444, #dc2626)',
+                                        transition: 'width 0.35s ease, background 0.3s ease'
+                                    }}
+                                />
+                            </Box>
 
+                            {passwordStrength.feedback?.length > 0 && (
+                                <Box mt={1}>
+                                    {passwordStrength.feedback.map((item, i) => (
+                                        <Typography
+                                            key={i}
+                                            sx={{
+                                                fontSize: 11,
+                                                color: 'rgba(255,255,255,0.65)',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                gap: 0.5
+                                            }}
+                                        >
+                                            • {item}
+                                        </Typography>
+                                    ))}
+                                </Box>
+                            )}
+                        </Box>
+                    )}
                     <TextField {...register("website")} fullWidth placeholder="https://example.com" variant="outlined"
                         error={!!errors.website} helperText={errors.website?.message} sx={{ ...inputSx, mt: 2 }}
                         InputProps={{

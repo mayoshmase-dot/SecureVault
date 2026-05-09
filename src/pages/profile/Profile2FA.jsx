@@ -1,17 +1,8 @@
-import {
-  Box,
-  Button,
-  CircularProgress,
-  Container,
-  InputAdornment,
-  TextField,
-  Typography
-} from '@mui/material'
+import {Box,Button,CircularProgress,Container,InputAdornment,TextField,Typography} from '@mui/material'
 
 import { SecurityOutlined, KeyOutlined } from '@mui/icons-material'
 import { useState } from 'react'
 import Swal from 'sweetalert2'
-
 import useProfile from '../../hooks/useProfile'
 import useGetQRCode from '../../hooks/useGetQRCode'
 import useConfirm2FA from '../../hooks/useConfirm2FA'
