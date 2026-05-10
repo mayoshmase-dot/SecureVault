@@ -78,7 +78,7 @@ export default function ProfileDelete() {
           </Box>
 
           <Typography fontSize={12} mb={0.5} color="secondary.dark">
-            Password
+            Master Password
           </Typography>
 
    <TextField
@@ -86,7 +86,7 @@ export default function ProfileDelete() {
                         type={showPassword ? 'text' : 'password'}
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        placeholder="Enter password"
+                        placeholder="Enter Master password"
                         sx={inputSx}
                         InputProps={{
                             startAdornment: (

@@ -20,7 +20,7 @@ export default function UpdateCredential() {
     const credential = data?.data || {};
     const [showPassword, setShowPassword] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState(null);
-    const { register, handleSubmit, reset, formState: { errors } } = useForm();
+    const { register, handleSubmit, reset,watch, formState: { errors } } = useForm();
     const passwordValue = watch('password') || ''
     useEffect(() => {
         if (!decryptedData) return;
