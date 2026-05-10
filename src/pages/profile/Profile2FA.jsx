@@ -1,4 +1,4 @@
-import {Box,Button,CircularProgress,Container,InputAdornment,TextField,Typography} from '@mui/material'
+import { Box, Button, CircularProgress, Container, InputAdornment, TextField, Typography } from '@mui/material'
 import { SecurityOutlined, KeyOutlined } from '@mui/icons-material'
 import { useState } from 'react'
 import Swal from 'sweetalert2'
@@ -15,7 +15,6 @@ export default function Profile2FA() {
   const queryClient = useQueryClient()
   const [code, setCode] = useState('')
   const [qrCode, setQrCode] = useState('')
-
   const { data, isLoading, isError, error } = useProfile()
   const { mutate: getQR, isPending: qrLoading } = useGetQRCode()
   const { mutate: confirm, isPending: confirmLoading } = useConfirm2FA()
@@ -51,29 +50,44 @@ export default function Profile2FA() {
 
         const { data: backupRes } = await fetchBackupCodes()
         const codes = backupRes?.data || []
-
         Swal.fire({
           title: 'Backup Codes',
           html: `
-            <p style="color:rgba(255,255,255,0.5);font-size:13px;margin-bottom:16px">
-              Save these — they won't show again
-            </p>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-              ${codes.map(c => `
-                <div style="
-                  background:#1e1b4b;
-                  padding:10px;
-                  border-radius:8px;
-                  color:#a5b4fc;
-                  font-family:monospace;
-                  font-size:13px;
-                  letter-spacing:1px;
-                  text-align:center
-                ">${c}</div>
-              `).join('')}
-            </div>
-          `,
+    <p style="
+      color:rgba(255,255,255,0.55);
+      font-size:13px;
+      margin-bottom:18px;
+      line-height:1.6
+    ">
+      Save these codes somewhere safe.<br/>
+      You won’t be able to see them again.
+    </p>
+
+    <div style="
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+    ">
+      ${codes.map(c => `
+        <div style="
+          background:rgba(255,255,255,0.04);
+          border:1px solid rgba(255,255,255,0.08);
+          padding:12px;
+          border-radius:12px;
+          color:#fff;
+          font-family:monospace;
+          font-size:13px;
+          letter-spacing:1px;
+          text-align:center;
+          font-weight:600;
+        ">
+          ${c}
+        </div>
+      `).join('')}
+    </div>
+  `,
           background: '#111827',
+          color: 'white',
           confirmButtonText: 'Done',
           confirmButtonColor: '#7c3aed'
         })

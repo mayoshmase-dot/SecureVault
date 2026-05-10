@@ -8,6 +8,5 @@ export default function useProfile() {
         const response = await AuthAxiosInstance.get('/auth/me');
         return response.data
     },
-    staleTime:1000 * 60 * 5
   })
 }

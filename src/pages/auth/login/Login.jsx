@@ -11,6 +11,7 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { LockOutlined, LanguageOutlined, PersonOutline } from '@mui/icons-material';
 import { inputSx, iconBox } from '../../../constants/styles';
 import useVaultStore from '../../../store/useVaultStore';
+import { useQueryClient } from '@tanstack/react-query';
 
 export default function Login() {
   const [serverErrors, setServerErrors] = useState('');
@@ -19,6 +20,7 @@ export default function Login() {
   const setToken = useAuthStore((state) => state.setToken);
   const setTempToken = useAuthStore((state) => state.setTempToken);
   const setMasterPassword = useVaultStore((state) => state.setMasterPassword);
+const queryClient = useQueryClient()
 
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm({
     resolver: yupResolver(LoginSchema),
@@ -32,7 +34,7 @@ const LoginForm = async (data) => {
     if (response.data.requires2FA) {
       setTempToken(response.data.tempToken);
       setMasterPassword(data.password);
-
+      queryClient.invalidateQueries({ queryKey: ['profile'] })  // ← أضف هاد
       navigate('/verify2FA');
       return;
     }

@@ -2,7 +2,7 @@ import {
   Box, Button, CircularProgress, Container, IconButton, InputAdornment, Link, TextField,
   Typography
 } from '@mui/material';
-import { Link as ReactLink } from 'react-router-dom';
+import { Link as ReactLink, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { RegisterSchema } from '../../../validation/RegisterSchema';
@@ -17,13 +17,16 @@ export default function Register() {
   const [serverErrors, setServerErrors] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
-
+  const navigate = useNavigate()
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm({ resolver: yupResolver(RegisterSchema), mode: 'all' });
 
   const RegisterForm = async (data) => {
     try {
       const response = await axiosInstance.post('/auth/register', data);
-      console.log(response);
+      if (response.status === 201) {
+        navigate('/login')
+        console.log(response.data);
+      }
     } catch (error) {
       setServerErrors(error?.response?.data?.message || 'Something went wrong');
     }
@@ -82,7 +85,6 @@ export default function Register() {
             </Typography>
           )}
 
-          {/* Form */}
           <Box
             component="form"
             onSubmit={handleSubmit(RegisterForm)}
@@ -92,7 +94,7 @@ export default function Register() {
           >
 
             <Box>
-              <Typography sx={{color: 'secondary.dark',fontSize: 12.5,mb: 0.5}}>Name</Typography>
+              <Typography sx={{ color: 'secondary.dark', fontSize: 12.5, mb: 0.5 }}>Name</Typography>
               <TextField
                 {...register('name')}
                 fullWidth
@@ -105,11 +107,12 @@ export default function Register() {
                     <InputAdornment position="start">
                       <PersonOutline sx={{ fontSize: 18, color: 'secondary.dark' }} />
                     </InputAdornment>
-                  )}}/>
+                  )
+                }} />
             </Box>
 
             <Box>
-              <Typography sx={{color: 'secondary.dark',fontSize: 12.5,mb: 0.5}}>Email</Typography>
+              <Typography sx={{ color: 'secondary.dark', fontSize: 12.5, mb: 0.5 }}>Email</Typography>
               <TextField
                 {...register('email')}
                 fullWidth
@@ -122,11 +125,12 @@ export default function Register() {
                     <InputAdornment position="start">
                       <LanguageOutlined sx={{ fontSize: 18, color: 'secondary.dark' }} />
                     </InputAdornment>
-                  ) }} />
+                  )
+                }} />
             </Box>
 
             <Box>
-              <Typography sx={{color: 'secondary.dark',fontSize: 12.5,mb: 0.5}}>Password</Typography>
+              <Typography sx={{ color: 'secondary.dark', fontSize: 12.5, mb: 0.5 }}>Password</Typography>
               <TextField
                 {...register('password')}
                 fullWidth
@@ -149,11 +153,12 @@ export default function Register() {
                           : <VisibilityOffIcon sx={{ color: 'white' }} />}
                       </IconButton>
                     </InputAdornment>
-                  )}}/>
+                  )
+                }} />
             </Box>
 
             <Box>
-              <Typography sx={{color: 'secondary.dark',fontSize: 12.5,mb: 0.5}}>Confirm Password</Typography>
+              <Typography sx={{ color: 'secondary.dark', fontSize: 12.5, mb: 0.5 }}>Confirm Password</Typography>
               <TextField
                 {...register('confirmPassword')}
                 fullWidth
@@ -176,7 +181,8 @@ export default function Register() {
                           : <VisibilityOffIcon sx={{ color: 'white' }} />}
                       </IconButton>
                     </InputAdornment>
-                  )}}/>
+                  )
+                }} />
             </Box>
 
             <Typography
@@ -193,9 +199,9 @@ export default function Register() {
             </Typography>
 
             <Button type="submit" disabled={isSubmitting}
-              sx={{mt: 1,borderRadius: 3,py: 1.5,backgroundColor: 'secondary.main',color: 'white',fontWeight: 700,letterSpacing: 1,}}>
+              sx={{ mt: 1, borderRadius: 3, py: 1.5, backgroundColor: 'secondary.main', color: 'white', fontWeight: 700, letterSpacing: 1, }}>
               {isSubmitting
-                ? <CircularProgress size={24} sx={{ color: 'white'  }} />
+                ? <CircularProgress size={24} sx={{ color: 'white' }} />
                 : 'Create Account'}
             </Button>
 

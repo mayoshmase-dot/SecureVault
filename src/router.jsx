@@ -106,6 +106,10 @@ const router = createBrowserRouter([
                         path: 'language',
                         element: <ProfileLanguage />
                     },
+                    {
+                        path: 'deleteAccount',
+                        element:<ProfileDelete />
+                    }
                 ]
             },
         ]
