@@ -11,7 +11,6 @@ export default function useGetCredentials() {
     const query = useQuery({
         queryKey: ['credential'],
         queryFn: getCredentials,
-        staleTime: 1000 * 60 * 5
     });
     return query;
 }
