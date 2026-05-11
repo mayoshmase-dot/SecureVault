@@ -19,7 +19,7 @@ export default function StatCard() {
                                         <GppGoodOutlinedIcon fontSize="large" />
                                     </IconButton>
                                     <Box textAlign={'center'} display="flex" flexDirection="column">
-                                        <Typography component={'h2'} variant="h6">Total Passwords</Typography>
+                                        <Typography component={'h2'} variant="h6">Strong Passwords</Typography>
                                         <Typography variant='span' fontWeight="bold">10</Typography>
                                     </Box>
                                 </Box>
@@ -52,8 +52,8 @@ export default function StatCard() {
                                         <VpnKeyOutlinedIcon fontSize="large" />
                                     </IconButton>
                                     <Box textAlign={'center'}>
-                                        <Typography component={'h2'} variant="h6">Last Sync</Typography>
-                                        <Typography variant='body2' fontWeight="bold">Just now</Typography>
+                                        <Typography component={'h2'} variant="h6">Reused Passwords</Typography>
+                                        <Typography variant='span' fontWeight="bold">1</Typography>
                                     </Box>
                                 </Box>
                             </Card>
