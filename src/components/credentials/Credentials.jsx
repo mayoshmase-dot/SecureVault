@@ -106,7 +106,6 @@ export default function Credentials() {
                                     </Box>
 
                                     <Box display="flex" alignItems="center" gap={1}>
-                                        {/* التاريخ */}
                                         <Typography sx={{
                                             fontSize: 11, color: "rgba(255,255,255,0.4)",
                                             backgroundColor: "rgba(255,255,255,0.05)",

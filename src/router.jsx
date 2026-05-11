@@ -17,6 +17,7 @@ import ResetPassword from "./pages/auth/resetPassword/ResetPassword";
 import GeneratePassword from "./pages/genaratePassword/GenaratePassword";
 import UpdateCredential from "./pages/credentials/UpdateCredential";
 import ProfileDelete from "./pages/profile/ProfileDelete";
+import ChangePassword from "./pages/profile/ChangePassword";
 
 const router = createBrowserRouter([
     {
@@ -101,14 +102,17 @@ const router = createBrowserRouter([
                         path: '2FA',
                         element: <Profile2FA />
                     },
-
+                    {
+                        path: 'changePassword',
+                        element: <ChangePassword />
+                    },
                     {
                         path: 'language',
                         element: <ProfileLanguage />
                     },
                     {
                         path: 'deleteAccount',
-                        element:<ProfileDelete />
+                        element: <ProfileDelete />
                     }
                 ]
             },

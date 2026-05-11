@@ -201,7 +201,7 @@ export default function Register() {
             <Button type="submit" disabled={isSubmitting}
               sx={{ mt: 1, borderRadius: 3, py: 1.5, backgroundColor: 'secondary.main', color: 'white', fontWeight: 700, letterSpacing: 1, }}>
               {isSubmitting
-                ? <CircularProgress size={24} sx={{ color: 'white' }} />
+                ? <CircularProgress size={24} />
                 : 'Create Account'}
             </Button>
 

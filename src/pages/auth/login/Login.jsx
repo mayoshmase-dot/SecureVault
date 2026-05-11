@@ -179,7 +179,7 @@ const LoginForm = async (data) => {
                 backgroundColor: 'secondary.main', color: 'white', fontWeight: 700, letterSpacing: 1
               }}>
               {isSubmitting
-                ? <CircularProgress size={24} sx={{ color: 'white' }} />
+                ? <CircularProgress size={24} />
                 : 'Sign In'}
             </Button>
 
