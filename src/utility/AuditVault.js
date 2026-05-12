@@ -1,63 +1,58 @@
+import { useQuery } from '@tanstack/react-query'
+import AuthAxiosInstance from '../api/AuthAxiosInstance'
+import useVaultStore from '../store/useVaultStore'
+import { decrypt } from '../crypto'
+import { passwordAnalyzer } from '../utility/PasswordAnalyzer'
 
-// import { passwordAnalyzer } from "./PasswordAnalyzer";
+const decryptField = async (field, masterPassword) => {
+    if (!field) return ''
+    try {
+        return await decrypt(field, masterPassword)
+    } catch {
+        return ''
+    }
+}
+export default function useVaultAudit() {
+    const { masterPassword } = useVaultStore()
 
-// export const auditVault = (credentials = []) => {
+    return useQuery({
+        queryKey: ['vaultAudit'],
+        queryFn: async () => {
+            const listRes = await AuthAxiosInstance.get('/vault/credentials')
+            const credentials = listRes.data?.data || []
 
-//   if (!credentials.length) {
-//     return {
-//       total: 0,
-//       strong: 0,
-//       weak: 0,
-//       reused: 0
-//     };
-//   }
+            if (!credentials.length) return { total: 0, strong: 0, weak: 0, reused: 0 }
 
-//   const passwordMap = {};
+            const decrypted = await Promise.all(
+                credentials.map(async (cred) => {
+                    try {
+                        const res = await AuthAxiosInstance.get(`/vault/credentials/${cred._id}`)
+                        const full = res.data?.data
+                        const password = await decryptField(full.password, masterPassword)
+                        return { ...cred, plainPassword: password }
+                    } catch {
+                        return { ...cred, plainPassword: '' }
+                    }
+                })
+            )
 
-//   let strong = 0;
-//   let weak = 0;
-//   let reused = 0;
+            const passwordCount = {}
+            decrypted.forEach(({ plainPassword }) => {
+                if (!plainPassword) return
+                passwordCount[plainPassword] = (passwordCount[plainPassword] || 0) + 1
+            })
 
-//   credentials.forEach((cred) => {
+            let strong = 0, weak = 0, reused = 0
+            decrypted.forEach(({ plainPassword }) => {
+                if (!plainPassword) return
+                const { isStrong } = passwordAnalyzer(plainPassword)
+                if (passwordCount[plainPassword] > 1) reused++
+                else if (isStrong) strong++
+                else weak++
+            })
 
-//     const password = String(cred.password || "").trim();
-
-//     if (!password) return;
-
-//     passwordMap[password] =
-//       (passwordMap[password] || 0) + 1;
-//   });
-
-//   // analyze
-//   credentials.forEach((cred) => {
-
-//     const password = String(cred.password || "").trim();
-
-//     if (!password) return;
-
-//     const analysis = passwordAnalyzer(password);
-
-//     const isReused =
-//       passwordMap[password] > 1;
-
-//     if (isReused) {
-//       reused++;
-//     }
-
-//     if (analysis.isStrong && !isReused) {
-//       strong++;
-//     }
-
-//     if (!analysis.isStrong) {
-//       weak++;
-//     }
-
-//   });
-
-//   return {
-//     total: credentials.length,
-//     strong,
-//     weak,
-//     reused
-//   };
-// };
+            return { total: credentials.length, strong, weak, reused }
+        },
+        enabled: !!masterPassword
+    })
+}

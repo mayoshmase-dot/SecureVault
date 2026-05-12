@@ -2,14 +2,10 @@ import { Box, Typography } from '@mui/material'
 import WarningAmberOutlinedIcon from '@mui/icons-material/WarningAmberOutlined'
 import { useNavigate } from 'react-router-dom'
 import useCheckPasswordExpiry from '../../hooks/useCheckPasswordExpiry'
-import Loader from '../../ui/Loader'
 
 export default function PasswordExpiryBanner() {
-    const { data, isLoading, isError, error } = useCheckPasswordExpiry()
+    const { data } = useCheckPasswordExpiry()
     const navigate = useNavigate()
-
-    if (isLoading) return <Loader />
-    if (isError) return <Box color="red">{error.message}</Box>
 
     const count = data?.data?.length || 0
     if (!count) return null
