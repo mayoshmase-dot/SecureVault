@@ -13,12 +13,10 @@ import Profile from "./pages/profile/Profile";
 import Verify2FA from "./pages/2FA/Verify2FA";
 import ForgotPassword from "./pages/auth/forgotPassword/ForgotPassword";
 import CredentialDetails from "./pages/credentials/CredentialDetails";
-import ResetPassword from "./pages/auth/resetPassword/ResetPassword";
 import GeneratePassword from "./pages/genaratePassword/GenaratePassword";
 import UpdateCredential from "./pages/credentials/UpdateCredential";
 import ProfileDelete from "./pages/profile/ProfileDelete";
 import ChangePassword from "./pages/profile/ChangePassword";
-import RecoverAccount from "./pages/auth/Recover/RecoverAccount";
 
 const router = createBrowserRouter([
     {
@@ -48,18 +46,7 @@ const router = createBrowserRouter([
                     <ForgotPassword />
                 )
             },
-            {
-                path: 'recoverAccount',
-                element: (
-                    <RecoverAccount />
-                )
-            },
-            {
-                path: 'reset-password',
-                element: (
-                    <ResetPassword />
-                )
-            }, {
+             {
                 path: 'generatePassword',
                 element:
                     <ProtectedRouter >
