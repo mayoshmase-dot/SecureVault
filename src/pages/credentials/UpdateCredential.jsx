@@ -55,7 +55,7 @@ export default function UpdateCredential() {
     const passwordStrength = passwordAnalyzer(passwordValue)
 
     if (isLoading || isDecrypting) return <Loader />;
-    if (isError) return <Box color="error.main">{error.message}</Box>;
+    if (isError) return <Box>{error.message}</Box>;
 
     return (
         <Box sx={{ backgroundColor: "primary.main", display: "flex", flexDirection: "column", px: { xs: 2, sm: 3 }, pt: 1, pb: 5 }}>

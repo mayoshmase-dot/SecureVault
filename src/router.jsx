@@ -18,6 +18,7 @@ import GeneratePassword from "./pages/genaratePassword/GenaratePassword";
 import UpdateCredential from "./pages/credentials/UpdateCredential";
 import ProfileDelete from "./pages/profile/ProfileDelete";
 import ChangePassword from "./pages/profile/ChangePassword";
+import RecoverAccount from "./pages/auth/Recover/RecoverAccount";
 
 const router = createBrowserRouter([
     {
@@ -45,6 +46,12 @@ const router = createBrowserRouter([
                 path: 'forgotPassword',
                 element: (
                     <ForgotPassword />
+                )
+            },
+            {
+                path: 'recoverAccount',
+                element: (
+                    <RecoverAccount />
                 )
             },
             {

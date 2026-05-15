@@ -1,78 +1,209 @@
-import { Box, Button, Container, TextField, Typography } from "@mui/material";
-import LockResetIcon from '@mui/icons-material/LockReset';
-import useForgotPassword from "../../../hooks/useForgotPassword";
-import { useNavigate } from "react-router-dom";
+import {
+    Box,
+    Button,
+    CircularProgress,
+    Container,
+    IconButton,
+    InputAdornment,
+    TextField,
+    Typography
+} from "@mui/material";
+
+import {
+    LockReset,
+    LanguageOutlined,
+    KeyOutlined,
+    LockOutlined,
+    Visibility,
+    VisibilityOff
+} from '@mui/icons-material';
+
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import useRecoverAccount from "../../../hooks/useRecoverAccount";
+import { iconBox, inputSx } from "../../../constants/styles";
 
 export default function ForgotPassword() {
-    const navigate = useNavigate()
-    const [email, setEmail] = useState('')
-    const { mutate: sendCode, isPending } = useForgotPassword()
 
-    const textFieldSx = {
-        '& .MuiOutlinedInput-root': {
-            color: 'white',
-            '& fieldset': { borderColor: 'rgba(255,255,255,0.2)' },
-            '&:hover fieldset': { borderColor: 'rgba(255,255,255,0.5)' },
-            '&.Mui-focused fieldset': { borderColor: 'rgb(48,168,90)' },
-        },
-        '& .MuiInputLabel-root': { color: 'rgba(255,255,255,0.5)' },
-        '& .MuiInputLabel-root.Mui-focused': { color: 'rgb(53, 241, 119)' },
-        '& input:-webkit-autofill': {
-            WebkitBoxShadow: '0 0 0 1000px rgb(1, 6, 46) inset',
-            WebkitTextFillColor: 'white',
-        },
+    const navigate = useNavigate();
+    const { mutate: recover, isPending } = useRecoverAccount();
+
+    const [step, setStep] = useState(1);
+
+    const [email, setEmail] = useState('');
+    const [recoveryKey, setRecoveryKey] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+
+    const handleRecover = () => {
+        if (!email || !recoveryKey || !newPassword) return;
+
+        recover(
+            { email, recoveryKey, newPassword },
+            {
+                onSuccess: () => {
+                    navigate('/login');
+                }
+            }
+        );
     };
 
     return (
         <Box sx={{ backgroundColor: 'primary.main', p: 5 }}>
             <Container maxWidth="sm">
-                <Box
-                    sx={{
-                        borderRadius: 3,
-                        backgroundColor: 'primary.main',
-                        boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
-                        border: '1px solid rgba(255,255,255,0.07)',
-                        p: 5,
-                    }}
-                >
+
+                <Box sx={{
+                    borderRadius: 3,
+                    backgroundColor: 'primary.main',
+                    boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
+                    border: '1px solid rgba(255,255,255,0.07)',
+                    p: 5,
+                }}>
+
+                    {/* HEADER */}
                     <Box display="flex" flexDirection="column" alignItems="center" gap={2} mb={4}>
-                        <LockResetIcon sx={{ color: 'secondary.dark', fontSize: 40 }} />
+
+                        <Box sx={iconBox}>
+                            <LockReset sx={{ fontSize: 20 }} />
+                        </Box>
+
                         <Typography variant="h5" color="white" fontWeight="bold">
-                            Forgot Password?
+                            Forgot Password
                         </Typography>
+
                         <Typography variant="subtitle2" color="rgba(255,255,255,0.5)" textAlign="center">
-                            Enter your email address and we'll send you a link to reset your password.
+                            Use your recovery key to reset your account securely.
                         </Typography>
+
                     </Box>
 
-                    <Box display="flex" flexDirection="column" gap={3}>
-                        <TextField fullWidth label="Email"
-                            variant="outlined" type="email" value={email}
-                            onChange={(e) => setEmail(e.target.value)} sx={textFieldSx}
-                        />
+                    {/* FORM */}
+                    <Box display="flex" flexDirection="column" gap={2}>
+
+                        {/* EMAIL */}
+                        <Box>
+                            <Typography sx={{ color: 'secondary.dark', fontSize: 12.5, mb: 0.5 }}>
+                                Email
+                            </Typography>
+
+                            <TextField
+                                fullWidth
+                                placeholder="Enter your email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                sx={inputSx}
+                                InputProps={{
+                                    startAdornment: (
+                                        <InputAdornment position="start">
+                                            <LanguageOutlined sx={{ fontSize: 18, color: 'secondary.dark' }} />
+                                        </InputAdornment>
+                                    )
+                                }}
+                            />
+                        </Box>
+
+                        {/* RECOVERY KEY */}
+                        <Box>
+                            <Typography sx={{ color: 'secondary.dark', fontSize: 12.5, mb: 0.5 }}>
+                                Recovery Key
+                            </Typography>
+
+                            <TextField
+                                fullWidth
+                                placeholder="XXXX-XXXX-XXXX-XXXX"
+                                value={recoveryKey}
+                                onChange={(e) => setRecoveryKey(e.target.value)}
+                                sx={inputSx}
+                                InputProps={{
+                                    startAdornment: (
+                                        <InputAdornment position="start">
+                                            <KeyOutlined sx={{ fontSize: 18, color: 'secondary.dark' }} />
+                                        </InputAdornment>
+                                    )
+                                }}
+                            />
+                        </Box>
+
+                        {/* NEW PASSWORD */}
+                        <Box>
+                            <Typography sx={{ color: 'secondary.dark', fontSize: 12.5, mb: 0.5 }}>
+                                New Password
+                            </Typography>
+
+                            <TextField
+                                fullWidth
+                                placeholder="••••••••"
+                                value={newPassword}
+                                type={showPassword ? 'text' : 'password'}
+                                onChange={(e) => setNewPassword(e.target.value)}
+                                sx={inputSx}
+                                InputProps={{
+                                    startAdornment: (
+                                        <InputAdornment position="start">
+                                            <LockOutlined sx={{ fontSize: 18, color: 'secondary.dark' }} />
+                                        </InputAdornment>
+                                    ),
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton onClick={() => setShowPassword(p => !p)}>
+                                                {showPassword ? (
+                                                    <Visibility sx={{ color: 'white', fontSize: 18 }} />
+                                                ) : (
+                                                    <VisibilityOff sx={{ color: 'white', fontSize: 18 }} />
+                                                )}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    )
+                                }}
+                            />
+                        </Box>
+
+                        {/* WARNING */}
+                        <Box sx={{
+                            background: '#1f2937',
+                            p: 2,
+                            borderRadius: 2,
+                            color: '#f87171',
+                            fontSize: 12,
+                            lineHeight: 1.5
+                        }}>
+                            ⚠️ Save this carefully. Without your recovery key your account cannot be restored.
+                        </Box>
+
+                        {/* BUTTON */}
                         <Button
-                            variant="contained"
-                            disabled={isPending}
-                            onClick={() => sendCode(email)}
-                            sx={{ py: 1.5,
-                                borderRadius: 5, backgroundColor: 'secondary.main',
-                                color: 'white', fontWeight: 700,
-                                letterSpacing: 1,  boxShadow: '0 0 20px rgba(48,168,90,0.3)',
-                                '&:hover': {
-                                    backgroundColor: 'secondary.dark',
-                                    boxShadow: '0 0 30px rgba(53,241,119,0.4)',
-                                },
+                            fullWidth
+                            disabled={isPending || !email || !recoveryKey || !newPassword}
+                            onClick={handleRecover}
+                            sx={{
+                                py: 1.5,
+                                borderRadius: 3,
+                                backgroundColor: 'secondary.main',
+                                color: 'white',
+                                fontWeight: 700,
+                                letterSpacing: 1
                             }}
                         >
-                            {isPending ? 'Sending...' : 'Send Reset Link'}
+                            {isPending ? (
+                                <CircularProgress size={22} sx={{ color: 'white' }} />
+                            ) : (
+                                'Reset Password'
+                            )}
                         </Button>
-                        <Button variant="text" onClick={() => navigate('/login')}sx={{ color: 'secondary.dark' }}>
+
+                        {/* BACK */}
+                        <Button
+                            fullWidth
+                            variant="text"
+                            onClick={() => navigate('/login')}
+                            sx={{ color: 'secondary.dark' }}
+                        >
                             Back to Login
                         </Button>
+
                     </Box>
                 </Box>
             </Container>
         </Box>
-    )
+    );
 }

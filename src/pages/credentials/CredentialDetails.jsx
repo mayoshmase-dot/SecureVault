@@ -21,7 +21,7 @@ export default function CredentialDetails() {
     const [showPassword, setShowPassword] = useState(false);
 
     if (isLoading || isDecrypting) return <Loader />;
-    if (isError) return <Box color="error.main">{error.message}</Box>;
+    if (isError) return <Box>{error.message}</Box>;
     if (decryptError) return <Box color="error.main" textAlign="center" mt={5}>Failed to decrypt data. Wrong master password?</Box>;
 
     const credential = data?.data;

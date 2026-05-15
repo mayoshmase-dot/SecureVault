@@ -1,97 +1,143 @@
+import { useState } from 'react'
+import { Box, Typography, Avatar, Divider, TextField, Button, CircularProgress, InputAdornment } from '@mui/material'
+import { Email, Person, Security, Edit, KeyOutlined } from '@mui/icons-material'
 import useProfile from '../../hooks/useProfile'
-import { Box, Typography, Avatar, Divider } from '@mui/material';
-import Loader from "../../ui/Loader";
-import EmailIcon from '@mui/icons-material/Email';
-import PersonIcon from '@mui/icons-material/Person';
-import SecurityIcon from '@mui/icons-material/Security';
+import useUpdateName from '../../hooks/useUpdateName'
+import useRequestEmailChange from '../../hooks/useRequestEmailChange'
+import useConfirmEmailChange from '../../hooks/useConfirmEmailChange'
+import Loader from '../../ui/Loader'
+import { inputSx } from '../../constants/styles'
 
-export default function Profile() {
+export default function ProfileInfo() {
+    const { data, isLoading, isError, error } = useProfile()
+    const { mutate: updateName, isPending: namePending } = useUpdateName()
+    const { mutate: requestEmail, isPending: requestPending } = useRequestEmailChange()
+    const { mutate: confirmEmail, isPending: confirmPending } = useConfirmEmailChange()
 
-    const { data, isError, isLoading, error } = useProfile();
+    const [editName, setEditName] = useState(false)
+    const [name, setName] = useState('')
+    const [editEmail, setEditEmail] = useState(false)
+    const [newEmail, setNewEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [codeSent, setCodeSent] = useState(false)
+    const [code, setCode] = useState('')
+
     if (isLoading) return <Loader />
-    if (isError) return <Box color={'red'}>{error.message}</Box>
+    if (isError) return <Box color="red">{error.message}</Box>
+
+    const profile = data?.data
 
     return (
         <Box py={5} px={3}>
 
             <Box sx={{
-                bgcolor: 'primary.main',
-                p: 5,
-                display: 'flex',
-                flexDirection: 'column',
-                borderRadius: 3,
-                alignItems: 'center',
-                gap: 2,
+                bgcolor: 'primary.main', p: 5,
+                display: 'flex', flexDirection: 'column',
+                borderRadius: 3, alignItems: 'center', gap: 2,
                 border: '1px solid rgba(255,255,255,0.08)',
-
                 boxShadow: '0 20px 60px rgba(0,0,0,0.4)',
             }}>
-                <Avatar sx={{
-                    width: 90,
-                    height: 90,
-                    bgcolor: 'secondary.main',
-                    color: 'white',
-                    fontSize: 40
-                }}>
-                    {data.data?.name?.charAt(0).toUpperCase()}
+                <Avatar sx={{ width: 90, height: 90, bgcolor: 'secondary.main', color: 'white', fontSize: 40 }}>
+                    {profile?.name?.charAt(0).toUpperCase()}
                 </Avatar>
-
-                <Typography variant='h5' color='white' fontWeight='bold'>
-                    {data.data?.name}
-                </Typography>
-
-                <Typography variant='body2' sx={{ color: 'rgba(255,255,255,0.7)' }}>
-                    {data.data?.email}
-                </Typography>
+                <Typography variant="h5" color="white" fontWeight="bold">{profile?.name}</Typography>
+                <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)' }}>{profile?.email}</Typography>
             </Box>
 
             <Box sx={{
-                mt: 3,
-                p: 3,
-                borderRadius: 3,
+                mt: 3, p: 3, borderRadius: 3,
                 backgroundColor: 'primary.main',
                 border: '1px solid rgba(255,255,255,0.08)',
                 boxShadow: '0 20px 60px rgba(0,0,0,0.4)',
-
             }}>
 
-                <Box display='flex' alignItems='center' gap={2} mb={2}>
-                    <PersonIcon sx={{ color: 'primary.main' }} />
-                    <Box>
-                        <Typography variant='body2' color='secondary.main'>
-                            Name
-                        </Typography>
-                        <Typography fontWeight='medium' color='white'>
-                            {data.data?.name}
-                        </Typography>
+                <Box display="flex" alignItems="center" gap={2} mb={2}>
+                    <Person sx={{ color: 'secondary.main' }} />
+                    <Box flex={1}>
+                        <Typography variant="body2" color="secondary.main">Name</Typography>
+                        {editName ? (
+                            <Box display="flex" gap={1} mt={0.5}>
+                                <TextField
+                                    fullWidth size="small"
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                    placeholder={profile?.name}
+                                    sx={inputSx}
+                                />
+                                <Button disabled={namePending || !name} onClick={() => updateName(name, { onSuccess: () => setEditName(false) })}
+                                    sx={{ borderRadius: 2, backgroundColor: 'secondary.main', color: 'white', px: 2, whiteSpace: 'nowrap' }}>
+                                    {namePending ? <CircularProgress size={18} sx={{ color: 'primary.main' }} /> : 'Save'}
+                                </Button>
+                                <Button onClick={() => setEditName(false)} sx={{ color: 'rgba(255,255,255,0.4)' }}>Cancel</Button>
+                            </Box>
+                        ) : (
+                            <Box display="flex" alignItems="center" gap={1}>
+                                <Typography fontWeight="medium" color="white">{profile?.name}</Typography>
+                                <Edit onClick={() => { setEditName(true); setName(profile?.name) }}
+                                    sx={{ fontSize: 16, color: 'rgba(255,255,255,0.3)', cursor: 'pointer', '&:hover': { color: 'secondary.main' } }} />
+                            </Box>
+                        )}
                     </Box>
                 </Box>
 
+                <Divider sx={{ borderColor: 'rgba(202, 34, 34, 0.1)' }} />
 
-                <Divider sx={{ borderColor: 'rgba(255,255,255,0.1)' }} />
-
-                <Box display='flex' alignItems='center' gap={2} my={2}>
-                    <EmailIcon sx={{ color: 'primary.main' }} />
-                    <Box>
-                        <Typography variant='body2' color='secondary.main'>
-                            Email
-                        </Typography>
-                        <Typography fontWeight='medium' color='white'>
-                            {data.data?.email}
-                        </Typography>
+                <Box display="flex" alignItems="flex-start" gap={2} my={2}>
+                    <Email sx={{ color: 'secondary.main', mt: 0.5 }} />
+                    <Box flex={1}>
+                        <Typography variant="body2" color="secondary.main">Email</Typography>
+                        {!editEmail ? (
+                            <Box display="flex" alignItems="center" gap={1}>
+                                <Typography fontWeight="medium" color="white">{profile?.email}</Typography>
+                                <Edit onClick={() => setEditEmail(true)}
+                                    sx={{ fontSize: 16, color: 'rgba(255,255,255,0.3)', cursor: 'pointer', '&:hover': { color: 'secondary.main' } }} />
+                            </Box>
+                        ) : !codeSent ? (
+                            <Box display="flex" flexDirection="column" gap={1} mt={0.5}>
+                                <TextField fullWidth size="small" placeholder="New email" value={newEmail}
+                                    onChange={(e) => setNewEmail(e.target.value)} sx={inputSx} />
+                                <TextField fullWidth size="small" type="password" placeholder="Master password" value={password}
+                                    onChange={(e) => setPassword(e.target.value)} sx={inputSx}
+                                    InputProps={{
+                                        startAdornment: <InputAdornment position="start"><KeyOutlined sx={{ fontSize: 16, color: 'secondary.dark' }} /></InputAdornment>
+                                    }} />
+                                <Box display="flex" gap={1}>
+                                    <Button disabled={requestPending || !newEmail || !password}
+                                        onClick={() => requestEmail({ newEmail, password }, { onSuccess: () => setCodeSent(true) })}
+                                        sx={{ borderRadius: 2, backgroundColor: 'secondary.main', color: 'white', px: 2 }}>
+                                        {requestPending ? <CircularProgress size={18} sx={{ color: 'primary.main' }} /> : 'Send Code'}
+                                    </Button>
+                                    <Button onClick={() => setEditEmail(false)} sx={{ color: 'rgba(255,255,255,0.4)' }}>Cancel</Button>
+                                </Box>
+                            </Box>
+                        ) : (
+                            <Box display="flex" flexDirection="column" gap={1} mt={0.5}>
+                                <Typography sx={{ color: 'rgba(255,255,255,0.5)', fontSize: 12 }}>
+                                    Code sent to {newEmail}
+                                </Typography>
+                                <TextField fullWidth size="small" placeholder="6-digit code" value={code}
+                                    onChange={(e) => setCode(e.target.value.replace(/\D/g, '').slice(0, 6))} sx={inputSx} />
+                                <Box display="flex" gap={1}>
+                                    <Button disabled={confirmPending || code.length !== 6}
+                                        onClick={() => confirmEmail(code, { onSuccess: () => { setEditEmail(false); setCodeSent(false); setCode('') } })}
+                                        sx={{ borderRadius: 2, backgroundColor: 'secondary.main', color: 'white', px: 2 }}>
+                                        {confirmPending ? <CircularProgress size={18} sx={{ color: 'white' }} /> : 'Verify'}
+                                    </Button>
+                                    <Button onClick={() => { setCodeSent(false); setCode('') }} sx={{ color: 'rgba(255,255,255,0.4)' }}>Back</Button>
+                                </Box>
+                            </Box>
+                        )}
                     </Box>
                 </Box>
 
                 <Divider sx={{ borderColor: 'rgba(255,255,255,0.1)' }} />
 
-                <Box display='flex' alignItems='center' gap={2} my={2}>
-                    <SecurityIcon sx={{ color: 'primary.main' }} />
+                <Box display="flex" alignItems="center" gap={2} mt={2}>
+                    <Security sx={{ color: 'secondary.main' }} />
                     <Box>
-                        <Typography variant='body2' color='secondary.main'>
-                            2FA
-                        </Typography>
-                        <Typography fontWeight='medium' color='white'>
-                            {data.data?.twoFactorEnabled ? "Enabled" : "Disabled"}
+                        <Typography variant="body2" color="secondary.main">2FA</Typography>
+                        <Typography fontWeight="medium" color="white">
+                            {profile?.twoFactorEnabled ? 'Enabled' : 'Disabled'}
                         </Typography>
                     </Box>
                 </Box>

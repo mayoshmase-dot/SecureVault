@@ -15,7 +15,7 @@ import { iconBox, inputSx } from '../../constants/styles'
 
 export default function ProfileDelete() {
   const [password, setPassword] = useState('')
-    const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const { mutate: deleteAccount, isPending } = useDeleteAccount()
 
   const handleDelete = () => {
@@ -81,28 +81,28 @@ export default function ProfileDelete() {
             Master Password
           </Typography>
 
-   <TextField
-                        fullWidth
-                        type={showPassword ? 'text' : 'password'}
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        placeholder="Enter Master password"
-                        sx={inputSx}
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <LockOutlined fontSize="small" sx={{color:'secondary.dark'}} />
-                                </InputAdornment>
-                            ),
-                            endAdornment: (
-                                <InputAdornment position="end">
-                                    <IconButton onClick={() => setShowPassword(p => !p)}>
-                                        {showPassword ? <Visibility sx={{ color: 'secondary.dark' }} /> : <VisibilityOff sx={{ color: 'secondary.dark' }} />}
-                                    </IconButton>
-                                </InputAdornment>
-                            ),
-                        }}
-                    />
+          <TextField
+            fullWidth
+            type={showPassword ? 'text' : 'password'}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Enter Master password"
+            sx={inputSx}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <LockOutlined fontSize="small" sx={{ color: 'secondary.dark' }} />
+                </InputAdornment>
+              ),
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={() => setShowPassword(p => !p)}>
+                    {showPassword ? <Visibility sx={{ color: 'secondary.dark' }} /> : <VisibilityOff sx={{ color: 'secondary.dark' }} />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
           <Button
             fullWidth
             disabled={!password || isPending}

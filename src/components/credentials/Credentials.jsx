@@ -22,7 +22,7 @@ export default function Credentials() {
     const { data: searchData, isLoading: searchLoading } = useSearchCredentials(search);
 
     if (isLoading) return <Loader />;
-    if (isError) return <Box color="error.main" bgcolor={'primary.main'}>{error.message}</Box>;
+    if (isError) return <Box color="error.main">{error.message}</Box>;
 
     const categories = ['All', "Personal", 'Work', 'Finance', 'Social', "Other"];
 
