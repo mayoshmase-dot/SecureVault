@@ -2,15 +2,17 @@ import { useState } from 'react';
 import { Box, Container, Typography, Slider, IconButton, Tooltip } from '@mui/material';
 import { Refresh, ContentCopy, Bolt } from '@mui/icons-material';
 import useGeneratePassword from '../../hooks/useGeneratePassword';
-
-const OPTIONS = [
-    { key: 'uppercase', label: 'Uppercase (A-Z)', icon: 'T' },
-    { key: 'lowercase', label: 'Lowercase (a-z)', icon: 'T' },
-    { key: 'numbers', label: 'Numbers (0-9)', icon: '#' },
-    { key: 'symbols', label: 'Symbols (!@#$)', icon: '⚙' },
-];
+import { useTranslation } from 'react-i18next';
 
 export default function GeneratePassword() {
+    const { t } = useTranslation();
+
+    const OPTIONS = [
+        { key: 'uppercase', label: t('Uppercase (A-Z)'), icon: 'T' },
+        { key: 'lowercase', label: t('Lowercase (a-z)'), icon: 'T' },
+        { key: 'numbers', label: t('Numbers (0-9)'), icon: '#' },
+        { key: 'symbols', label: t('Symbols (!@#$)'), icon: '⚙' },
+    ];
 
     const [length, setLength] = useState(16);
     const [options, setOptions] = useState({
@@ -20,9 +22,7 @@ export default function GeneratePassword() {
         symbols: false,
     });
 
-    const { mutate, isPending, data } = useGeneratePassword(
-
-    );
+    const { mutate, isPending, data } = useGeneratePassword();
     const password = data?.data?.password || '';
 
     const generate = () => mutate({ length, ...options });
@@ -32,17 +32,16 @@ export default function GeneratePassword() {
         setOptions(next);
     };
 
-
     const activeCount = Object.values(options).filter(Boolean).length;
 
     const strength =
         length >= 20 && activeCount === 4
-            ? { label: 'STRONG', color: 'rgb(48,168,90)', width: '100%' }
+            ? { label: t('STRONG'), color: 'rgb(48,168,90)', width: '100%' }
             : length >= 12 && activeCount >= 3
-                ? { label: 'GOOD', color: 'rgb(48,168,90)', width: '70%' }
+                ? { label: t('GOOD'), color: 'rgb(48,168,90)', width: '70%' }
                 : length >= 8 && activeCount >= 2
-                    ? { label: 'FAIR', color: '#f59e0b', width: '45%' }
-                    : { label: 'WEAK', color: '#ef4444', width: '20%' };
+                    ? { label: t('FAIR'), color: '#f59e0b', width: '45%' }
+                    : { label: t('WEAK'), color: '#ef4444', width: '20%' };
 
     return (
         <Box sx={{ backgroundColor: 'primary.main', minHeight: '100vh', display: 'flex', alignItems: 'center', py: 5 }}>
@@ -64,10 +63,10 @@ export default function GeneratePassword() {
                         </Box>
                         <Box>
                             <Typography variant="h6" fontWeight={700} color="white">
-                                Password Generator
+                                {t('Password Generator')}
                             </Typography>
                             <Typography sx={{ fontSize: 12, color: 'rgba(255,255,255,0.4)' }}>
-                                Create strong, unhackable passwords
+                                {t('Create strong, unhackable passwords')}
                             </Typography>
                         </Box>
                     </Box>
@@ -85,17 +84,17 @@ export default function GeneratePassword() {
                             fontWeight: 600,
                             flex: 1,
                         }}>
-                            {password || 'Click Generate...'}
+                            {password || t('Click Generate...')}
                         </Typography>
 
                         <Box display="flex" gap={0.5}>
-                            <Tooltip title="Regenerate">
+                            <Tooltip title={t('Regenerate')}>
                                 <IconButton onClick={generate} disabled={isPending} sx={{ color: 'secondary.main' }}>
                                     <Refresh fontSize="small" />
                                 </IconButton>
                             </Tooltip>
 
-                            <Tooltip title="Copy">
+                            <Tooltip title={t('Copy')}>
                                 <IconButton
                                     size="small"
                                     sx={{ color: "secondary.main" }}
@@ -110,7 +109,7 @@ export default function GeneratePassword() {
                     <Box mb={2.5}>
                         <Box display="flex" justifyContent="space-between" mb={0.75}>
                             <Typography sx={{ fontSize: 12, color: 'rgba(255,255,255,0.5)' }}>
-                                Password Strength
+                                {t('Password Strength')}
                             </Typography>
                             <Typography sx={{ fontSize: 12, color: strength.color, fontWeight: 700 }}>
                                 {strength.label}
@@ -130,7 +129,7 @@ export default function GeneratePassword() {
 
                     <Box mb={3}>
                         <Typography sx={{ fontSize: 12, color: 'rgba(255,255,255,0.5)', mb: 1 }}>
-                            Password Length: <b style={{ color: 'white' }}>{length}</b>
+                            {t('Password Length')}: <b style={{ color: 'white' }}>{length}</b>
                         </Typography>
 
                         <Slider
@@ -197,7 +196,7 @@ export default function GeneratePassword() {
                         cursor: isPending ? 'not-allowed' : 'pointer',
                     }}>
                         <Typography sx={{ color: 'white', fontWeight: 600 }}>
-                            {isPending ? 'Generating...' : 'Generate Password'}
+                            {isPending ? t('Generating...') : t('Generate Password')}
                         </Typography>
                     </Box>
 

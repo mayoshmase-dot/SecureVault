@@ -17,6 +17,7 @@ import {Divider,Drawer,List,ListItem,ListItemButton,ListItemText,ListItemIcon} f
 import { Link as RouterLink, useNavigate } from 'react-router-dom'
 import useAuthStore from '../../store/useAuthStore';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 
 export default function Navbar() {
@@ -24,6 +25,7 @@ export default function Navbar() {
   const logout = useAuthStore((state) => state.logout)
   const navigate = useNavigate();
   const [drawerOpen, setDrawerOpen] = useState(false)
+  const { t } = useTranslation();
 
   const handleLogout = () => {
     logout();
@@ -36,44 +38,42 @@ export default function Navbar() {
         <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
 
           <Box display="flex" alignItems="center" component={RouterLink} to='/' sx={{ textDecoration: 'none', color: 'white' }}>
-            <Box component="img" src={LogoSecure} width="70px"
-              height="50"
-              alt="logo" />
-            <Typography fontWeight={700}>SecureVault</Typography>
+            <Box component="img" src={LogoSecure} sx={{ height: 50 }} />
+            <Typography fontWeight={700}>{t('SecureVault')}</Typography>
           </Box>
 
           <Box sx={{ display: { xs: 'none', md: 'flex' } }} alignItems="center" gap={2}>
 
             <Button component={RouterLink} to='/' color="inherit" startIcon={<HomeIcon />}
               sx={{ '&:hover': { color: 'secondary.main' } }}>
-              Home
+              {t('Home')}
             </Button>
 
             {token ? (
               <>
                 <Button component={RouterLink} to='/dashboard' color="inherit" startIcon={<DashboardIcon />}
                   sx={{ '&:hover': { color: 'secondary.main' } }}>
-                  Dashboard
+                  {t('Dashboard')}
                 </Button>
 
                 <Button onClick={handleLogout} color="inherit" startIcon={<LogoutIcon />}
                   sx={{ '&:hover': { color: 'secondary.main' } }}>
-                  Logout
+                  {t('Logout')}
                 </Button>
                 <Button component={RouterLink} to='/generatePassword' startIcon={<VpnKeyIcon />}
                   sx={{ color: 'white', '&:hover': { color: 'secondary.main' } }}>
-                  Genarate
+                  {t('Generate')}
                 </Button>
                 <Button component={RouterLink} to='/profile' startIcon={<AccountCircleIcon />}
                   sx={{ color: 'white', '&:hover': { color: 'secondary.main' } }}>
-                  Profile
+                  {t('Profile')}
                 </Button>
               </>
             ) : (
               <>
                 <Button component={RouterLink} to='/login' color="inherit" startIcon={<LoginIcon />}
                   sx={{ '&:hover': { color: 'secondary.main' } }}>
-                  Sign In
+                  {t('SignIn')}
                 </Button>
 
                 <Button
@@ -91,7 +91,7 @@ export default function Navbar() {
                     }
                   }}
                 >
-                  Sign Up
+                  {t('SignUp')}
                 </Button>
               </>
             )}
@@ -125,7 +125,7 @@ export default function Navbar() {
 
           <Box p={2}>
             <Typography variant={'h6'} fontWeight={'bold'}>
-              SecureVault
+              {t('SecureVault')}
             </Typography>
           </Box>
 
@@ -148,7 +148,7 @@ export default function Navbar() {
                 <ListItemIcon sx={{ color: 'white' }}>
                   <HomeIcon />
                 </ListItemIcon>
-                <ListItemText primary="Home" />
+                <ListItemText primary={t('Home')} />
               </ListItemButton>
             </ListItem>
 
@@ -171,7 +171,7 @@ export default function Navbar() {
                     <ListItemIcon sx={{ color: 'white' }}>
                       <AccountCircleIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Profile" />
+                    <ListItemText primary={t('Profile')} />
                   </ListItemButton>
                 </ListItem>
 
@@ -191,7 +191,7 @@ export default function Navbar() {
                     <ListItemIcon sx={{ color: 'white' }}>
                       <DashboardIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Dashboard" />
+                    <ListItemText primary={t('Dashboard')} />
                   </ListItemButton>
                 </ListItem>
                 <ListItem disablePadding>
@@ -209,7 +209,7 @@ export default function Navbar() {
                     <ListItemIcon sx={{ color: 'white' }}>
                       <VpnKeyIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Generate" />
+                    <ListItemText primary={t('Generate')} />
                   </ListItemButton>
                 </ListItem>
                 <ListItem disablePadding>
@@ -228,7 +228,7 @@ export default function Navbar() {
                     <ListItemIcon sx={{ color: 'white' }}>
                       <LogoutIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Logout" />
+                    <ListItemText primary={t('Logout')} />
                   </ListItemButton>
                 </ListItem>
               </>
@@ -252,7 +252,7 @@ export default function Navbar() {
                     <ListItemIcon sx={{ color: 'white' }}>
                       <LoginIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Sign In" />
+                    <ListItemText primary={t('SignIn')} />
                   </ListItemButton>
                 </ListItem>
 
@@ -274,7 +274,7 @@ export default function Navbar() {
                     <ListItemIcon sx={{ color: 'white' }}>
                       <PersonAddIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Sign Up" />
+                    <ListItemText primary={t('SignUp')} />
                   </ListItemButton>
                 </ListItem>
               </>

@@ -3,28 +3,30 @@ import {
     PersonRounded, WorkOutline, AccountBalanceOutlined,
     GroupOutlined, MoreHorizOutlined
 } from "@mui/icons-material";
+import { useTranslation } from "react-i18next";
 
 const CATEGORIES = [
-    { label: "Personal", icon: <PersonRounded fontSize="small" /> },
-    { label: "Work", icon: <WorkOutline fontSize="small" /> },
-    { label: "Finance", icon: <AccountBalanceOutlined fontSize="small" /> },
-    { label: "Social", icon: <GroupOutlined fontSize="small" /> },
-    { label: "Other", icon: <MoreHorizOutlined fontSize="small" /> },
+    { key: "Personal", icon: <PersonRounded fontSize="small" /> },
+    { key: "Work", icon: <WorkOutline fontSize="small" /> },
+    { key: "Finance", icon: <AccountBalanceOutlined fontSize="small" /> },
+    { key: "Social", icon: <GroupOutlined fontSize="small" /> },
+    { key: "Other", icon: <MoreHorizOutlined fontSize="small" /> },
 ];
 
 export default function CategorySelector({ selected, onChange }) {
+    const { t } = useTranslation();
     return (
         <Box mt={3}>
             <Typography sx={{ color: "white", fontSize: 12.5, mb: 1, fontWeight: 500 }}>
-                Category
+                {t('Category')}
             </Typography>
             <Box display="flex" gap={1}>
-                {CATEGORIES.map(({ label, icon }) => {
-                    const active = selected === label;
+                {CATEGORIES.map(({ key, icon }) => {
+                    const active = selected === key;
                     return (
                         <Button
-                            key={label}
-                            onClick={() => onChange(label)}
+                            key={key}
+                            onClick={() => onChange(key)}
                             startIcon={icon}
                             sx={{
                                 flex: '1 1 60px',
@@ -47,7 +49,7 @@ export default function CategorySelector({ selected, onChange }) {
                                 transition: 'all 0.15s ease',
                             }}
                         >
-                            {label}
+                            {t(key)}
                         </Button>
                     );
                 })}

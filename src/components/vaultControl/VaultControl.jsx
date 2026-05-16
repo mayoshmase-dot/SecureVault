@@ -1,13 +1,14 @@
-import { Search } from '@mui/icons-material'
 import { Box, Button, Container, InputBase } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search';
 import VpnKeyOutlinedIcon from '@mui/icons-material/VpnKeyOutlined';
 import AddIcon from '@mui/icons-material/Add';
 import { Link } from 'react-router-dom';
 import { useSearchStore } from '../../store/useSearchStore';
+import { useTranslation } from 'react-i18next';
 
 export default function VaultControl() {
     const { search, setSearch } = useSearchStore();
+    const { t } = useTranslation();
 
     return (
         <Box bgcolor={'primary.main'}>
@@ -21,7 +22,7 @@ export default function VaultControl() {
                         <SearchIcon sx={{ color: "secondary.main", mr: 1 }} />
                         <InputBase
                             fullWidth
-                            placeholder="Search your vault..."
+                            placeholder={t('Search your vault...')}
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
                             sx={{
@@ -35,7 +36,7 @@ export default function VaultControl() {
                             backgroundColor: 'secondary.main', borderRadius: 3, fontWeight: 'bold', color: 'white',
                             px: 3, py: 1, textTransform: 'none', '&:hover': { backgroundColor: 'secondary.dark', }
                         }} startIcon={<VpnKeyOutlinedIcon />}>
-                            Generator
+                            {t('Generator')}
                         </Button>
                         <Button component={Link} to="/addCredentials"
                             variant="contained" startIcon={<AddIcon />}
@@ -44,7 +45,7 @@ export default function VaultControl() {
                                 px: 3, py: 1, textTransform: 'none',
                                 '&:hover': { backgroundColor: 'secondary.dark', }
                             }}>
-                            Add New
+                            {t('Add New')}
                         </Button>
                     </Box>
                 </Box>

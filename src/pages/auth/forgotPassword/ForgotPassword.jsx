@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import useRecoverAccount from "../../../hooks/useRecoverAccount";
 import { iconBox, inputSx } from "../../../constants/styles";
+import { useTranslation } from 'react-i18next';
 
 const schema = yup.object({
     newPassword: yup.string()
@@ -20,6 +21,7 @@ const schema = yup.object({
 export default function ForgotPassword() {
     const navigate = useNavigate()
     const { mutate: recover, isPending } = useRecoverAccount()
+    const { t } = useTranslation();
 
     const [email, setEmail] = useState('')
     const [recoveryKey, setRecoveryKey] = useState('')
@@ -58,10 +60,10 @@ export default function ForgotPassword() {
                         </Box>
                         <Box>
                             <Typography sx={{ color: 'white', fontWeight: 600, fontSize: 22 }}>
-                                Recover Account
+                                {t('Recover Account')}
                             </Typography>
                             <Typography sx={{ color: 'rgba(255,255,255,0.4)', fontSize: 12 }}>
-                                Use your recovery key to regain access
+                                {t('Use your recovery key to regain access')}
                             </Typography>
                         </Box>
                     </Box>
@@ -69,21 +71,21 @@ export default function ForgotPassword() {
                     <Box display="flex" flexDirection="column" gap={1.5}>
 
                         <Box>
-                            <Typography sx={{ color: 'secondary.dark', fontSize: 12.5, mb: 0.5 }}>Email</Typography>
-                            <TextField fullWidth placeholder="Enter your email" value={email}
+                            <Typography sx={{ color: 'secondary.dark', fontSize: 12.5, mb: 0.5 }}>{t('Email')}</Typography>
+                            <TextField fullWidth placeholder={t('Enter your email')} value={email}
                                 onChange={(e) => setEmail(e.target.value)} sx={inputSx}
                                 InputProps={{ startAdornment: <InputAdornment position="start"><LanguageOutlined sx={{ fontSize: 18, color: 'secondary.dark' }} /></InputAdornment> }} />
                         </Box>
 
                         <Box>
-                            <Typography sx={{ color: 'secondary.dark', fontSize: 12.5, mb: 0.5 }}>Recovery Key</Typography>
+                            <Typography sx={{ color: 'secondary.dark', fontSize: 12.5, mb: 0.5 }}>{t('Recovery Key')}</Typography>
                             <TextField fullWidth placeholder="XXXX-XXXX-XXXX-XXXX-XXXX-XXXX" value={recoveryKey}
                                 onChange={(e) => setRecoveryKey(e.target.value)} sx={inputSx}
                                 InputProps={{ startAdornment: <InputAdornment position="start"><KeyOutlined sx={{ fontSize: 18, color: 'secondary.dark' }} /></InputAdornment> }} />
                         </Box>
 
                         <Box>
-                            <Typography sx={{ color: 'secondary.dark', fontSize: 12.5, mb: 0.5 }}>New Password</Typography>
+                            <Typography sx={{ color: 'secondary.dark', fontSize: 12.5, mb: 0.5 }}>{t('New Password')}</Typography>
                             <TextField fullWidth placeholder="••••••••" value={newPassword}
                                 type={showPassword ? 'text' : 'password'}
                                 onChange={handleNewPasswordChange} sx={inputSx}
@@ -109,11 +111,11 @@ export default function ForgotPassword() {
                                 backgroundColor: 'secondary.main',
                                 color: 'white', fontWeight: 700, letterSpacing: 1
                             }}>
-                            {isPending ? <CircularProgress size={22} sx={{ color: 'white' }} /> : 'Recover Account'}
+                            {isPending ? <CircularProgress size={22} sx={{ color: 'white' }} /> : t('Recover Account button')}
                         </Button>
 
                         <Button fullWidth onClick={() => navigate('/login')} sx={{ color: 'rgba(255,255,255,0.4)', fontSize: 13 }}>
-                            Back to Login
+                            {t('Back to Login')}
                         </Button>
 
                     </Box>

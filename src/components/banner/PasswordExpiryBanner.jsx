@@ -2,10 +2,12 @@ import { Box, Typography } from '@mui/material'
 import WarningAmberOutlinedIcon from '@mui/icons-material/WarningAmberOutlined'
 import { useNavigate } from 'react-router-dom'
 import useCheckPasswordExpiry from '../../hooks/useCheckPasswordExpiry'
+import { useTranslation } from 'react-i18next'
 
 export default function PasswordExpiryBanner() {
     const { data } = useCheckPasswordExpiry()
     const navigate = useNavigate()
+    const { t } = useTranslation()
 
     const count = data?.data?.length || 0
     if (!count) return null
@@ -30,7 +32,7 @@ export default function PasswordExpiryBanner() {
         >
             <WarningAmberOutlinedIcon sx={{ color: '#facc15', fontSize: 20 }} />
             <Typography sx={{ color: '#facc15', fontSize: 13 }}>
-                {count} password{count > 1 ? 's' : ''} haven't been updated in 90+ days — Review them
+                {count > 1 ? t('password_expiry_other', { count }) : t('password_expiry_one')}
             </Typography>
         </Box>
     )

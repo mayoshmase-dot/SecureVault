@@ -3,9 +3,11 @@ import GppGoodOutlinedIcon from '@mui/icons-material/GppGoodOutlined'
 import GppMaybeOutlinedIcon from '@mui/icons-material/GppMaybeOutlined'
 import VpnKeyOutlinedIcon from '@mui/icons-material/VpnKeyOutlined'
 import useVaultAudit from '../../utility/AuditVault'
+import { useTranslation } from 'react-i18next'
 
 export default function StatCard() {
     const { data: summary = { strong: 0, weak: 0, reused: 0 } } = useVaultAudit()
+    const { t } = useTranslation()
 
     return (
         <Box sx={{ backgroundColor: 'primary.main' }}>
@@ -25,7 +27,7 @@ export default function StatCard() {
                                         <GppGoodOutlinedIcon fontSize="large" />
                                     </IconButton>
                                     <Box textAlign="center" display="flex" flexDirection="column">
-                                        <Typography component="h2" variant="h6">Strong Passwords</Typography>
+                                        <Typography component="h2" variant="h6">{t('Strong Passwords')}</Typography>
                                         <Typography fontWeight="bold">{summary.strong}</Typography>
                                     </Box>
                                 </Box>
@@ -44,7 +46,7 @@ export default function StatCard() {
                                         <GppMaybeOutlinedIcon fontSize="large" />
                                     </IconButton>
                                     <Box textAlign="center">
-                                        <Typography component="h2" variant="h6">Weak Passwords</Typography>
+                                        <Typography component="h2" variant="h6">{t('Weak Passwords')}</Typography>
                                         <Typography fontWeight="bold">{summary.weak}</Typography>
                                     </Box>
                                 </Box>
@@ -63,7 +65,7 @@ export default function StatCard() {
                                         <VpnKeyOutlinedIcon fontSize="large" />
                                     </IconButton>
                                     <Box textAlign="center">
-                                        <Typography component="h2" variant="h6">Reused Passwords</Typography>
+                                        <Typography component="h2" variant="h6">{t('Reused Passwords')}</Typography>
                                         <Typography fontWeight="bold">{summary.reused}</Typography>
                                     </Box>
                                 </Box>

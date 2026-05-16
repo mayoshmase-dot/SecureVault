@@ -1,9 +1,11 @@
 import { Button } from "@mui/material";
 import { ArrowBack } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export default function BackButton({ to = "/dashboard" }) {
     const navigate = useNavigate();
+    const { t } = useTranslation();
     return (
         <Button
             startIcon={<ArrowBack />}
@@ -17,7 +19,7 @@ export default function BackButton({ to = "/dashboard" }) {
                 '& .MuiTouchRipple-root': { display: 'none' },
             }}
         >
-            Back to Dashboard
+            {t('Back to Dashboard')}
         </Button>
     );
 }

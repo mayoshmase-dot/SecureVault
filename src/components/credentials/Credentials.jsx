@@ -10,6 +10,7 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useDeleteCredentials from "../../hooks/useDeleteCredentials";
+import { useTranslation } from "react-i18next";
 
 export default function Credentials() {
     const { data, isError, isLoading, error } = useGetCredentials();
@@ -17,6 +18,7 @@ export default function Credentials() {
     const [deletingId, setDeletingId] = useState(null);
     const [category, setCategory] = useState('All');
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     const { search } = useSearchStore();
     const { data: searchData, isLoading: searchLoading } = useSearchCredentials(search);
@@ -38,7 +40,7 @@ export default function Credentials() {
             <Container maxWidth="md">
                 <Box py={5}>
                     <Typography variant="h5" fontWeight="700" sx={{ color: "secondary.main", mb: 2 }}>
-                        Credentials Vault
+                        {t('Credentials Vault')}
                     </Typography>
 
                     <Box display="flex" gap={1} mb={3} flexWrap="wrap">
@@ -54,7 +56,7 @@ export default function Credentials() {
                                     backgroundColor: category === cat ? "rgba(0,255,100,0.15)" : "transparent",
                                 }}
                             >
-                                {cat}
+                                {t(cat)}
                             </Box>
                         ))}
                     </Box>
@@ -65,10 +67,10 @@ export default function Credentials() {
                         <Box display="flex" flexDirection="column" alignItems="center" mt={8} gap={2}>
                             <Typography sx={{ fontSize: 48 }}>🔍</Typography>
                             <Typography sx={{ color: "rgba(255,255,255,0.5)", fontSize: 16 }}>
-                                No credentials found
+                                {t('No credentials found')}
                             </Typography>
                             <Typography sx={{ color: "rgba(255,255,255,0.25)", fontSize: 13 }}>
-                                {search ? `No results for "${search}"` : `No credentials in "${category}"`}
+                                {search ? `${t('No results for')} "${search}"` : `${t('No credentials in')} "${t(category)}"`}
                             </Typography>
                         </Box>
                     ) : (
@@ -114,7 +116,7 @@ export default function Credentials() {
                                             {new Date(credential.createdAt).toLocaleDateString()}
                                         </Typography>
 
-                                        <Tooltip title="Details" componentsProps={{
+                                        <Tooltip title={t('Details')} componentsProps={{
                                             tooltip: { sx: { backgroundColor: 'secondary.main', color: 'white', fontSize: 12, p: 1 } }
                                         }}>
                                             <IconButton size="small"
@@ -124,7 +126,7 @@ export default function Credentials() {
                                             </IconButton>
                                         </Tooltip>
 
-                                        <Tooltip title="Delete" componentsProps={{
+                                        <Tooltip title={t('Delete')} componentsProps={{
                                             tooltip: { sx: { backgroundColor: 'secondary.main', color: 'white', fontSize: 12, p: 1 } }
                                         }}>
                                             <IconButton size="small"
@@ -138,7 +140,7 @@ export default function Credentials() {
                                             </IconButton>
                                         </Tooltip>
 
-                                        <Tooltip title="Edit Credential" componentsProps={{
+                                        <Tooltip title={t('Edit Credential')} componentsProps={{
                                             tooltip: { sx: { backgroundColor: 'secondary.main', color: 'white', fontSize: 12, p: 1 } }
                                         }}>
                                             <IconButton size="small"

@@ -12,6 +12,7 @@ import CategorySelector from "../../ui/CategorySelector";
 import { inputSx } from "../../constants/styles";
 import CopyButton from "../../ui/CopyButton";
 import { passwordAnalyzer } from "../../utility/PasswordAnalyzer";
+import { useTranslation } from "react-i18next";
 
 export default function UpdateCredential() {
     const { id } = useParams();
@@ -21,7 +22,9 @@ export default function UpdateCredential() {
     const [showPassword, setShowPassword] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState(null);
     const { register, handleSubmit, reset, watch, formState: { errors } } = useForm();
+    const { t } = useTranslation();
     const passwordValue = watch('password') || ''
+
     useEffect(() => {
         if (!decryptedData) return;
         reset({
@@ -47,11 +50,12 @@ export default function UpdateCredential() {
             category !== decryptedData?.category;
 
         if (!hasChanges) {
-            Swal.fire({ icon: "info", title: "No Changes", text: "You have not made any changes." });
+            Swal.fire({ icon: "info", title: t("No Changes"), text: t("You have not made any changes.") });
             return;
         }
         mutate({ title: formData.title, username: formData.username, password: formData.password, website: formData.website, notes: formData.notes || "", tags: formData.tags, category });
     };
+
     const passwordStrength = passwordAnalyzer(passwordValue)
 
     if (isLoading || isDecrypting) return <Loader />;
@@ -69,20 +73,20 @@ export default function UpdateCredential() {
                             <ShieldOutlined sx={{ fontSize: 20 }} />
                         </Box>
                         <Box>
-                            <Typography variant="h6" sx={{ color: "white", fontWeight: "bold" }}>Update Credential</Typography>
-                            <Typography variant="subtitle2" sx={{ color: "rgba(255,255,255,0.35)" }}>Update your saved credentials</Typography>
+                            <Typography variant="h6" sx={{ color: "white", fontWeight: "bold" }}>{t('Update Credential')}</Typography>
+                            <Typography variant="subtitle2" sx={{ color: "rgba(255,255,255,0.35)" }}>{t('Update your saved credentials')}</Typography>
                         </Box>
                     </Box>
                     <Divider sx={{ backgroundColor: "secondary.main", my: 2 }} />
 
-                    <TextField {...register("title")} fullWidth placeholder="e.g. Google, Netflix" variant="outlined"
+                    <TextField {...register("title")} fullWidth placeholder={t('e.g. Google, Netflix, Work Email')} variant="outlined"
                         error={!!errors.title} helperText={errors.title?.message} sx={inputSx}
                         InputProps={{
                             startAdornment: <InputAdornment position="start"><TitleOutlined sx={{ fontSize: 18, color: "secondary.dark" }} /></InputAdornment>,
                             endAdornment: <CopyButton value={decryptedData?.title} />,
                         }} />
 
-                    <TextField {...register("username")} fullWidth placeholder="Username or email" variant="outlined"
+                    <TextField {...register("username")} fullWidth placeholder={t('Username or email')} variant="outlined"
                         error={!!errors.username} helperText={errors.username?.message} sx={{ ...inputSx, mt: 2 }}
                         InputProps={{
                             startAdornment: <InputAdornment position="start"><PersonOutline sx={{ fontSize: 18, color: "secondary.dark" }} /></InputAdornment>,
@@ -99,24 +103,16 @@ export default function UpdateCredential() {
                                         {showPassword ? <Visibility sx={{ color: 'secondary.main' }} /> : <VisibilityOff sx={{ color: 'secondary.main' }} />}
                                     </IconButton>
                                     <CopyButton value={decryptedData?.password} />
-
                                 </InputAdornment>
                             ),
                         }} />
+
                     {passwordValue && (
                         <Box mt={1}>
                             <Typography sx={{ color: 'white', fontSize: 12 }}>
-                                Strength: {passwordStrength.level}
+                                {t('Strength')}: {passwordStrength.level}
                             </Typography>
-                            <Box
-                                sx={{
-                                    height: 6,
-                                    borderRadius: 5,
-                                    backgroundColor: 'rgba(255,255,255,0.08)',
-                                    overflow: 'hidden',
-                                    mt: 0.5
-                                }}
-                            >
+                            <Box sx={{ height: 6, borderRadius: 5, backgroundColor: 'rgba(255,255,255,0.08)', overflow: 'hidden', mt: 0.5 }}>
                                 <Box
                                     sx={{
                                         width: `${passwordStrength.percentage}%`,
@@ -132,20 +128,10 @@ export default function UpdateCredential() {
                                     }}
                                 />
                             </Box>
-
                             {passwordStrength.feedback?.length > 0 && (
                                 <Box mt={1}>
                                     {passwordStrength.feedback.map((item, i) => (
-                                        <Typography
-                                            key={i}
-                                            sx={{
-                                                fontSize: 11,
-                                                color: 'rgba(255,255,255,0.65)',
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                gap: 0.5
-                                            }}
-                                        >
+                                        <Typography key={i} sx={{ fontSize: 11, color: 'rgba(255,255,255,0.65)', display: 'flex', alignItems: 'center', gap: 0.5 }}>
                                             • {item}
                                         </Typography>
                                     ))}
@@ -153,6 +139,7 @@ export default function UpdateCredential() {
                             )}
                         </Box>
                     )}
+
                     <TextField {...register("website")} fullWidth placeholder="https://example.com" variant="outlined"
                         error={!!errors.website} helperText={errors.website?.message} sx={{ ...inputSx, mt: 2 }}
                         InputProps={{
@@ -160,14 +147,14 @@ export default function UpdateCredential() {
                             endAdornment: <CopyButton value={decryptedData?.website} />,
                         }} />
 
-                    <TextField {...register("notes")} fullWidth placeholder="Write a note..." variant="outlined"
+                    <TextField {...register("notes")} fullWidth placeholder={t('Write a note...')} variant="outlined"
                         error={!!errors.notes} helperText={errors.notes?.message} sx={{ ...inputSx, mt: 2 }}
                         InputProps={{
                             startAdornment: <InputAdornment position="start"><NotesOutlined sx={{ fontSize: 18, color: "secondary.dark" }} /></InputAdornment>,
                             endAdornment: <CopyButton value={decryptedData?.notes} />,
                         }} />
 
-                    <TextField {...register("tags")} fullWidth placeholder="Write tags..." variant="outlined"
+                    <TextField {...register("tags")} fullWidth placeholder={t('Write tags...')} variant="outlined"
                         error={!!errors.tags} helperText={errors.tags?.message} sx={{ ...inputSx, mt: 2 }}
                         InputProps={{
                             startAdornment: <InputAdornment position="start"><Tag sx={{ fontSize: 18, color: "secondary.dark" }} /></InputAdornment>,
@@ -178,7 +165,7 @@ export default function UpdateCredential() {
 
                     <Button type="submit" fullWidth disabled={isPending} startIcon={<SaveOutlined />}
                         sx={{ mt: 3, py: 1.5, borderRadius: "10px", backgroundColor: "rgb(48,168,90)", color: "white", "&:hover": { backgroundColor: "rgb(40,148,78)" } }}>
-                        {isPending ? <CircularProgress size={22} sx={{ color: "white" }} /> : "Update Credential"}
+                        {isPending ? <CircularProgress size={22} sx={{ color: "white" }} /> : t('Update Credential')}
                     </Button>
                 </Box>
             </Box>

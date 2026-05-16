@@ -14,15 +14,17 @@ import BackButton from "../../ui/BackButton";
 import CopyButton from "../../ui/CopyButton";
 import FieldValue from "../../ui/FieldValue";
 import { cardStyle, iconBox } from "../../constants/styles";
+import { useTranslation } from "react-i18next";
 
 export default function CredentialDetails() {
     const { id } = useParams();
     const { data, isLoading, isError, error, decryptedData, isDecrypting, decryptError } = useCredentialDetails({ id });
     const [showPassword, setShowPassword] = useState(false);
+    const { t } = useTranslation();
 
     if (isLoading || isDecrypting) return <Loader />;
     if (isError) return <Box>{error.message}</Box>;
-    if (decryptError) return <Box color="error.main" textAlign="center" mt={5}>Failed to decrypt data. Wrong master password?</Box>;
+    if (decryptError) return <Box color="error.main" textAlign="center" mt={5}>{t('Failed to decrypt data. Wrong master password?')}</Box>;
 
     const credential = data?.data;
     const display = decryptedData ?? credential;
@@ -45,7 +47,7 @@ export default function CredentialDetails() {
                         <Box sx={cardStyle} mb={2}>
                             <Box display="flex" alignItems="center" gap={1.5}>
                                 <PersonIcon sx={{ color: "secondary.main" }} />
-                                <Typography color="white">Username</Typography>
+                                <Typography color="white">{t('Username')}</Typography>
                             </Box>
                             <Box display="flex" alignItems="center" gap={1}>
                                 <FieldValue value={display?.username} />
@@ -56,13 +58,13 @@ export default function CredentialDetails() {
                         <Box sx={cardStyle} mb={2}>
                             <Box display="flex" alignItems="center" gap={1.5}>
                                 <LockIcon sx={{ color: "secondary.main" }} />
-                                <Typography color="white">Password</Typography>
+                                <Typography color="white">{t('Password')}</Typography>
                             </Box>
                             <Box display="flex" alignItems="center" gap={1}>
                                 <Typography sx={{ color: "rgba(255,255,255,0.6)", fontSize: 14 }}>
                                     {showPassword ? display?.password : '••••••••'}
                                 </Typography>
-                                <Tooltip title={showPassword ? "Hide" : "Show"}>
+                                <Tooltip title={showPassword ? t('Hide') : t('Show')}>
                                     <IconButton size="small" sx={{ color: "secondary.main" }} onClick={() => setShowPassword(p => !p)}>
                                         {showPassword ? <Visibility fontSize="small" /> : <VisibilityOff fontSize="small" />}
                                     </IconButton>
@@ -75,7 +77,7 @@ export default function CredentialDetails() {
                             <Box sx={cardStyle} mb={2}>
                                 <Box display="flex" alignItems="center" gap={1.5}>
                                     <NoteIcon sx={{ color: "secondary.main" }} />
-                                    <Typography color="white">Notes</Typography>
+                                    <Typography color="white">{t('Notes')}</Typography>
                                 </Box>
                                 <Box display="flex" alignItems="center" gap={1}>
                                     <FieldValue value={display?.notes} />
@@ -87,7 +89,7 @@ export default function CredentialDetails() {
                         <Box sx={cardStyle} mb={2}>
                             <Box display="flex" alignItems="center" gap={1.5}>
                                 <TagIcon sx={{ color: "secondary.main" }} />
-                                <Typography color="white">Tags</Typography>
+                                <Typography color="white">{t('Tags')}</Typography>
                             </Box>
                             <Box display="flex" alignItems="center" gap={1}>
                                 <FieldValue value={credential?.tags} />
@@ -98,7 +100,7 @@ export default function CredentialDetails() {
                         <Box sx={cardStyle} mb={3}>
                             <Box display="flex" alignItems="center" gap={1.5}>
                                 <CategoryIcon sx={{ color: "secondary.main" }} />
-                                <Typography color="white">Category</Typography>
+                                <Typography color="white">{t('Category')}</Typography>
                             </Box>
                             <Box display="flex" alignItems="center" gap={1}>
                                 <FieldValue value={credential?.category} />
@@ -110,10 +112,10 @@ export default function CredentialDetails() {
 
                         <Box display="flex" justifyContent="space-between">
                             <Typography sx={{ fontSize: 12, color: "rgba(255,255,255,0.3)" }}>
-                                Created: {new Date(credential?.createdAt).toLocaleDateString()}
+                                {t('Created')}: {new Date(credential?.createdAt).toLocaleDateString()}
                             </Typography>
                             <Typography sx={{ fontSize: 12, color: "rgba(255,255,255,0.3)" }}>
-                                Updated: {new Date(credential?.lastModified).toLocaleDateString()}
+                                {t('Updated')}: {new Date(credential?.lastModified).toLocaleDateString()}
                             </Typography>
                         </Box>
                     </Box>

@@ -7,6 +7,7 @@ import Swal from 'sweetalert2'
 import useVerify2FACode from '../../hooks/useVerify2FACode'
 import useAuthStore from '../../store/useAuthStore'
 import { iconBox, inputSx } from '../../constants/styles'
+import { useTranslation } from 'react-i18next'
 
 export default function Verify2FA() {
     const [code, setCode] = useState('')
@@ -16,6 +17,8 @@ export default function Verify2FA() {
     const tempToken = useAuthStore((state) => state.tempToken)
     const setToken = useAuthStore((state) => state.setToken)
     const clearTempToken = useAuthStore((state) => state.clearTempToken)
+    const { t } = useTranslation()
+
     const handleVerify = () => {
         if (code.length !== 6 || !tempToken) return
 
@@ -28,8 +31,8 @@ export default function Verify2FA() {
                     queryClient.invalidateQueries({ queryKey: ['profile'] })
                     Swal.fire({
                         icon: 'success',
-                        title: 'Verified Successfully',
-                        text: 'Redirecting to dashboard...',
+                        title: t('Verified Successfully'),
+                        text: t('Redirecting to dashboard...'),
                         timer: 1500,
                         showConfirmButton: false
                     }).then(() => {
@@ -38,6 +41,7 @@ export default function Verify2FA() {
                 }
             })
     }
+
     return (
         <Box sx={{
             backgroundColor: 'primary.main',
@@ -63,17 +67,17 @@ export default function Verify2FA() {
 
                         <Box>
                             <Typography sx={{ color: 'white', fontWeight: 600 }}>
-                                Two-Factor Authentication
+                                {t('Two-Factor Authentication')}
                             </Typography>
                             <Typography sx={{ color: 'rgba(255,255,255,0.4)', fontSize: 12 }}>
-                                Enter your 6-digit code
+                                {t('Enter your 6-digit code')}
                             </Typography>
                         </Box>
                     </Box>
 
                     <TextField
                         fullWidth
-                        placeholder="6-digit code"
+                        placeholder={t('6-digit code')}
                         value={code}
                         onChange={(e) =>
                             setCode(e.target.value.replace(/\D/g, '').slice(0, 6))
@@ -89,7 +93,6 @@ export default function Verify2FA() {
                         }}
                     />
 
-                    {/* BUTTON */}
                     <Button
                         fullWidth
                         onClick={handleVerify}
@@ -106,7 +109,7 @@ export default function Verify2FA() {
                         {isPending ? (
                             <CircularProgress size={22} sx={{ color: 'white' }} />
                         ) : (
-                            'Verify'
+                            t('Verify')
                         )}
                     </Button>
 
