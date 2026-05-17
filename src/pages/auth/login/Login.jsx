@@ -14,12 +14,14 @@ import useVaultStore from '../../../store/useVaultStore';
 import { deriveAuthHash } from '../../../crypto';
 import { useTranslation } from 'react-i18next';
 
+
 export default function Login() {
   const [serverErrors, setServerErrors] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const setToken = useAuthStore((state) => state.setToken);
   const setMasterPassword = useVaultStore((state) => state.setMasterPassword);
+  const setTempToken = useAuthStore((state) => state.setTempToken)
   const { t } = useTranslation();
 
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm({
@@ -33,7 +35,15 @@ const LoginForm = async (data) => {
     const { masterPasswordSeed, kdfIterations } = kdfRes.data.data
     const authHash = await deriveAuthHash(data.password, masterPasswordSeed, kdfIterations)
     const response = await axiosInstance.post('/auth/login', { email: data.email, password: authHash })
+    
     setMasterPassword(data.password)
+
+    if (response.data.requires2FA) {
+      setTempToken(response.data.tempToken)
+      navigate('/verify2FA')
+      return
+    }
+
     if (response.data.accessToken) {
       localStorage.setItem("token", response.data.accessToken)
       localStorage.setItem("refreshToken", response.data.refreshToken)

@@ -9,7 +9,7 @@ export default function useSearchCredentials(query) {
     };
 
     const queryResult = useQuery({
-        queryKey: ['credential-search', query],
+        queryKey: ['credential-search',query],
         queryFn: SearchCredentials,
         enabled: !!query, 
     });

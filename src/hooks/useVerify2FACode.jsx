@@ -1,7 +1,6 @@
 import { useMutation } from '@tanstack/react-query'
 import AuthAxiosInstance from '../api/AuthAxiosInstance'
 import Swal from 'sweetalert2'
-import useAuthStore from '../store/useAuthStore'
 
 export default function useVerify2FACode() {
   return useMutation({
@@ -15,7 +14,6 @@ export default function useVerify2FACode() {
           }
         }
       )
-
       return response.data
     },
 

@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { Box, Typography, Avatar, Divider, TextField, Button, CircularProgress, InputAdornment } from '@mui/material'
-import { Email, Person, Security, Edit, KeyOutlined } from '@mui/icons-material'
+import { Box, Typography, Avatar, Divider, TextField, Button, CircularProgress, InputAdornment, IconButton } from '@mui/material'
+import { Email, Person, Security, Edit, KeyOutlined, Visibility, VisibilityOff } from '@mui/icons-material'
 import useProfile from '../../hooks/useProfile'
 import useUpdateName from '../../hooks/useUpdateName'
 import useRequestEmailChange from '../../hooks/useRequestEmailChange'
@@ -21,6 +21,7 @@ export default function ProfileInfo() {
     const [editEmail, setEditEmail] = useState(false)
     const [newEmail, setNewEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [showPassword, setShowPassword] = useState(false)
     const [codeSent, setCodeSent] = useState(false)
     const [code, setCode] = useState('')
 
@@ -79,9 +80,28 @@ export default function ProfileInfo() {
                             </Box>
                         ) : !codeSent ? (
                             <Box display="flex" flexDirection="column" gap={1} mt={0.5}>
-                                <TextField fullWidth size="small" placeholder={t('New email')} value={newEmail} onChange={(e) => setNewEmail(e.target.value)} sx={inputSx} />
-                                <TextField fullWidth size="small" type="password" placeholder={t('Master password')} value={password} onChange={(e) => setPassword(e.target.value)} sx={inputSx}
-                                    InputProps={{ startAdornment: <InputAdornment position="start"><KeyOutlined sx={{ fontSize: 16, color: 'secondary.dark' }} /></InputAdornment> }} />
+                                <TextField fullWidth size="small" placeholder={t('New email')} value={newEmail}
+                                    onChange={(e) => setNewEmail(e.target.value)} sx={inputSx} />
+                                <TextField fullWidth size="small"
+                                    type={showPassword ? 'text' : 'password'}
+                                    placeholder={t('Master password')} value={password}
+                                    onChange={(e) => setPassword(e.target.value)} sx={inputSx}
+                                    InputProps={{
+                                        startAdornment: (
+                                            <InputAdornment position="start">
+                                                <KeyOutlined sx={{ fontSize: 16, color: 'secondary.dark' }} />
+                                            </InputAdornment>
+                                        ),
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <IconButton onClick={() => setShowPassword(p => !p)} size="small">
+                                                    {showPassword
+                                                        ? <Visibility sx={{ color: 'white', fontSize: 18 }} />
+                                                        : <VisibilityOff sx={{ color: 'white', fontSize: 18 }} />}
+                                                </IconButton>
+                                            </InputAdornment>
+                                        )
+                                    }} />
                                 <Box display="flex" gap={1}>
                                     <Button disabled={requestPending || !newEmail || !password}
                                         onClick={() => requestEmail({ newEmail, password }, { onSuccess: () => setCodeSent(true) })}

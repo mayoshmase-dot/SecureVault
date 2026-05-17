@@ -107,10 +107,11 @@ i18n
 
           // Verify2FA
           "Two-Factor Authentication": "Two-Factor Authentication",
-          "Enter your 6-digit code": "Enter your 6-digit code",
+          "Enter your code": "Enter your code",
           "Verified Successfully": "Verified Successfully",
           "Redirecting to dashboard...": "Redirecting to dashboard...",
           Verify: "Verify",
+          "code": "code",
 
           // AddCredential
           "Add New Credential": "Add New Credential",
@@ -215,7 +216,7 @@ i18n
           "Yes, delete it": "Yes, delete it",
           Error: "Error",
           // BackButton
-"Back to Dashboard": "Back to Dashboard",
+          "Back to Dashboard": "Back to Dashboard",
         }
       },
 
@@ -317,11 +318,11 @@ i18n
 
           // Verify2FA
           "Two-Factor Authentication": "المصادقة الثنائية",
-          "Enter your 6-digit code": "أدخل الكود المكون من 6 أرقام",
+          "Enter your code": "أدخل الكود",
           "Verified Successfully": "تم التحقق بنجاح",
           "Redirecting to dashboard...": "جارٍ التوجيه للوحة التحكم...",
           Verify: "تحقق",
-
+          "code": "الكود",
           // AddCredential
           "Add New Credential": "إضافة بيانات جديدة",
           "Fill in the details to secure your account": "أدخل التفاصيل لتأمين حسابك",

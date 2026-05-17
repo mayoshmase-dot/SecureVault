@@ -20,7 +20,7 @@ export default function Verify2FA() {
     const { t } = useTranslation()
 
     const handleVerify = () => {
-        if (code.length !== 6 || !tempToken) return
+        if ((code.length !== 6 && code.length !== 8) || !tempToken) return
 
         mutate(
             { code, token: tempToken },
@@ -70,18 +70,16 @@ export default function Verify2FA() {
                                 {t('Two-Factor Authentication')}
                             </Typography>
                             <Typography sx={{ color: 'rgba(255,255,255,0.4)', fontSize: 12 }}>
-                                {t('Enter your 6-digit code')}
+                                {t('Enter your code')}
                             </Typography>
                         </Box>
                     </Box>
 
                     <TextField
                         fullWidth
-                        placeholder={t('6-digit code')}
+                        placeholder={t('code')}
                         value={code}
-                        onChange={(e) =>
-                            setCode(e.target.value.replace(/\D/g, '').slice(0, 6))
-                        }
+                        onChange={(e) => setCode(e.target.value.replace(/[^a-zA-Z0-9]/g, '').slice(0, 8))}
                         onKeyDown={(e) => e.key === 'Enter' && handleVerify()}
                         sx={inputSx}
                         InputProps={{
@@ -96,7 +94,7 @@ export default function Verify2FA() {
                     <Button
                         fullWidth
                         onClick={handleVerify}
-                        disabled={code.length !== 6 || isPending}
+                        disabled={(code.length !== 6 && code.length !== 8) || isPending}
                         sx={{
                             borderRadius: 3,
                             py: 1.5,
