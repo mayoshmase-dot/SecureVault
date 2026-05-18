@@ -14,16 +14,20 @@ export default function ChangePassword() {
     const [showPassword, setShowPassword] = useState(false);
     const { t } = useTranslation();
 
-    const schema = yup.object({
-        newPassword: yup.string()
-            .required("Password is required")
-            .min(8, "Password must be at least 8 characters")
-            .max(20, "Password must not exceed 20 characters")
-            .matches(/[A-Z]/, "Must contain at least one uppercase letter")
-            .matches(/[a-z]/, "Must contain at least one lowercase letter")
-            .matches(/[0-9]/, "Must contain at least one number")
-            .matches(/[@$!%*?&\-+\/.#%^=\(\)_\{\}\[\]:;"'<>,|~]/, "Must contain at least one special character")
-    });
+  const schema = yup.object({
+  newPassword: yup
+    .string()
+    .required(t("password_required"))
+    .min(8, t("password_min"))
+    .max(20, t("password_max"))
+    .matches(/[A-Z]/, t("password_uppercase"))
+    .matches(/[a-z]/, t("password_lowercase"))
+    .matches(/[0-9]/, t("password_number"))
+    .matches(
+      /[@$!%*?&\-+\/.#%^=\(\)_\{\}\[\]:;"'<>,|~]/,
+      t("password_special")
+    )
+});
 
     const handleNewPasswordChange = async (e) => {
         const value = e.target.value;

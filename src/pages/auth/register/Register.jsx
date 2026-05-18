@@ -26,9 +26,10 @@ export default function Register() {
   const [codePending, setCodePending] = useState(false);
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const schema = RegisterSchema(t)
 
   const { register, handleSubmit, formState: { errors, isSubmitting }, getValues } = useForm({
-    resolver: yupResolver(RegisterSchema), mode: 'all'
+    resolver: yupResolver(schema), mode: 'all'
   });
 
   const handleSendCode = async () => {

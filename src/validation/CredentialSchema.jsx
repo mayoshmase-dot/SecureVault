@@ -1,35 +1,48 @@
 import * as yup from 'yup'
 
-export const CredentialSchema = yup.object({
+export const CredentialSchema = (t) => {
 
-  title: yup
-    .string()
-    .required("Title is required")
-    .max(100, "Title must be at most 100 characters"),
+  return yup.object({
 
-  username: yup
-    .string()
-    .required("Username is required"),
+    title: yup
+      .string()
+      .required(t("title_required"))
+      .max(100, t("title_max")),
 
-  password: yup
-    .string()
-    .required("Password is required"),
+    username: yup
+      .string()
+      .required(t("username_required")),
 
-  website: yup
-    .string()
-    .max(255, "Website must be at most 255 characters")
-    .url("Enter a valid URL (e.g. https://example.com)")
-    .optional()
-    .transform((value) => value === "" ? undefined : value),
+    password: yup
+      .string()
+      .required(t("password_required")),
 
-  category: yup
-    .string()
-    .optional()
-    .transform((value) => value === "" ? undefined : value),
-  tags: yup.string().optional(),
-  notes: yup
-    .string()
-    .max(1000, "Notes must be at most 1000 characters")
-    .optional()
-    .transform((value) => value === "" ? undefined : value),
-});
+    website: yup
+      .string()
+      .max(255, t("website_max"))
+      .url(t("website_invalid"))
+      .optional()
+      .transform((value) =>
+        value === "" ? undefined : value
+      ),
+
+    category: yup
+      .string()
+      .optional()
+      .transform((value) =>
+        value === "" ? undefined : value
+      ),
+
+    tags: yup
+      .string()
+      .optional(),
+
+    notes: yup
+      .string()
+      .max(1000, t("notes_max"))
+      .optional()
+      .transform((value) =>
+        value === "" ? undefined : value
+      ),
+  })
+}

@@ -8,14 +8,18 @@ import { iconBox, inputSx } from "../../../constants/styles";
 import { useTranslation } from 'react-i18next';
 
 const schema = yup.object({
-    newPassword: yup.string()
-        .required("Password is required")
-        .min(8, "Password must be at least 8 characters")
-        .max(20, "Password must not exceed 20 characters")
-        .matches(/[A-Z]/, "Must contain at least one uppercase letter")
-        .matches(/[a-z]/, "Must contain at least one lowercase letter")
-        .matches(/[0-9]/, "Must contain at least one number")
-        .matches(/[@$!%*?&\-+\/.#%^=\(\)_\{\}\[\]:;"'<>,|~]/, "Must contain at least one special character")
+  newPassword: yup
+    .string()
+    .required(t("password_required"))
+    .min(8, t("password_min"))
+    .max(20, t("password_max"))
+    .matches(/[A-Z]/, t("password_uppercase"))
+    .matches(/[a-z]/, t("password_lowercase"))
+    .matches(/[0-9]/, t("password_number"))
+    .matches(
+      /[@$!%*?&\-+\/.#%^=\(\)_\{\}\[\]:;"'<>,|~]/,
+      t("password_special")
+    )
 })
 
 export default function ForgotPassword() {
@@ -93,7 +97,7 @@ export default function ForgotPassword() {
                                     startAdornment: <InputAdornment position="start"><LockOutlined sx={{ fontSize: 18, color: 'secondary.dark' }} /></InputAdornment>,
                                     endAdornment: <InputAdornment position="end">
                                         <IconButton onClick={() => setShowPassword(p => !p)}>
-                                            {showPassword ? <Visibility sx={{ color: 'white', fontSize: 18 }} /> : <VisibilityOff sx={{ color: 'white', fontSize: 18 }} />}
+                                            {showPassword ? <Visibility sx={{ color: 'secondary.main', fontSize: 18 }} /> : <VisibilityOff sx={{ color: 'secondary.,main', fontSize: 18 }} />}
                                         </IconButton>
                                     </InputAdornment>
                                 }} />

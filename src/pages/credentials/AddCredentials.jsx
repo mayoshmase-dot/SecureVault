@@ -16,10 +16,12 @@ export default function AddCredential() {
     const { mutate, isPending } = useAddCredentials();
     const [showPassword, setShowPassword] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState('Personal');
-    const { register, handleSubmit, watch, formState: { errors, isSubmitting } } = useForm({
-        resolver: yupResolver(CredentialSchema), mode: 'all'
-    });
     const { t } = useTranslation();
+    const schema = CredentialSchema(t)
+    const { register, handleSubmit, watch, formState: { errors, isSubmitting } } = useForm({
+        resolver: yupResolver(schema), mode: 'all'
+    });
+
 
     const passwordValue = watch('password') || ''
     const onSubmit = async (data) => {

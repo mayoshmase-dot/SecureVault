@@ -5,10 +5,12 @@ import AddIcon from '@mui/icons-material/Add';
 import { Link } from 'react-router-dom';
 import { useSearchStore } from '../../store/useSearchStore';
 import { useTranslation } from 'react-i18next';
+import i18n from '../../i18next';
 
 export default function VaultControl() {
     const { search, setSearch } = useSearchStore();
     const { t } = useTranslation();
+  const isAr = i18n.language === 'ar'
 
     return (
         <Box bgcolor={'primary.main'}>
@@ -34,15 +36,14 @@ export default function VaultControl() {
                     <Box display={'flex'} gap={3} flexDirection={{ xs: 'column', md: 'row' }}>
                         <Button component={Link} to="/generatePassword" sx={{
                             backgroundColor: 'secondary.main', borderRadius: 3, fontWeight: 'bold', color: 'white',
-                            px: 3, py: 1, textTransform: 'none', '&:hover': { backgroundColor: 'secondary.dark', }
-                        }} startIcon={<VpnKeyOutlinedIcon />}>
+                            px: 3, py: 1, textTransform: 'none', '&:hover': { backgroundColor: 'secondary.dark', }, gap: isAr ? 1 : 0.5  }} startIcon={<VpnKeyOutlinedIcon />}>
                             {t('Generator')}
                         </Button>
                         <Button component={Link} to="/addCredentials"
                             variant="contained" startIcon={<AddIcon />}
                             sx={{
                                 backgroundColor: 'secondary.main', borderRadius: 3, fontWeight: 'bold', color: 'white',
-                                px: 3, py: 1, textTransform: 'none',
+                                px: 3, py: 1, textTransform: 'none',gap: isAr ? 1 : 0.5 ,
                                 '&:hover': { backgroundColor: 'secondary.dark', }
                             }}>
                             {t('Add New')}

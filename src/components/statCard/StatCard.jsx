@@ -15,7 +15,7 @@ export default function StatCard() {
                 <Box py={5}>
                     <Grid container spacing={5}>
 
-                        <Grid item xs={12} md={6} lg={4} flex={1}>
+                        <Grid size={{ xs: 12, md: 6, lg: 4 }} flex={1}>
                             <Card sx={{
                                 py: 4, px: 3, bgcolor: "primary.main",
                                 boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
@@ -34,7 +34,7 @@ export default function StatCard() {
                             </Card>
                         </Grid>
 
-                        <Grid item xs={12} md={6} lg={4} flex={1}>
+                        <Grid size={{ xs: 12, md: 6, lg: 4 }} flex={1}>
                             <Card sx={{
                                 py: 4, px: 3, bgcolor: "primary.main",
                                 boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
@@ -53,7 +53,7 @@ export default function StatCard() {
                             </Card>
                         </Grid>
 
-                        <Grid item xs={12} md={6} lg={4} flex={1}>
+                        <Grid size={{ xs: 12, md: 6, lg: 4 }} flex={1}>
                             <Card sx={{
                                 py: 4, px: 3, bgcolor: "primary.main",
                                 boxShadow: '0 20px 60px rgba(0,0,0,0.5)',

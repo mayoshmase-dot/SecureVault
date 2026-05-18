@@ -4,7 +4,7 @@ import { initReactI18next } from 'react-i18next';
 i18n
   .use(initReactI18next)
   .init({
-lng: localStorage.getItem('language') || 'en',
+    lng: localStorage.getItem('language') || 'en',
     debug: true,
 
     resources: {
@@ -22,7 +22,8 @@ lng: localStorage.getItem('language') || 'en',
 
           // Hero
           "Secure Your Passwords in One Safe Vault ": "Secure Your Passwords in One Safe Vault",
-          "Store, manage, and generate strong passwords with advanced encryption and two-factor authentication.": "Store, manage, and generate strong passwords with advanced encryption and two-factor authentication.",
+          "Store, manage, and generate strong passwords with advanced encryption and two-factor authentication.":
+            "Store, manage, and generate strong passwords with advanced encryption and two-factor authentication.",
           "Create Account": "Create Account",
 
           // Features
@@ -37,16 +38,22 @@ lng: localStorage.getItem('language') || 'en',
           "Fast Search text": "Find credentials instantly.",
 
           // Footer
-          "Palestine Technical University – Kadoorie": "Palestine Technical University – Kadoorie",
-          "SecureVault – Password Manager": "SecureVault – Password Manager",
-          "A secure platform to store and manage your credentials safely.": "A secure platform to store and manage your credentials safely.",
-          "Prepared by: Maya Masri, Sojood Zidan": "Prepared by: Maya Masri, Sojood Zidan",
-          "SecureVault – All rights reserved.": "SecureVault – All rights reserved.",
+          "Palestine Technical University – Kadoorie":
+            "Palestine Technical University – Kadoorie",
+          "SecureVault – Password Manager":
+            "SecureVault – Password Manager",
+          "A secure platform to store and manage your credentials safely.":
+            "A secure platform to store and manage your credentials safely.",
+          "Prepared by: Maya Masri, Sojood Zidan":
+            "Prepared by: Maya Masri, Sojood Zidan",
+          "SecureVault – All rights reserved.":
+            "SecureVault – All rights reserved.",
 
           // Login
           "Sign In title": "Sign In",
           "Access your secure vault": "Access your secure vault",
-          "Don't have an account yet?": "Don't have an account yet?",
+          "Don't have an account yet?":
+            "Don't have an account yet?",
           "Enter your email": "Enter your email",
           "Remember me": "Remember me",
           "Forgot Password?": "Forgot Password?",
@@ -55,20 +62,25 @@ lng: localStorage.getItem('language') || 'en',
           // Forgot Password
           "Recover Account": "Recover Account",
           "Recover Account button": "Recover Account",
-          "Use your recovery key to regain access": "Use your recovery key to regain access",
+          "Use your recovery key to regain access":
+            "Use your recovery key to regain access",
           "Recovery Key": "Recovery Key",
           "Back to Login": "Back to Login",
 
           // Register
           "Sign Up title": "Sign Up",
-          "Create your secure account": "Create your secure account",
-          "Enter the code sent to your email": "Enter the code sent to your email",
-          "Already have an account?": "Already have an account?",
+          "Create your secure account":
+            "Create your secure account",
+          "Enter the code sent to your email":
+            "Enter the code sent to your email",
+          "Already have an account?":
+            "Already have an account?",
           "Your name": "Your name",
           "Confirm Password": "Confirm Password",
           "Verification Code": "Verification Code",
           "6-digit code": "6-digit code",
-          "By creating an account, you agree to our": "By creating an account, you agree to our",
+          "By creating an account, you agree to our":
+            "By creating an account, you agree to our",
           Terms: "Terms",
           and: "and",
           "Privacy Policy": "Privacy Policy",
@@ -84,14 +96,17 @@ lng: localStorage.getItem('language') || 'en',
           Finance: "Finance",
           Social: "Social",
           Other: "Other",
-          "No credentials found": "No credentials found",
+          "No credentials found":
+            "No credentials found",
           "No results for": "No results for",
-          "No credentials in": "No credentials in",
+          "No credentials in":
+            "No credentials in",
           Details: "Details",
           "Edit Credential": "Edit Credential",
 
           // VaultControl
-          "Search your vault...": "Search your vault...",
+          "Search your vault...":
+            "Search your vault...",
           Generator: "Generator",
           "Add New": "Add New",
 
@@ -102,30 +117,47 @@ lng: localStorage.getItem('language') || 'en',
           "New Password": "New Password",
 
           // PasswordExpiryBanner
-          password_expiry_one: "1 password hasn't been updated in 90+ days — Review it",
-          password_expiry_other: "{{count}} passwords haven't been updated in 90+ days — Review them",
+          password_expiry_one:
+            "1 password hasn't been updated in 90+ days — Review it",
+          password_expiry_other:
+            "{{count}} passwords haven't been updated in 90+ days — Review them",
 
           // Verify2FA
-          "Two-Factor Authentication": "Two-Factor Authentication",
+          "Two-Factor Authentication":
+            "Two-Factor Authentication",
           "Enter your code": "Enter your code",
-          "Verified Successfully": "Verified Successfully",
-          "Redirecting to dashboard...": "Redirecting to dashboard...",
+          "Verified Successfully":
+            "Verified Successfully",
+          "Redirecting to dashboard...":
+            "Redirecting to dashboard...",
           Verify: "Verify",
-          "code": "code",
+          code: "code",
 
           // AddCredential
-          "Add New Credential": "Add New Credential",
-          "Fill in the details to secure your account": "Fill in the details to secure your account",
-          "Title / Service Name": "Title / Service Name",
-          "e.g. Google, Netflix, Work Email": "e.g. Google, Netflix, Work Email",
-          "Username / Email": "Username / Email",
-          "Username or email": "Username or email",
-          "Website URL (Optional)": "Website URL (Optional)",
-          "Note (Optional)": "Note (Optional)",
-          "Write a note...": "Write a note...",
-          "Tags (Optional)": "Tags (Optional)",
-          "Write a tag...": "Write a tag...",
-          "Save Credential": "Save Credential",
+          "Add New Credential":
+            "Add New Credential",
+          "Fill in the details to secure your account":
+            "Fill in the details to secure your account",
+          "Title / Service Name":
+            "Title / Service Name",
+          "e.g. Google, Netflix, Work Email":
+            "e.g. Google, Netflix, Work Email",
+          "Username / Email":
+            "Username / Email",
+          "Username or email":
+            "Username or email",
+          "Website URL (Optional)":
+            "Website URL (Optional)",
+          "Note (Optional)":
+            "Note (Optional)",
+          "Write a note...":
+            "Write a note...",
+          "Tags (Optional)":
+            "Tags (Optional)",
+          "Write a tag...":
+            "Write a tag...",
+          "Save Credential":
+            "Save Credential",
           Strength: "Strength",
 
           // CredentialDetails
@@ -133,32 +165,47 @@ lng: localStorage.getItem('language') || 'en',
           Show: "Show",
           Created: "Created",
           Updated: "Updated",
-          "Failed to decrypt data. Wrong master password?": "Failed to decrypt data. Wrong master password?",
+          "Failed to decrypt data. Wrong master password?":
+            "Failed to decrypt data. Wrong master password?",
 
           // UpdateCredential
-          "Update Credential": "Update Credential",
-          "Update your saved credentials": "Update your saved credentials",
+          "Update Credential":
+            "Update Credential",
+          "Update your saved credentials":
+            "Update your saved credentials",
           "No Changes": "No Changes",
-          "You have not made any changes.": "You have not made any changes.",
-          "Write tags...": "Write tags...",
+          "You have not made any changes.":
+            "You have not made any changes.",
+          "Write tags...":
+            "Write tags...",
 
           // GeneratePassword
-          "Uppercase (A-Z)": "Uppercase (A-Z)",
-          "Lowercase (a-z)": "Lowercase (a-z)",
-          "Numbers (0-9)": "Numbers (0-9)",
-          "Symbols (!@#$)": "Symbols (!@#$)",
-          "Create strong, unhackable passwords": "Create strong, unhackable passwords",
-          "Click Generate...": "Click Generate...",
+          "Uppercase (A-Z)":
+            "Uppercase (A-Z)",
+          "Lowercase (a-z)":
+            "Lowercase (a-z)",
+          "Numbers (0-9)":
+            "Numbers (0-9)",
+          "Symbols (!@#$)":
+            "Symbols (!@#$)",
+          "Create strong, unhackable passwords":
+            "Create strong, unhackable passwords",
+          "Click Generate...":
+            "Click Generate...",
           Regenerate: "Regenerate",
           Copy: "Copy",
-          "Password Strength": "Password Strength",
-          "Password Length": "Password Length",
+          "Password Strength":
+            "Password Strength",
+          "Password Length":
+            "Password Length",
           STRONG: "STRONG",
           GOOD: "GOOD",
           FAIR: "FAIR",
           WEAK: "WEAK",
-          "Generating...": "Generating...",
-          "Generate Password": "Generate Password",
+          "Generating...":
+            "Generating...",
+          "Generate Password":
+            "Generate Password",
 
           // Shared
           Email: "Email",
@@ -174,80 +221,70 @@ lng: localStorage.getItem('language') || 'en',
           Enabled: "Enabled",
           Disabled: "Disabled",
 
-          // ChangePassword
-          "Change Password": "Change Password",
-          "Use a strong password": "Use a strong password",
+          // Validation
+          title_required:
+            "Title is required",
+          title_max:
+            "Title must be at most 100 characters",
+
+          username_required:
+            "Username is required",
+
+          password_required:
+            "Password is required",
+
+          website_max:
+            "Website must be at most 255 characters",
+          website_invalid:
+            "Enter a valid URL (e.g. https://example.com)",
+
+          notes_max:
+            "Notes must be at most 1000 characters",
+
+          email_required:
+            "Email is required",
+          email_invalid:
+            "Invalid email format",
+          email_max:
+            "Email is too long",
+
+          name_required:
+            "Name is required",
+          name_letters_only:
+            "Name can only contain letters",
+
+          password_min:
+            "Password must be at least 8 characters",
+          password_min_reset:
+            "Password must be at least 6 characters",
+          password_max:
+            "Password must not exceed 20 characters",
+
+          password_uppercase:
+            "Must contain at least one uppercase letter",
+          password_lowercase:
+            "Must contain at least one lowercase letter",
+          password_number:
+            "Must contain at least one number",
+          password_special:
+            "Must contain at least one special character",
+
+          confirm_password_required:
+            "Please confirm your password",
+          passwords_match:
+            "Passwords must match",
           "Current Password": "Current Password",
+          "New Password": "New Password",
           "Enter your current password": "Enter your current password",
           "Enter your new password": "Enter your new password",
           "Update Password": "Update Password",
-
-          // Profile Sidebar
-          Info: "Info",
-          Language: "Language",
-          "Delete Account": "Delete Account",
-
-          // Profile2FA
-          "Secure your account": "Secure your account",
-          "Enable 2FA": "Enable 2FA",
-          "2FA Enabled": "2FA Enabled",
-          "Backup Codes": "Backup Codes",
-          Done: "Done",
-          "Disable 2FA?": "Disable 2FA?",
-          "Your account will be less secure": "Your account will be less secure",
-          Disable: "Disable",
-          "Disabled title": "Disabled",
-          "2FA is enabled": "2FA is enabled",
-
-          // ProfileInfo
-          "New email": "New email",
-          "Master password": "Master password",
-          "Send Code": "Send Code",
-          "Code sent to": "Code sent to",
-          "2FA": "2FA",
-
-          // ProfileDelete
-          "Irreversible action": "Irreversible action",
-          "All your data will be permanently deleted.": "All your data will be permanently deleted.",
-          "Master Password": "Master Password",
-          "Enter Master password": "Enter Master password",
-          "Delete Account?": "Delete Account?",
-          "This action is irreversible.": "This action is irreversible.",
-          "Yes, delete it": "Yes, delete it",
-          Error: "Error",
-          // BackButton
-          "Back to Dashboard": "Back to Dashboard",
-
-          'Success': 'Success',
-          'Credential added successfully': 'Credential added successfully ✅',
-          'Something went wrong': 'Something went wrong',
-          'Update Password success': 'Password updated successfully',
-          'Choose your preferred language': 'Choose your preferred language',
-
-          'Email Updated!': 'Email Updated!',
-          'Are you sure?': 'Are you sure?',
-          'Do you want to delete this credential?': 'Do you want to delete this credential?',
-          'Yes, delete it': 'Yes, delete it',
-          'Deleted!': 'Deleted!',
-          'Credential deleted successfully': 'Credential deleted successfully ✅',
-
-          'Account Recovered!': 'Account Recovered!',
-          'Save your new recovery key — you won\'t see it again.': 'Save your new recovery key — you won\'t see it again.',
-          'If you lose this key and your password, your data cannot be recovered.': 'If you lose this key and your password, your data cannot be recovered.',
-          'I saved it': 'I saved it',
-          'Copied!': 'Copied!',
-          'Download': 'Download',
-          'Recovery Failed': 'Recovery Failed',
-          'Failed to generate password': 'Failed to generate password ❌',
-          'Update!': 'Updated!',
-          'Credential updated successfully': 'Credential updated successfully ✅',
-          'Failed to update credential': 'Failed to update credential ❌',
-          'Updated!': 'Updated!',
-
-
+          "Use a strong password": "Use a strong password",
+          "Recovery Key": "Recovery Key",
+"Enter your recovery key": "Enter your recovery key",
+"New Password": "New Password",
+"Enter your new password": "Enter your new password"
         }
       },
-
       ar: {
         translation: {
           // Navbar
@@ -261,109 +298,175 @@ lng: localStorage.getItem('language') || 'en',
           SignUp: "إنشاء حساب",
 
           // Hero
-          "Secure Your Passwords in One Safe Vault ": "احفظ كلمات مرورك في خزنة آمنة",
-          "Store, manage, and generate strong passwords with advanced encryption and two-factor authentication.": "خزّن وأدر وولّد كلمات مرور قوية مع تشفير متقدم والمصادقة الثنائية.",
+          "Secure Your Passwords in One Safe Vault ":
+            "احفظ كلمات مرورك في خزنة آمنة",
+          "Store, manage, and generate strong passwords with advanced encryption and two-factor authentication.":
+            "خزّن وأدر وولّد كلمات مرور قوية مع تشفير متقدم والمصادقة الثنائية.",
           "Create Account": "إنشاء حساب",
 
           // Features
           Features: "المميزات",
           "Secure Encryption": "تشفير آمن",
-          "Secure Encryption text": "جميع البيانات مشفرة بالكامل.",
-          "Password Generator": "مولّد كلمات المرور",
-          "Password Generator text": "أنشئ كلمات مرور عشوائية قوية.",
-          "Two Factor Authentication": "المصادقة الثنائية",
-          "Two Factor Authentication text": "طبقة حماية إضافية لحسابك.",
+          "Secure Encryption text":
+            "جميع البيانات مشفرة بالكامل.",
+          "Password Generator":
+            "مولّد كلمات المرور",
+          "Password Generator text":
+            "أنشئ كلمات مرور عشوائية قوية.",
+          "Two Factor Authentication":
+            "المصادقة الثنائية",
+          "Two Factor Authentication text":
+            "طبقة حماية إضافية لحسابك.",
           "Fast Search": "بحث سريع",
-          "Fast Search text": "ابحث عن بياناتك فوراً.",
+          "Fast Search text":
+            "ابحث عن بياناتك فوراً.",
 
           // Footer
-          "Palestine Technical University – Kadoorie": "جامعة فلسطين التقنية – خضوري",
-          "SecureVault – Password Manager": "سيكيور فولت – مدير كلمات المرور",
-          "A secure platform to store and manage your credentials safely.": "منصة آمنة لتخزين وإدارة بياناتك بأمان.",
-          "Prepared by: Maya Masri, Sojood Zidan": "إعداد: مايا مصري، سجود زيدان",
-          "SecureVault – All rights reserved.": "سيكيور فولت – جميع الحقوق محفوظة.",
+          "Palestine Technical University – Kadoorie":
+            "جامعة فلسطين التقنية – خضوري",
+          "SecureVault – Password Manager":
+            "سيكيور فولت – مدير كلمات المرور",
+          "A secure platform to store and manage your credentials safely.":
+            "منصة آمنة لتخزين وإدارة بياناتك بأمان.",
+          "Prepared by: Maya Masri, Sojood Zidan":
+            "إعداد: مايا مصري، سجود زيدان",
+          "SecureVault – All rights reserved.":
+            "سيكيور فولت – جميع الحقوق محفوظة.",
 
           // Login
           "Sign In title": "تسجيل الدخول",
-          "Access your secure vault": "ادخل إلى خزنتك الآمنة",
-          "Don't have an account yet?": "ليس لديك حساب بعد؟",
-          "Enter your email": "أدخل بريدك الإلكتروني",
+          "Access your secure vault":
+            "ادخل إلى خزنتك الآمنة",
+          "Don't have an account yet?":
+            "ليس لديك حساب بعد؟",
+          "Enter your email":
+            "أدخل بريدك الإلكتروني",
           "Remember me": "تذكرني",
-          "Forgot Password?": "نسيت كلمة المرور؟",
-          "Sign In button": "تسجيل الدخول",
+          "Forgot Password?":
+            "نسيت كلمة المرور؟",
+          "Sign In button":
+            "تسجيل الدخول",
 
           // Forgot Password
-          "Recover Account": "استعادة الحساب",
-          "Recover Account button": "استعادة الحساب",
-          "Use your recovery key to regain access": "استخدم مفتاح الاسترداد لاستعادة حسابك",
-          "Recovery Key": "مفتاح الاسترداد",
-          "Back to Login": "العودة لتسجيل الدخول",
+          "Recover Account":
+            "استعادة الحساب",
+          "Recover Account button":
+            "استعادة الحساب",
+          "Use your recovery key to regain access":
+            "استخدم مفتاح الاسترداد لاستعادة حسابك",
+          "Recovery Key":
+            "مفتاح الاسترداد",
+          "Back to Login":
+            "العودة لتسجيل الدخول",
 
           // Register
-          "Sign Up title": "إنشاء حساب",
-          "Create your secure account": "أنشئ حسابك الآمن",
-          "Enter the code sent to your email": "أدخل الكود المرسل إلى بريدك",
-          "Already have an account?": "لديك حساب بالفعل؟",
+          "Sign Up title":
+            "إنشاء حساب",
+          "Create your secure account":
+            "أنشئ حسابك الآمن",
+          "Enter the code sent to your email":
+            "أدخل الكود المرسل إلى بريدك",
+          "Already have an account?":
+            "لديك حساب بالفعل؟",
           "Your name": "اسمك",
-          "Confirm Password": "تأكيد كلمة المرور",
-          "Verification Code": "كود التحقق",
-          "6-digit code": "كود مكون من 6 أرقام",
-          "By creating an account, you agree to our": "بإنشاء حساب، أنت توافق على",
+          "Confirm Password":
+            "تأكيد كلمة المرور",
+          "Verification Code":
+            "كود التحقق",
+          "6-digit code":
+            "كود مكون من 6 أرقام",
+          "By creating an account, you agree to our":
+            "بإنشاء حساب، أنت توافق على",
           Terms: "الشروط",
           and: "و",
-          "Privacy Policy": "سياسة الخصوصية",
-          "Send Verification Code": "إرسال كود التحقق",
-          "Create Account button": "إنشاء الحساب",
+          "Privacy Policy":
+            "سياسة الخصوصية",
+          "Send Verification Code":
+            "إرسال كود التحقق",
+          "Create Account button":
+            "إنشاء الحساب",
           Back: "رجوع",
 
           // Credentials
-          "Credentials Vault": "خزنة البيانات",
+          "Credentials Vault":
+            "خزنة البيانات",
           All: "الكل",
           Personal: "شخصية",
           Work: "أعمال",
           Finance: "مالية",
           Social: "اجتماعية",
           Other: "أخرى",
-          "No credentials found": "لا توجد بيانات",
-          "No results for": "لا نتائج لـ",
-          "No credentials in": "لا توجد بيانات في",
+          "No credentials found":
+            "لا توجد بيانات",
+          "No results for":
+            "لا نتائج لـ",
+          "No credentials in":
+            "لا توجد بيانات في",
           Details: "التفاصيل",
-          "Edit Credential": "تعديل البيانات",
+          "Edit Credential":
+            "تعديل البيانات",
 
           // VaultControl
-          "Search your vault...": "ابحث في خزنتك...",
-          Generator: "مولّد كلمات المرور",
-          "Add New": "إضافة جديد",
+          "Search your vault...":
+            "ابحث في خزنتك...",
+          Generator:
+            "مولّد كلمات المرور",
+          "Add New":
+            "إضافة جديد",
 
           // StatCard
-          "Strong Passwords": "كلمات المرور القوية",
-          "Weak Passwords": "كلمات المرور الضعيفة",
-          "Reused Passwords": "كلمات المرور المكررة",
-          "New Password": "كلمة المرور الجديدة",
+          "Strong Passwords":
+            "كلمات المرور القوية",
+          "Weak Passwords":
+            "كلمات المرور الضعيفة",
+          "Reused Passwords":
+            "كلمات المرور المكررة",
+          "New Password":
+            "كلمة المرور الجديدة",
+
           // PasswordExpiryBanner
-          password_expiry_one: "كلمة مرور واحدة لم يتم تحديثها منذ 90+ يوم — راجعها",
-          password_expiry_other: "{{count}} كلمة مرور لم يتم تحديثها منذ 90+ يوم — راجعها",
+          password_expiry_one:
+            "كلمة مرور واحدة لم يتم تحديثها منذ 90+ يوم — راجعها",
+          password_expiry_other:
+            "{{count}} كلمة مرور لم يتم تحديثها منذ 90+ يوم — راجعها",
 
           // Verify2FA
-          "Two-Factor Authentication": "المصادقة الثنائية",
-          "Enter your code": "أدخل الكود",
-          "Verified Successfully": "تم التحقق بنجاح",
-          "Redirecting to dashboard...": "جارٍ التوجيه للوحة التحكم...",
+          "Two-Factor Authentication":
+            "المصادقة الثنائية",
+          "Enter your code":
+            "أدخل الكود",
+          "Verified Successfully":
+            "تم التحقق بنجاح",
+          "Redirecting to dashboard...":
+            "جارٍ التوجيه للوحة التحكم...",
           Verify: "تحقق",
-          "code": "الكود",
+          code: "الكود",
+
           // AddCredential
-          "Add New Credential": "إضافة بيانات جديدة",
-          "Fill in the details to secure your account": "أدخل التفاصيل لتأمين حسابك",
-          "Title / Service Name": "العنوان / اسم الخدمة",
-          "e.g. Google, Netflix, Work Email": "مثال: جوجل، نتفليكس، بريد العمل",
-          "Username / Email": "اسم المستخدم / البريد الإلكتروني",
-          "Username or email": "اسم المستخدم أو البريد",
-          "Website URL (Optional)": "رابط الموقع (اختياري)",
-          "Note (Optional)": "ملاحظة (اختياري)",
-          "Write a note...": "اكتب ملاحظة...",
-          "Tags (Optional)": "وسوم (اختياري)",
-          "Write a tag...": "اكتب وسماً...",
-          "Save Credential": "حفظ البيانات",
+          "Add New Credential":
+            "إضافة بيانات جديدة",
+          "Fill in the details to secure your account":
+            "أدخل التفاصيل لتأمين حسابك",
+          "Title / Service Name":
+            "العنوان / اسم الخدمة",
+          "e.g. Google, Netflix, Work Email":
+            "مثال: جوجل، نتفليكس، بريد العمل",
+          "Username / Email":
+            "اسم المستخدم / البريد الإلكتروني",
+          "Username or email":
+            "اسم المستخدم أو البريد",
+          "Website URL (Optional)":
+            "رابط الموقع (اختياري)",
+          "Note (Optional)":
+            "ملاحظة (اختياري)",
+          "Write a note...":
+            "اكتب ملاحظة...",
+          "Tags (Optional)":
+            "وسوم (اختياري)",
+          "Write a tag...":
+            "اكتب وسماً...",
+          "Save Credential":
+            "حفظ البيانات",
           Strength: "القوة",
 
           // CredentialDetails
@@ -371,32 +474,49 @@ lng: localStorage.getItem('language') || 'en',
           Show: "إظهار",
           Created: "تاريخ الإنشاء",
           Updated: "تاريخ التعديل",
-          "Failed to decrypt data. Wrong master password?": "فشل فك التشفير. هل كلمة المرور الرئيسية صحيحة؟",
+          "Failed to decrypt data. Wrong master password?":
+            "فشل فك التشفير. هل كلمة المرور الرئيسية صحيحة؟",
 
           // UpdateCredential
-          "Update Credential": "تعديل البيانات",
-          "Update your saved credentials": "عدّل بياناتك المحفوظة",
-          "No Changes": "لا يوجد تغييرات",
-          "You have not made any changes.": "لم تقم بأي تغييرات.",
-          "Write tags...": "اكتب وسوماً...",
+          "Update Credential":
+            "تعديل البيانات",
+          "Update your saved credentials":
+            "عدّل بياناتك المحفوظة",
+          "No Changes":
+            "لا يوجد تغييرات",
+          "You have not made any changes.":
+            "لم تقم بأي تغييرات.",
+          "Write tags...":
+            "اكتب وسوماً...",
 
           // GeneratePassword
-          "Uppercase (A-Z)": "أحرف كبيرة (A-Z)",
-          "Lowercase (a-z)": "أحرف صغيرة (a-z)",
-          "Numbers (0-9)": "أرقام (0-9)",
-          "Symbols (!@#$)": "رموز (!@#$)",
-          "Create strong, unhackable passwords": "أنشئ كلمات مرور قوية لا يمكن اختراقها",
-          "Click Generate...": "اضغط توليد...",
-          Regenerate: "توليد جديد",
+          "Uppercase (A-Z)":
+            "أحرف كبيرة (A-Z)",
+          "Lowercase (a-z)":
+            "أحرف صغيرة (a-z)",
+          "Numbers (0-9)":
+            "أرقام (0-9)",
+          "Symbols (!@#$)":
+            "رموز (!@#$)",
+          "Create strong, unhackable passwords":
+            "أنشئ كلمات مرور قوية لا يمكن اختراقها",
+          "Click Generate...":
+            "اضغط توليد...",
+          Regenerate:
+            "توليد جديد",
           Copy: "نسخ",
-          "Password Strength": "قوة كلمة المرور",
-          "Password Length": "طول كلمة المرور",
+          "Password Strength":
+            "قوة كلمة المرور",
+          "Password Length":
+            "طول كلمة المرور",
           STRONG: "قوية",
           GOOD: "جيدة",
           FAIR: "مقبولة",
           WEAK: "ضعيفة",
-          "Generating...": "جارٍ التوليد...",
-          "Generate Password": "توليد كلمة مرور",
+          "Generating...":
+            "جارٍ التوليد...",
+          "Generate Password":
+            "توليد كلمة مرور",
 
           // Shared
           Email: "البريد الإلكتروني",
@@ -412,77 +532,72 @@ lng: localStorage.getItem('language') || 'en',
           Enabled: "مفعّلة",
           Disabled: "معطّلة",
 
-          // ChangePassword
-          "Change Password": "تغيير كلمة المرور",
-          "Use a strong password": "استخدم كلمة مرور قوية",
+          // Validation
+          title_required:
+            "العنوان مطلوب",
+          title_max:
+            "يجب ألا يتجاوز العنوان 100 حرف",
+
+          username_required:
+            "اسم المستخدم مطلوب",
+
+          password_required:
+            "كلمة المرور مطلوبة",
+
+          website_max:
+            "يجب ألا يتجاوز الرابط 255 حرف",
+          website_invalid:
+            "أدخل رابط صحيح مثل https://example.com",
+
+          notes_max:
+            "يجب ألا تتجاوز الملاحظات 1000 حرف",
+
+          email_required:
+            "البريد الإلكتروني مطلوب",
+          email_invalid:
+            "صيغة البريد الإلكتروني غير صحيحة",
+          email_max:
+            "البريد الإلكتروني طويل جدًا",
+
+          name_required:
+            "الاسم مطلوب",
+          name_letters_only:
+            "الاسم يجب أن يحتوي على أحرف فقط",
+
+          password_min:
+            "يجب أن تكون كلمة المرور 8 أحرف على الأقل",
+          password_min_reset:
+            "يجب أن تكون كلمة المرور 6 أحرف على الأقل",
+          password_max:
+            "يجب ألا تتجاوز كلمة المرور 20 حرفًا",
+
+          password_uppercase:
+            "يجب أن تحتوي على حرف كبير واحد على الأقل",
+          password_lowercase:
+            "يجب أن تحتوي على حرف صغير واحد على الأقل",
+          password_number:
+            "يجب أن تحتوي على رقم واحد على الأقل",
+          password_special:
+            "يجب أن تحتوي على رمز خاص واحد على الأقل",
+
+          confirm_password_required:
+            "يرجى تأكيد كلمة المرور",
+          passwords_match:
+            "كلمتا المرور غير متطابقتين",
           "Current Password": "كلمة المرور الحالية",
+          "New Password": "كلمة المرور الجديدة",
           "Enter your current password": "أدخل كلمة المرور الحالية",
           "Enter your new password": "أدخل كلمة المرور الجديدة",
           "Update Password": "تحديث كلمة المرور",
-
-          // Profile Sidebar
-          Info: "المعلومات",
-          Language: "اللغة",
-          "Delete Account": "حذف الحساب",
-
-          // Profile2FA
-          "Secure your account": "أمّن حسابك",
-          "Enable 2FA": "تفعيل المصادقة الثنائية",
-          "2FA Enabled": "تم تفعيل المصادقة الثنائية",
-          "Backup Codes": "رموز الاسترداد",
-          Done: "تم",
-          "Disable 2FA?": "تعطيل المصادقة الثنائية؟",
-          "Your account will be less secure": "سيصبح حسابك أقل أماناً",
-          Disable: "تعطيل",
-          "Disabled title": "تم التعطيل",
-          "2FA is enabled": "المصادقة الثنائية مفعّلة",
-
-          // ProfileInfo
-          "New email": "البريد الجديد",
-          "Master password": "كلمة المرور الرئيسية",
-          "Send Code": "إرسال الكود",
-          "Code sent to": "تم إرسال الكود إلى",
-          "2FA": "المصادقة الثنائية",
-
-          // ProfileDelete
-          "Irreversible action": "إجراء لا يمكن التراجع عنه",
-          "All your data will be permanently deleted.": "سيتم حذف جميع بياناتك نهائياً.",
-          "Master Password": "كلمة المرور الرئيسية",
-          "Enter Master password": "أدخل كلمة المرور الرئيسية",
-          "Delete Account?": "حذف الحساب؟",
-          "This action is irreversible.": "هذا الإجراء لا يمكن التراجع عنه.",
-          "Yes, delete it": "نعم، احذفه",
-          Error: "خطأ",
-          // BackButton
-          "Back to Dashboard": "العودة للوحة التحكم",
-
-          'Success': 'تم بنجاح',
-          'Credential added successfully': 'تم إضافة البيانات بنجاح ✅',
-          'Something went wrong': 'حدث خطأ ما',
-          'Update Password success': 'تم تحديث كلمة المرور بنجاح',
-          'Choose your preferred language': 'اختر لغتك المفضلة',
-
-          'Email Updated!': 'تم تحديث البريد!',
-          'Are you sure?': 'هل أنت متأكد؟',
-          'Do you want to delete this credential?': 'هل تريد حذف هذه البيانات؟',
-          'Yes, delete it': 'نعم، احذفه',
-          'Deleted!': 'تم الحذف!',
-          'Credential deleted successfully': 'تم حذف البيانات بنجاح ✅',
-          'Account Recovered!': 'تم استعادة الحساب!',
-          'Save your new recovery key — you won\'t see it again.': 'احفظ مفتاح الاسترداد الجديد — لن تراه مرة أخرى.',
-          'If you lose this key and your password, your data cannot be recovered.': 'إذا فقدت هذا المفتاح وكلمة مرورك، لن يمكن استعادة بياناتك.',
-          'I saved it': 'لقد حفظته',
-          'Copied!': 'تم النسخ!',
-          'Download': 'تحميل',
-          'Recovery Failed': 'فشل الاسترداد',
-          'Failed to generate password': 'فشل توليد كلمة المرور ❌',
-          'Update!': 'تم التحديث!',
-          'Credential updated successfully': 'تم تحديث البيانات بنجاح ✅',
-          'Failed to update credential': 'فشل تحديث البيانات ❌',
-          'Updated!': 'تم التحديث!',
+          "Use a strong password": "استخدم كلمة مرور قوية",
+          "Recovery Key": "مفتاح الاسترداد",
+"Enter your recovery key": "أدخل مفتاح الاسترداد",
+"New Password": "كلمة المرور الجديدة",
+"Enter your new password": "أدخل كلمة المرور الجديدة"
         }
       }
     },
+
 
     interpolation: {
       escapeValue: false

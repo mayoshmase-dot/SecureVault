@@ -8,14 +8,15 @@ import { useTranslation } from 'react-i18next'
 export default function ProfileLanguage() {
     const { t } = useTranslation()
 
-    const changeLanguage = async (lng) => {
-        i18n.changeLanguage(lng)
-        try {
-            await AuthAxiosInstance.put('/auth/update-language', { language: lng })
-        } catch (err) {
-            console.error('Failed to update language on server', err)
-        }
+  const changeLanguage = async (lng) => {
+    i18n.changeLanguage(lng)
+    localStorage.setItem('language', lng)  // ← ضيفها هون كمان
+    try {
+        await AuthAxiosInstance.put('/auth/update-language', { language: lng })
+    } catch (err) {
+        console.error('Failed to update language on server', err)
     }
+}
 
     return (
         <Box py={5} px={3}>

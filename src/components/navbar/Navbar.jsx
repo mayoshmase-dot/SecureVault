@@ -34,22 +34,21 @@ export default function Navbar() {
     navigate('/login')
   }
 
-  const changeLanguage = async (lng) => {
-    i18n.changeLanguage(lng)
-    localStorage.setItem('language', lng)
-    try {
-      await AuthAxiosInstance.put('/auth/update-language', { language: lng })
-    } catch (err) {
-      console.error('Failed to update language on server', err)
+  const toggleLanguage = async () => {
+    const newLng = i18n.language === 'ar' ? 'en' : 'ar'
+    i18n.changeLanguage(newLng)
+    localStorage.setItem('language', newLng)  
+
+    if (token) {
+      try {
+        await AuthAxiosInstance.put('/auth/update-language', { language: newLng })
+      } catch (err) {
+        console.error('Failed to update language on server', err)
+      }
     }
   }
 
-  const toggleLng = () => changeLanguage(i18n.language === 'ar' ? 'en' : 'ar')
-
-  const btnSx = {
-    '&:hover': { color: 'secondary.main' },
-    gap: .5
-  }
+  const isAr = i18n.language === 'ar'
 
   return (
     <>
@@ -63,55 +62,67 @@ export default function Navbar() {
 
           <Box sx={{ display: { xs: 'none', md: 'flex' } }} alignItems="center" gap={2}>
 
-            <Button component={RouterLink} to='/' color="inherit" startIcon={<HomeIcon />} sx={btnSx}>
+            <Button component={RouterLink} to='/' color="inherit" startIcon={<HomeIcon />}
+              sx={{ '&:hover': { color: 'secondary.main' }, gap: isAr ? 1 : 0.5 }}>
               {t('Home')}
             </Button>
 
             {token ? (
               <>
-                <Button component={RouterLink} to='/dashboard' color="inherit" startIcon={<DashboardIcon />} sx={btnSx}>
+                <Button component={RouterLink} to='/dashboard' color="inherit" startIcon={<DashboardIcon />}
+                  sx={{ '&:hover': { color: 'secondary.main' }, gap: isAr ? 1 : 0.5 }}>
                   {t('Dashboard')}
                 </Button>
 
-                <Button onClick={handleLogout} color="inherit" startIcon={<LogoutIcon />} sx={btnSx}>
+                <Button onClick={handleLogout} color="inherit" startIcon={<LogoutIcon />}
+                  sx={{ '&:hover': { color: 'secondary.main' }, gap: isAr ? 1 : 0.5 }}>
                   {t('Logout')}
                 </Button>
 
                 <Button component={RouterLink} to='/generatePassword' startIcon={<VpnKeyIcon />}
-                  sx={{ color: 'white', ...btnSx }}>
+                  sx={{ color: 'white', '&:hover': { color: 'secondary.main' }, gap: isAr ? 1 : 0.5 }}>
                   {t('Generate')}
                 </Button>
 
                 <Button component={RouterLink} to='/profile' startIcon={<AccountCircleIcon />}
-                  sx={{ color: 'white', ...btnSx }}>
+                  sx={{ color: 'white', '&:hover': { color: 'secondary.main' }, gap: isAr ? 1 : 0.5 }}>
                   {t('Profile')}
                 </Button>
               </>
             ) : (
               <>
-                <Button component={RouterLink} to='/login' color="inherit" startIcon={<LoginIcon />} sx={btnSx}>
+                <Button component={RouterLink} to='/login' color="inherit" startIcon={<LoginIcon />}
+                  sx={{ '&:hover': { color: 'secondary.main' }, gap: isAr ? 1 : 0.5 }}>
                   {t('SignIn')}
                 </Button>
 
-                <Button component={RouterLink} to='/register' variant="contained" startIcon={<PersonAddIcon />}
+                <Button
+                  component={RouterLink}
+                  to='/register'
+                  variant="contained"
+                  startIcon={<PersonAddIcon />}
                   sx={{
-                    borderRadius: 5, px: 2, gap: 0.5,
-                    backgroundColor: 'secondary.main', fontWeight: 700,
+                    borderRadius: 5, px: 2,
+                    gap: isAr ? 1 : 0.5,
+                    backgroundColor: 'secondary.main',
+                    fontWeight: 700,
                     '&:hover': { backgroundColor: 'secondary.dark' }
-                  }}>
+                  }}
+                >
                   {t('SignUp')}
                 </Button>
               </>
             )}
 
-            <IconButton onClick={toggleLng} sx={{ color: 'white', '&:hover': { color: 'secondary.main' } }}>
+            <IconButton onClick={toggleLanguage}
+              sx={{ color: 'white', '&:hover': { color: 'secondary.main' } }}>
               <LanguageIcon />
             </IconButton>
 
           </Box>
 
           <Box sx={{ display: { xs: 'flex', md: 'none' } }} alignItems="center" gap={1}>
-            <IconButton onClick={toggleLng} sx={{ color: 'white' }}>
+            <IconButton onClick={toggleLanguage} sx={{ color: 'white' }}>
               <LanguageIcon />
             </IconButton>
             <IconButton sx={{ color: 'white' }} onClick={() => setDrawerOpen(true)}>
@@ -139,7 +150,7 @@ export default function Navbar() {
         <Box sx={{ width: 240 }}>
 
           <Box p={2}>
-            <Typography variant='h6' fontWeight='bold'>
+            <Typography variant={'h6'} fontWeight={'bold'}>
               {t('SecureVault')}
             </Typography>
           </Box>
@@ -196,7 +207,7 @@ export default function Navbar() {
               <>
                 <ListItem disablePadding>
                   <ListItemButton component={RouterLink} to='/login' onClick={() => setDrawerOpen(false)}
-                    sx={{ '&:hover': { backgroundColor: 'rgba(48,168,90,0.15)', color: 'secondary.main' } }}>
+                    sx={{ '&:hover': { backgroundColor: 'rgba(48,168,90,0.15)', color: 'secondary.main', '& .MuiListItemIcon-root': { color: 'secondary.main' } } }}>
                     <ListItemIcon sx={{ color: 'white' }}><LoginIcon /></ListItemIcon>
                     <ListItemText primary={t('SignIn')} />
                   </ListItemButton>
@@ -204,7 +215,7 @@ export default function Navbar() {
 
                 <ListItem disablePadding>
                   <ListItemButton component={RouterLink} to='/register' onClick={() => setDrawerOpen(false)}
-                    sx={{ '&:hover': { backgroundColor: 'rgba(48,168,90,0.15)', color: 'secondary.main' } }}>
+                    sx={{ '&:hover': { backgroundColor: 'rgba(48,168,90,0.15)', color: 'secondary.main', '& .MuiListItemIcon-root': { color: 'secondary.main' } } }}>
                     <ListItemIcon sx={{ color: 'white' }}><PersonAddIcon /></ListItemIcon>
                     <ListItemText primary={t('SignUp')} />
                   </ListItemButton>
@@ -215,10 +226,10 @@ export default function Navbar() {
             <Divider sx={{ borderColor: 'rgba(255,255,255,0.1)', my: 1 }} />
 
             <ListItem disablePadding>
-              <ListItemButton onClick={() => { toggleLng(); setDrawerOpen(false); }}
+              <ListItemButton onClick={() => { toggleLanguage(); setDrawerOpen(false); }}
                 sx={{ '&:hover': { backgroundColor: 'rgba(48,168,90,0.15)', color: 'secondary.main' } }}>
                 <ListItemIcon sx={{ color: 'white' }}><LanguageIcon /></ListItemIcon>
-                <ListItemText primary={i18n.language === 'ar' ? 'English' : 'العربية'} />
+                <ListItemText primary={isAr ? 'English' : 'العربية'} />
               </ListItemButton>
             </ListItem>
 

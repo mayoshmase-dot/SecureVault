@@ -22,10 +22,12 @@ export default function Login() {
   const setToken = useAuthStore((state) => state.setToken);
   const setMasterPassword = useVaultStore((state) => state.setMasterPassword);
   const setTempToken = useAuthStore((state) => state.setTempToken)
-  const { t } = useTranslation();
+const { t } = useTranslation()
+
+  const schema = LoginSchema(t)
 
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm({
-    resolver: yupResolver(LoginSchema),
+    resolver: yupResolver(schema),
     mode: "all"
   });
 
