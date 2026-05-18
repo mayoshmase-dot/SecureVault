@@ -20,6 +20,7 @@ import useAuthStore from '../../store/useAuthStore';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import i18n from '../../i18next';
+import AuthAxiosInstance from '../../api/AuthAxiosInstance';
 
 export default function Navbar() {
   const token = useAuthStore((state) => state.token)
@@ -33,13 +34,21 @@ export default function Navbar() {
     navigate('/login')
   }
 
-  const toggleLanguage = () => {
-    i18n.changeLanguage(i18n.language === 'ar' ? 'en' : 'ar')
+  const changeLanguage = async (lng) => {
+    i18n.changeLanguage(lng)
+    localStorage.setItem('language', lng)
+    try {
+      await AuthAxiosInstance.put('/auth/update-language', { language: lng })
+    } catch (err) {
+      console.error('Failed to update language on server', err)
+    }
   }
+
+  const toggleLng = () => changeLanguage(i18n.language === 'ar' ? 'en' : 'ar')
 
   const btnSx = {
     '&:hover': { color: 'secondary.main' },
-    gap: 1
+    gap: .5
   }
 
   return (
@@ -86,7 +95,7 @@ export default function Navbar() {
 
                 <Button component={RouterLink} to='/register' variant="contained" startIcon={<PersonAddIcon />}
                   sx={{
-                    borderRadius: 5, px: 2, gap: 1,
+                    borderRadius: 5, px: 2, gap: 0.5,
                     backgroundColor: 'secondary.main', fontWeight: 700,
                     '&:hover': { backgroundColor: 'secondary.dark' }
                   }}>
@@ -95,14 +104,14 @@ export default function Navbar() {
               </>
             )}
 
-            <IconButton onClick={toggleLanguage} sx={{ color: 'white', '&:hover': { color: 'secondary.main' } }}>
+            <IconButton onClick={toggleLng} sx={{ color: 'white', '&:hover': { color: 'secondary.main' } }}>
               <LanguageIcon />
             </IconButton>
 
           </Box>
 
           <Box sx={{ display: { xs: 'flex', md: 'none' } }} alignItems="center" gap={1}>
-            <IconButton onClick={toggleLanguage} sx={{ color: 'white' }}>
+            <IconButton onClick={toggleLng} sx={{ color: 'white' }}>
               <LanguageIcon />
             </IconButton>
             <IconButton sx={{ color: 'white' }} onClick={() => setDrawerOpen(true)}>
@@ -206,7 +215,7 @@ export default function Navbar() {
             <Divider sx={{ borderColor: 'rgba(255,255,255,0.1)', my: 1 }} />
 
             <ListItem disablePadding>
-              <ListItemButton onClick={() => { toggleLanguage(); setDrawerOpen(false); }}
+              <ListItemButton onClick={() => { toggleLng(); setDrawerOpen(false); }}
                 sx={{ '&:hover': { backgroundColor: 'rgba(48,168,90,0.15)', color: 'secondary.main' } }}>
                 <ListItemIcon sx={{ color: 'white' }}><LanguageIcon /></ListItemIcon>
                 <ListItemText primary={i18n.language === 'ar' ? 'English' : 'العربية'} />

@@ -1,14 +1,17 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import AuthAxiosInstance from '../api/AuthAxiosInstance';
-import Swal from 'sweetalert2';
-import { useNavigate } from 'react-router-dom';
-import { encrypt } from '../crypto';
-import useVaultStore from '../store/useVaultStore';
+// useUpdateCredential.js
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import AuthAxiosInstance from '../api/AuthAxiosInstance'
+import Swal from 'sweetalert2'
+import { useNavigate } from 'react-router-dom'
+import { encrypt } from '../crypto'
+import useVaultStore from '../store/useVaultStore'
+import { useTranslation } from 'react-i18next'
 
 export default function useUpdateCredential({ id }) {
-    const queryClient = useQueryClient();
-    const navigate = useNavigate();
-    const masterPassword = useVaultStore((state) => state.masterPassword);
+    const queryClient = useQueryClient()
+    const navigate = useNavigate()
+    const masterPassword = useVaultStore((state) => state.masterPassword)
+    const { t } = useTranslation()
 
     return useMutation({
         mutationFn: async (data) => {
@@ -18,16 +21,16 @@ export default function useUpdateCredential({ id }) {
                 password: await encrypt(data.password, masterPassword),
                 notes: data.notes ? await encrypt(data.notes, masterPassword) : '',
             };
-            const response = await AuthAxiosInstance.put(`/vault/credentials/${id}`, encryptedData);
-            return response.data;
+            const response = await AuthAxiosInstance.put(`/vault/credentials/${id}`, encryptedData)
+            return response.data
         },
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["credential"] });
-            Swal.fire({ icon: "success", title: "Update!", text: "Credential updated successfully ✅" })
-                .then(() => navigate('/dashboard'));
+            queryClient.invalidateQueries({ queryKey: ["credential"] })
+            Swal.fire({ icon: "success", title: t('Update!'), text: t('Credential updated successfully') })
+                .then(() => navigate('/dashboard'))
         },
         onError: (error) => {
-            Swal.fire({ icon: 'error', title: 'Error', text: error?.response?.data?.message || 'Failed to update credential ❌' });
+            Swal.fire({ icon: 'error', title: t('Error'), text: error?.response?.data?.message || t('Failed to update credential') })
         },
-    });
+    })
 }

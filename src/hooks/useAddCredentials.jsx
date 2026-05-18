@@ -4,11 +4,13 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import useVaultStore from "../store/useVaultStore";
 import { encrypt } from "../crypto";
+import { useTranslation } from "react-i18next";
 
 export default function useAddCredentials() {
     const queryClient = useQueryClient();
     const navigate = useNavigate();
     const { masterPassword } = useVaultStore();
+    const { t } = useTranslation();
 
     return useMutation({
         mutationFn: async (data) => {
@@ -35,25 +37,19 @@ export default function useAddCredentials() {
         },
 
         onSuccess: () => {
-            queryClient.invalidateQueries({
-                queryKey: ["credential"],
-            });
-
+            queryClient.invalidateQueries({ queryKey: ["credential"] });
             Swal.fire({
                 icon: "success",
-                title: "Success",
-                text: "Credential added successfully ✅",
+                title: t('Success'),
+                text: t('Credential added successfully'),
             }).then(() => navigate("/dashboard"));
         },
 
         onError: (error) => {
             Swal.fire({
                 icon: "error",
-                title: "Error",
-                text:
-                    error.response?.data?.message ||
-                    error.message ||
-                    "Something went wrong",
+                title: t('Error'),
+                text: error.response?.data?.message || error.message || t('Something went wrong'),
             });
         },
     });

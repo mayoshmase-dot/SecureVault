@@ -4,26 +4,24 @@ import axiosInstance from "../api/axiosInstance";
 import Swal from "sweetalert2";
 import useVaultStore from "../store/useVaultStore";
 import { decrypt, encrypt, safeParse, deriveAuthHash } from "../crypto";
+import { useTranslation } from "react-i18next";
 
 export default function useChangeMasterPassword() {
     const queryClient = useQueryClient();
     const setMasterPassword = useVaultStore((state) => state.setMasterPassword);
+    const { t } = useTranslation();
 
     return useMutation({
         mutationFn: async ({ currentPassword, newPassword }) => {
-
-            // 1. جيب الإيميل والـ kdf-params
             const profileRes = await AuthAxiosInstance.get('/auth/me')
             const email = profileRes.data?.data?.email
 
             const kdfRes = await axiosInstance.get(`/auth/kdf-params/${email}`)
             const { masterPasswordSeed, kdfIterations } = kdfRes.data.data
 
-            // 2. اعمل hash للباسورد القديم والجديد
             const currentAuthHash = await deriveAuthHash(currentPassword, masterPasswordSeed, kdfIterations)
             const newAuthHash = await deriveAuthHash(newPassword, masterPasswordSeed, kdfIterations)
 
-            // 3. جيب الـ credentials وأعد تشفيرها
             const credRes = await AuthAxiosInstance.get('/vault/credentials')
             const credentials = credRes.data?.data || []
 
@@ -47,13 +45,11 @@ export default function useChangeMasterPassword() {
                 })
             )
 
-            // 4. غير الباسورد على السيرفر
             const response = await AuthAxiosInstance.put('/auth/change-password', {
                 currentPassword: currentAuthHash,
                 newPassword: newAuthHash
             })
 
-            // 5. ارفع الـ credentials المشفرة بالجديد
             await Promise.all(
                 reEncrypted
                     .filter(Boolean)
@@ -72,8 +68,8 @@ export default function useChangeMasterPassword() {
             queryClient.invalidateQueries({ queryKey: ['credential'] })
             Swal.fire({
                 icon: "success",
-                title: "Success",
-                text: data?.message || "Password updated successfully",
+                title: t('Success'),
+                text: data?.message || t('Update Password success'),
                 confirmButtonColor: "#7c3aed"
             })
         },
@@ -81,8 +77,8 @@ export default function useChangeMasterPassword() {
         onError: (error) => {
             Swal.fire({
                 icon: "error",
-                title: "Error",
-                text: error?.response?.data?.message || "Request failed",
+                title: t('Error'),
+                text: error?.response?.data?.message || t('Something went wrong'),
                 confirmButtonColor: "#dc2626"
             })
         }

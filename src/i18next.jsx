@@ -4,7 +4,7 @@ import { initReactI18next } from 'react-i18next';
 i18n
   .use(initReactI18next)
   .init({
-    lng: 'ar',
+lng: localStorage.getItem('language') || 'en',
     debug: true,
 
     resources: {
@@ -217,6 +217,34 @@ i18n
           Error: "Error",
           // BackButton
           "Back to Dashboard": "Back to Dashboard",
+
+          'Success': 'Success',
+          'Credential added successfully': 'Credential added successfully ✅',
+          'Something went wrong': 'Something went wrong',
+          'Update Password success': 'Password updated successfully',
+          'Choose your preferred language': 'Choose your preferred language',
+
+          'Email Updated!': 'Email Updated!',
+          'Are you sure?': 'Are you sure?',
+          'Do you want to delete this credential?': 'Do you want to delete this credential?',
+          'Yes, delete it': 'Yes, delete it',
+          'Deleted!': 'Deleted!',
+          'Credential deleted successfully': 'Credential deleted successfully ✅',
+
+          'Account Recovered!': 'Account Recovered!',
+          'Save your new recovery key — you won\'t see it again.': 'Save your new recovery key — you won\'t see it again.',
+          'If you lose this key and your password, your data cannot be recovered.': 'If you lose this key and your password, your data cannot be recovered.',
+          'I saved it': 'I saved it',
+          'Copied!': 'Copied!',
+          'Download': 'Download',
+          'Recovery Failed': 'Recovery Failed',
+          'Failed to generate password': 'Failed to generate password ❌',
+          'Update!': 'Updated!',
+          'Credential updated successfully': 'Credential updated successfully ✅',
+          'Failed to update credential': 'Failed to update credential ❌',
+          'Updated!': 'Updated!',
+
+
         }
       },
 
@@ -427,6 +455,31 @@ i18n
           Error: "خطأ",
           // BackButton
           "Back to Dashboard": "العودة للوحة التحكم",
+
+          'Success': 'تم بنجاح',
+          'Credential added successfully': 'تم إضافة البيانات بنجاح ✅',
+          'Something went wrong': 'حدث خطأ ما',
+          'Update Password success': 'تم تحديث كلمة المرور بنجاح',
+          'Choose your preferred language': 'اختر لغتك المفضلة',
+
+          'Email Updated!': 'تم تحديث البريد!',
+          'Are you sure?': 'هل أنت متأكد؟',
+          'Do you want to delete this credential?': 'هل تريد حذف هذه البيانات؟',
+          'Yes, delete it': 'نعم، احذفه',
+          'Deleted!': 'تم الحذف!',
+          'Credential deleted successfully': 'تم حذف البيانات بنجاح ✅',
+          'Account Recovered!': 'تم استعادة الحساب!',
+          'Save your new recovery key — you won\'t see it again.': 'احفظ مفتاح الاسترداد الجديد — لن تراه مرة أخرى.',
+          'If you lose this key and your password, your data cannot be recovered.': 'إذا فقدت هذا المفتاح وكلمة مرورك، لن يمكن استعادة بياناتك.',
+          'I saved it': 'لقد حفظته',
+          'Copied!': 'تم النسخ!',
+          'Download': 'تحميل',
+          'Recovery Failed': 'فشل الاسترداد',
+          'Failed to generate password': 'فشل توليد كلمة المرور ❌',
+          'Update!': 'تم التحديث!',
+          'Credential updated successfully': 'تم تحديث البيانات بنجاح ✅',
+          'Failed to update credential': 'فشل تحديث البيانات ❌',
+          'Updated!': 'تم التحديث!',
         }
       }
     },

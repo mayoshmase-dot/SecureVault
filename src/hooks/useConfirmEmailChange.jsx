@@ -1,9 +1,12 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import AuthAxiosInstance from '../api/AuthAxiosInstance'
 import Swal from 'sweetalert2'
+import { useTranslation } from 'react-i18next'
 
 export default function useConfirmEmailChange() {
     const queryClient = useQueryClient()
+    const { t } = useTranslation()
+
     return useMutation({
         mutationFn: async (code) => {
             const response = await AuthAxiosInstance.post('/auth/confirm-email-change', { code })
@@ -11,10 +14,10 @@ export default function useConfirmEmailChange() {
         },
         onSuccess: (data) => {
             queryClient.invalidateQueries({ queryKey: ['profile'] })
-            Swal.fire({ title: 'Email Updated!', text: data.message, icon: 'success', confirmButtonColor: '#7c3aed' })
+            Swal.fire({ title: t('Email Updated!'), text: data.message, icon: 'success', confirmButtonColor: '#7c3aed' })
         },
         onError: (error) => {
-            Swal.fire({ title: 'Error!', text: error.response?.data?.message || 'Something went wrong', icon: 'error' })
+            Swal.fire({ title: t('Error'), text: error.response?.data?.message || t('Something went wrong'), icon: 'error' })
         }
     })
 }
