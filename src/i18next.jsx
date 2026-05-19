@@ -280,9 +280,9 @@ i18n
           "Update Password": "Update Password",
           "Use a strong password": "Use a strong password",
           "Recovery Key": "Recovery Key",
-"Enter your recovery key": "Enter your recovery key",
-"New Password": "New Password",
-"Enter your new password": "Enter your new password"
+          "Enter your recovery key": "Enter your recovery key",
+          "New Password": "New Password",
+          "Enter your new password": "Enter your new password"
         }
       },
       ar: {
@@ -591,9 +591,9 @@ i18n
           "Update Password": "تحديث كلمة المرور",
           "Use a strong password": "استخدم كلمة مرور قوية",
           "Recovery Key": "مفتاح الاسترداد",
-"Enter your recovery key": "أدخل مفتاح الاسترداد",
-"New Password": "كلمة المرور الجديدة",
-"Enter your new password": "أدخل كلمة المرور الجديدة"
+          "Enter your recovery key": "أدخل مفتاح الاسترداد",
+          "New Password": "كلمة المرور الجديدة",
+          "Enter your new password": "أدخل كلمة المرور الجديدة"
         }
       }
     },

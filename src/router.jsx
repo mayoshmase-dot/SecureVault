@@ -46,7 +46,7 @@ const router = createBrowserRouter([
                     <ForgotPassword />
                 )
             },
-             {
+            {
                 path: 'generatePassword',
                 element:
                     <ProtectedRouter >
