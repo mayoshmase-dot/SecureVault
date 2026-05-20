@@ -36,15 +36,19 @@ export default function useRecoverAccount() {
                         ${t('If you lose this key and your password, your data cannot be recovered.')}
                     </div>
                     <div style="display:flex;justify-content:center;gap:10px">
-                        <button id="copyBtn" style="background:rgba(53,241,119,0.15);border:1px solid rgba(53,241,119,0.3);padding:8px 16px;border-radius:8px;color:rgb(53,241,119);cursor:pointer;font-weight:600;font-size:13px">${t('Copy')}</button>
-                        <button id="downloadBtn" style="background:rgba(53,241,119,0.15);border:1px solid rgba(53,241,119,0.3);padding:8px 16px;border-radius:8px;color:rgb(53,241,119);cursor:pointer;font-weight:600;font-size:13px">${t('Download')}</button>
-                    </div>
+ <button id="copyBtn" style="background: rgb(53, 241, 119);border:none;padding:10px 14px;border-radius:8px;color:white;cursor:pointer;font-weight:600;">
+        📋 ${t('Copy')}
+      </button>
+      <button id="downloadBtn" style="background: rgb(53, 241, 119);border:none;padding:10px 14px;border-radius:8px;color:white;cursor:pointer;font-weight:700;">
+        💾 ${t('Download')}
+      </button>
+       </div>
                 `,
                 confirmButtonText: t('I saved it'),
                 confirmButtonColor: 'rgb(48,168,90)',
                 allowOutsideClick: false,
                 didOpen: () => {
-                    document.getElementById('copyBtn').addEventListener('click', async function() {
+                    document.getElementById('copyBtn').addEventListener('click', async function () {
                         await navigator.clipboard.writeText(newRecoveryKey)
                         this.innerText = t('Copied!')
                         setTimeout(() => this.innerText = t('Copy'), 1500)

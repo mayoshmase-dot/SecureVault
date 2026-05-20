@@ -45,17 +45,15 @@ const getCharacterPoolSize = (password) => {
 
 const calculateEntropy = (password) => {
   const poolSize = getCharacterPoolSize(password)
-
   if (!poolSize) return 0
-
   return Math.floor(password.length * Math.log2(poolSize))
 }
 
-export const passwordAnalyzer = (password = '') => {
+export const passwordAnalyzer = (password = '', t) => {
 
   if (!password.trim()) {
     return {
-      level: 'None',
+      level: t('None'),
       score: 0,
       percentage: 0,
       entropy: 0,
@@ -73,7 +71,7 @@ export const passwordAnalyzer = (password = '') => {
         noSequentialChars: true
       },
 
-      feedback: ['Enter a password']
+      feedback: [t('Enter a password')]
     }
   }
 
@@ -113,12 +111,10 @@ export const passwordAnalyzer = (password = '') => {
   if (!noRepeatedChars) score -= 1
   if (!noSequentialChars) score -= 0.5
 
-  // Common passwords penalty
   if (!noCommonPassword) {
     score = Math.min(score, 1)
   }
 
-  // Entropy bonus
   const entropy = calculateEntropy(password)
 
   if (entropy >= 80) {
@@ -127,66 +123,64 @@ export const passwordAnalyzer = (password = '') => {
     score += 0.5
   }
 
-  // Normalize score
   score = Math.max(0, Math.min(10, score))
   score = Math.round(score * 10) / 10
 
   const percentage = Math.round((score / 10) * 100)
 
-  // Password level
-  let level = 'Very Weak'
+  let level = t('Very Weak')
 
   if (score > 8) {
-    level = 'Very Strong'
+    level = t('Very Strong')
   } else if (score > 6) {
-    level = 'Strong'
+    level = t('Strong')
   } else if (score > 4) {
-    level = 'Medium'
+    level = t('Medium')
   } else if (score > 2) {
-    level = 'Weak'
+    level = t('Weak')
   }
 
   const isStrong = score >= 6
 
-  // Feedback
+  // Feedback (all translated)
   if (!hasMinLength) {
-    feedback.push('Use at least 8 characters')
+    feedback.push(t('Use at least 8 characters'))
   }
 
   if (!hasGoodLength) {
-    feedback.push('Use 12+ characters for better security')
+    feedback.push(t('Use 12+ characters for better security'))
   }
 
   if (!hasLowercase) {
-    feedback.push('Add lowercase letters')
+    feedback.push(t('Add lowercase letters'))
   }
 
   if (!hasUppercase) {
-    feedback.push('Add uppercase letters')
+    feedback.push(t('Add uppercase letters'))
   }
 
   if (!hasNumbers) {
-    feedback.push('Add numbers')
+    feedback.push(t('Add numbers'))
   }
 
   if (!hasSymbols) {
-    feedback.push('Add special characters')
+    feedback.push(t('Add special characters'))
   }
 
   if (!noCommonPassword) {
-    feedback.push('Avoid common passwords')
+    feedback.push(t('Avoid common passwords'))
   }
 
   if (!noRepeatedChars) {
-    feedback.push('Avoid repeated characters')
+    feedback.push(t('Avoid repeated characters'))
   }
 
   if (!noSequentialChars) {
-    feedback.push('Avoid sequential patterns')
+    feedback.push(t('Avoid sequential patterns'))
   }
 
   if (feedback.length === 0) {
-    feedback.push('Great password!')
+    feedback.push(t('Great password!'))
   }
 
   return {

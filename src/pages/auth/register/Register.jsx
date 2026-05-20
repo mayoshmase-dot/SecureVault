@@ -24,6 +24,7 @@ export default function Register() {
   const [verificationToken, setVerificationToken] = useState('');
   const [code, setCode] = useState('');
   const [codePending, setCodePending] = useState(false);
+  const [resendPending, setResendPending] = useState(false);
   const navigate = useNavigate();
   const { t } = useTranslation();
   const schema = RegisterSchema(t)
@@ -48,6 +49,22 @@ export default function Register() {
     }
   };
 
+  const handleResendCode = async () => {
+    const email = getValues('email');
+    if (!email) return;
+    setResendPending(true);
+    setServerErrors('');
+    try {
+      const response = await axiosInstance.post('/auth/send-registration-code', { email });
+      setVerificationToken(response.data.verificationToken);
+      setCode('');
+    } catch (error) {
+      setServerErrors(error?.response?.data?.message || 'Something went wrong');
+    } finally {
+      setResendPending(false);
+    }
+  };
+
   const RegisterForm = async (data) => {
     setServerErrors('')
     try {
@@ -67,31 +84,38 @@ export default function Register() {
 
       if (response.status === 201) {
         await Swal.fire({
-          title: '🔐 Save Your Recovery Key!',
+          title: t('Save Recovery Key'),
           background: 'rgb(1, 6, 46)',
           color: '#fff',
           width: 600,
           html: `
-            <div style="background: rgb(1, 6, 46);border: 1px solid rgba(255,255,255,0.08);padding: 20px;border-radius: 12px;font-family: monospace;color: rgb(53, 241, 119);text-align: center;letter-spacing: 2px;font-size: 16px;margin-bottom: 16px;">
-              ${recoveryKey}
-            </div>
-            <div style="background: rgba(0,0,0,0.25);border: 1px solid rgba(255,255,255,0.08);padding: 14px;border-radius: 10px;color: #f87171;font-size: 13px;line-height: 1.5;margin-bottom: 14px;">
-              ⚠️ <b>Warning</b><br/>
-              Save this now. We cannot reset your account without it.<br/>
-              If you lose this and your password, your data is gone forever.
-            </div>
-            <div style="display:flex;justify-content:center;gap:10px;">
-              <button id="copyBtn" style="background: rgb(53, 241, 119);border:none;padding:10px 14px;border-radius:8px;color:white;cursor:pointer;font-weight:600;">📋 Copy</button>
-              <button id="downloadBtn" style="background: rgb(53, 241, 119);border:none;padding:10px 14px;border-radius:8px;color:white;cursor:pointer;font-weight:700;">💾 Download</button>
-            </div>
-          `,
-          confirmButtonText: 'I understand',
+    <div style="background: rgb(1, 6, 46);border: 1px solid rgba(255,255,255,0.08);padding: 20px;border-radius: 12px;font-family: monospace;color: rgb(53, 241, 119);text-align: center;letter-spacing: 2px;font-size: 16px;margin-bottom: 16px;">
+      ${recoveryKey}
+    </div>
+
+    <div style="background: rgba(0,0,0,0.25);border: 1px solid rgba(255,255,255,0.08);padding: 14px;border-radius: 10px;color: #f87171;font-size: 13px;line-height: 1.5;margin-bottom: 14px;">
+      ⚠️ <b>${t('Warning')}</b><br/>
+      ${t('Save now warning line 1')}<br/>
+      ${t('Save now warning line 2')}
+    </div>
+
+    <div style="display:flex;justify-content:center;gap:10px;">
+      <button id="copyBtn" style="background: rgb(53, 241, 119);border:none;padding:10px 14px;border-radius:8px;color:white;cursor:pointer;font-weight:600;">
+        📋 ${t('Copy')}
+      </button>
+      <button id="downloadBtn" style="background: rgb(53, 241, 119);border:none;padding:10px 14px;border-radius:8px;color:white;cursor:pointer;font-weight:700;">
+        💾 ${t('Download')}
+      </button>
+    </div>
+  `,
+          confirmButtonText: t('I understand'),
           confirmButtonColor: 'rgb(53, 241, 119)',
           allowOutsideClick: false,
           didOpen: () => {
             document.getElementById('copyBtn').addEventListener('click', async () => {
               await navigator.clipboard.writeText(recoveryKey)
             })
+
             document.getElementById('downloadBtn').addEventListener('click', () => {
               const blob = new Blob([recoveryKey], { type: 'text/plain' })
               const url = URL.createObjectURL(blob)
@@ -103,7 +127,18 @@ export default function Register() {
             })
           }
         })
-        navigate('/login')
+
+        await Swal.fire({
+          icon: 'success',
+          title: t('Account Created!'),
+          text: t('Your account has been created successfully. You can now sign in.'),
+          confirmButtonColor: 'rgb(53, 241, 119)',
+          background: 'rgb(1, 6, 46)',
+          color: '#fff',
+          confirmButtonText: t('Sign In'),
+        }).then(() => {
+          navigate('/login')
+        })
       }
     } catch (error) {
       setServerErrors(error?.response?.data?.message || 'Something went wrong')
@@ -229,7 +264,15 @@ export default function Register() {
                   mt: 1, borderRadius: 3, py: 1.5,
                   backgroundColor: 'secondary.main', color: 'white', fontWeight: 700, letterSpacing: 1
                 }}>
-                  {isSubmitting ? <CircularProgress size={24} sx={{ color: 'white' }} /> : t('Create Account')}
+                  {isSubmitting ? <CircularProgress size={24} sx={{ color: 'white' }} /> : t('Create Account button')}
+                </Button>
+
+                <Button onClick={handleResendCode} disabled={resendPending} sx={{
+                  borderRadius: 3, py: 1,
+                  color: 'rgba(255,255,255,0.5)', fontSize: 13,
+                  '&:hover': { color: 'secondary.main' }
+                }}>
+                  {resendPending ? <CircularProgress size={18} sx={{ color: 'white' }} /> : t('Resend Code')}
                 </Button>
 
                 <Button onClick={() => { setStep(1); setCode('') }} sx={{ color: 'rgba(255,255,255,0.4)', fontSize: 13 }}>

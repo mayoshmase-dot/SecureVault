@@ -27,7 +27,7 @@ export default function AddCredential() {
     const onSubmit = async (data) => {
         mutate({ ...data, category: selectedCategory });
     };
-    const passwordStrength = passwordAnalyzer(passwordValue)
+    const passwordStrength = passwordAnalyzer(passwordValue , t)
 
     return (
         <Box sx={{ backgroundColor: "primary.main", display: "flex", flexDirection: "column", px: { xs: 2, sm: 3 }, pt: 1, pb: 5 }}>
@@ -150,9 +150,9 @@ export default function AddCredential() {
 
                     <CategorySelector selected={selectedCategory} onChange={setSelectedCategory} />
 
-                    <Button type="submit" fullWidth disabled={isSubmitting || isPending} startIcon={<SaveOutlined sx={{ fontSize: '18px !important' }} />}
-                        sx={{ mt: 3, py: 1.5, borderRadius: '10px', backgroundColor: 'rgb(48,168,90)', color: 'white', fontSize: 14.5, letterSpacing: 0.3, boxShadow: '0 0 24px rgba(48,168,90,0.25)', '&:hover': { backgroundColor: 'rgb(40,148,78)' } }}>
-                        {(isSubmitting || isPending) ? <CircularProgress size={24} sx={{ color: 'white' }} /> : t('Save Credential')}
+                    <Button type="submit" fullWidth disabled={isSubmitting || isPending} startIcon={<SaveOutlined sx={{ fontSize: '18px !important'}} />}
+                        sx={{ mt: 3, py: 1.5, borderRadius: '10px', backgroundColor: 'rgb(48,168,90)',gap:.5, color: 'white', fontSize: 14.5, letterSpacing: 0.3, boxShadow: '0 0 24px rgba(48,168,90,0.25)', '&:hover': { backgroundColor: 'rgb(40,148,78)' } }}>
+                        {(isSubmitting || isPending) ? <CircularProgress size={24} sx={{ color: 'white'}} /> : t('Save Credential')}
                     </Button>
                 </Box>
             </Box>

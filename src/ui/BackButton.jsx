@@ -11,7 +11,7 @@ export default function BackButton({ to = "/dashboard" }) {
             startIcon={<ArrowBack />}
             onClick={() => navigate(to)}
             sx={{
-                display: "flex",
+                display: "flex",gap:.5,
                 justifyContent: "flex-start",
                 cursor: "pointer",
                 color: "white",

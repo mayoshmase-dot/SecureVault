@@ -26,7 +26,14 @@ export default function useDeleteAccount() {
             return response.data;
         },
 
-        onSuccess: () => {
+        onSuccess: async () => {
+            await Swal.fire({
+                title: t('Account Deleted'),
+                text: t('Your account and all your data have been permanently deleted'),
+                icon: 'success',
+                confirmButtonText: t('OK')
+            });
+
             logout();
             localStorage.clear();
             sessionStorage.clear();

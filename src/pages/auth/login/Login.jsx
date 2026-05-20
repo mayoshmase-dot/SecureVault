@@ -116,7 +116,7 @@ const LoginForm = async (data) => {
                   endAdornment: (
                     <InputAdornment position="end">
                       <IconButton onClick={() => setShowPassword(p => !p)}>
-                        {showPassword ? <VisibilityIcon sx={{ color: 'white' }} /> : <VisibilityOffIcon sx={{ color: 'white' }} />}
+                        {showPassword ? <VisibilityIcon sx={{ color: 'secondary.dark' }} /> : <VisibilityOffIcon sx={{ color: 'secondary.dark' }} />}
                       </IconButton>
                     </InputAdornment>
                   )

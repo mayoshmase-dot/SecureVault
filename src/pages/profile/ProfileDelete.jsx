@@ -62,7 +62,7 @@ export default function ProfileDelete() {
 
           <TextField fullWidth type={showPassword ? 'text' : 'password'}
             value={password} onChange={(e) => setPassword(e.target.value)}
-            placeholder={t('Enter Master password')} sx={inputSx}
+            placeholder={t('Enter your Master password')} sx={inputSx}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">

@@ -20,6 +20,12 @@ i18n
           SignIn: "Sign In",
           SignUp: "Sign Up",
 
+          // Profile (NEW)
+          Info: "Info",
+          "Change Password": "Change Password",
+          Language: "Language",
+          "Delete Account": "Delete Account",
+
           // Hero
           "Secure Your Passwords in One Safe Vault ": "Secure Your Passwords in One Safe Vault",
           "Store, manage, and generate strong passwords with advanced encryption and two-factor authentication.":
@@ -52,8 +58,7 @@ i18n
           // Login
           "Sign In title": "Sign In",
           "Access your secure vault": "Access your secure vault",
-          "Don't have an account yet?":
-            "Don't have an account yet?",
+          "Don't have an account yet?": "Don't have an account yet?",
           "Enter your email": "Enter your email",
           "Remember me": "Remember me",
           "Forgot Password?": "Forgot Password?",
@@ -62,25 +67,20 @@ i18n
           // Forgot Password
           "Recover Account": "Recover Account",
           "Recover Account button": "Recover Account",
-          "Use your recovery key to regain access":
-            "Use your recovery key to regain access",
+          "Use your recovery key to regain access": "Use your recovery key to regain access",
           "Recovery Key": "Recovery Key",
           "Back to Login": "Back to Login",
 
           // Register
           "Sign Up title": "Sign Up",
-          "Create your secure account":
-            "Create your secure account",
-          "Enter the code sent to your email":
-            "Enter the code sent to your email",
-          "Already have an account?":
-            "Already have an account?",
+          "Create your secure account": "Create your secure account",
+          "Enter the code sent to your email": "Enter the code sent to your email",
+          "Already have an account?": "Already have an account?",
           "Your name": "Your name",
           "Confirm Password": "Confirm Password",
           "Verification Code": "Verification Code",
           "6-digit code": "6-digit code",
-          "By creating an account, you agree to our":
-            "By creating an account, you agree to our",
+          "By creating an account, you agree to our": "By creating an account, you agree to our",
           Terms: "Terms",
           and: "and",
           "Privacy Policy": "Privacy Policy",
@@ -96,17 +96,14 @@ i18n
           Finance: "Finance",
           Social: "Social",
           Other: "Other",
-          "No credentials found":
-            "No credentials found",
+          "No credentials found": "No credentials found",
           "No results for": "No results for",
-          "No credentials in":
-            "No credentials in",
+          "No credentials in": "No credentials in",
           Details: "Details",
           "Edit Credential": "Edit Credential",
 
           // VaultControl
-          "Search your vault...":
-            "Search your vault...",
+          "Search your vault...": "Search your vault...",
           Generator: "Generator",
           "Add New": "Add New",
 
@@ -122,45 +119,31 @@ i18n
           password_expiry_other:
             "{{count}} passwords haven't been updated in 90+ days — Review them",
 
-          // Verify2FA
-          "Two-Factor Authentication":
-            "Two-Factor Authentication",
+          // 2FA
+          "Two-Factor Authentication": "Two-Factor Authentication",
           "Enter your code": "Enter your code",
-          "Verified Successfully":
-            "Verified Successfully",
-          "Redirecting to dashboard...":
-            "Redirecting to dashboard...",
+          "Verified Successfully": "Verified Successfully",
+          "Redirecting to dashboard...": "Redirecting to dashboard...",
           Verify: "Verify",
           code: "code",
 
-          // AddCredential
-          "Add New Credential":
-            "Add New Credential",
+          // Add Credential
+          "Add New Credential": "Add New Credential",
           "Fill in the details to secure your account":
             "Fill in the details to secure your account",
-          "Title / Service Name":
-            "Title / Service Name",
-          "e.g. Google, Netflix, Work Email":
-            "e.g. Google, Netflix, Work Email",
-          "Username / Email":
-            "Username / Email",
-          "Username or email":
-            "Username or email",
-          "Website URL (Optional)":
-            "Website URL (Optional)",
-          "Note (Optional)":
-            "Note (Optional)",
-          "Write a note...":
-            "Write a note...",
-          "Tags (Optional)":
-            "Tags (Optional)",
-          "Write a tag...":
-            "Write a tag...",
-          "Save Credential":
-            "Save Credential",
+          "Title / Service Name": "Title / Service Name",
+          "e.g. Google, Netflix, Work Email": "e.g. Google, Netflix, Work Email",
+          "Username / Email": "Username / Email",
+          "Username or email": "Username or email",
+          "Website URL (Optional)": "Website URL (Optional)",
+          "Note (Optional)": "Note (Optional)",
+          "Write a note...": "Write a note...",
+          "Tags (Optional)": "Tags (Optional)",
+          "Write a tag...": "Write a tag...",
+          "Save Credential": "Save Credential",
           Strength: "Strength",
 
-          // CredentialDetails
+          // Credential Details
           Hide: "Hide",
           Show: "Show",
           Created: "Created",
@@ -168,44 +151,31 @@ i18n
           "Failed to decrypt data. Wrong master password?":
             "Failed to decrypt data. Wrong master password?",
 
-          // UpdateCredential
-          "Update Credential":
-            "Update Credential",
-          "Update your saved credentials":
-            "Update your saved credentials",
+          // Update Credential
+          "Update Credential": "Update Credential",
+          "Update your saved credentials": "Update your saved credentials",
           "No Changes": "No Changes",
-          "You have not made any changes.":
-            "You have not made any changes.",
-          "Write tags...":
-            "Write tags...",
+          "You have not made any changes.": "You have not made any changes.",
+          "Write tags...": "Write tags...",
 
-          // GeneratePassword
-          "Uppercase (A-Z)":
-            "Uppercase (A-Z)",
-          "Lowercase (a-z)":
-            "Lowercase (a-z)",
-          "Numbers (0-9)":
-            "Numbers (0-9)",
-          "Symbols (!@#$)":
-            "Symbols (!@#$)",
+          // Generate Password
+          "Uppercase (A-Z)": "Uppercase (A-Z)",
+          "Lowercase (a-z)": "Lowercase (a-z)",
+          "Numbers (0-9)": "Numbers (0-9)",
+          "Symbols (!@#$)": "Symbols (!@#$)",
           "Create strong, unhackable passwords":
             "Create strong, unhackable passwords",
-          "Click Generate...":
-            "Click Generate...",
+          "Click Generate...": "Click Generate...",
           Regenerate: "Regenerate",
           Copy: "Copy",
-          "Password Strength":
-            "Password Strength",
-          "Password Length":
-            "Password Length",
+          "Password Strength": "Password Strength",
+          "Password Length": "Password Length",
           STRONG: "STRONG",
           GOOD: "GOOD",
           FAIR: "FAIR",
           WEAK: "WEAK",
-          "Generating...":
-            "Generating...",
-          "Generate Password":
-            "Generate Password",
+          "Generating...": "Generating...",
+          "Generate Password": "Generate Password",
 
           // Shared
           Email: "Email",
@@ -222,57 +192,28 @@ i18n
           Disabled: "Disabled",
 
           // Validation
-          title_required:
-            "Title is required",
-          title_max:
-            "Title must be at most 100 characters",
+          title_required: "Title is required",
+          title_max: "Title must be at most 100 characters",
+          username_required: "Username is required",
+          password_required: "Password is required",
+          website_max: "Website must be at most 255 characters",
+          website_invalid: "Enter a valid URL (e.g. https://example.com)",
+          notes_max: "Notes must be at most 1000 characters",
+          email_required: "Email is required",
+          email_invalid: "Invalid email format",
+          email_max: "Email is too long",
+          name_required: "Name is required",
+          name_letters_only: "Name can only contain letters",
+          password_min: "Password must be at least 8 characters",
+          password_min_reset: "Password must be at least 6 characters",
+          password_max: "Password must not exceed 20 characters",
+          password_uppercase: "Must contain at least one uppercase letter",
+          password_lowercase: "Must contain at least one lowercase letter",
+          password_number: "Must contain at least one number",
+          password_special: "Must contain at least one special character",
+          confirm_password_required: "Please confirm your password",
+          passwords_match: "Passwords must match",
 
-          username_required:
-            "Username is required",
-
-          password_required:
-            "Password is required",
-
-          website_max:
-            "Website must be at most 255 characters",
-          website_invalid:
-            "Enter a valid URL (e.g. https://example.com)",
-
-          notes_max:
-            "Notes must be at most 1000 characters",
-
-          email_required:
-            "Email is required",
-          email_invalid:
-            "Invalid email format",
-          email_max:
-            "Email is too long",
-
-          name_required:
-            "Name is required",
-          name_letters_only:
-            "Name can only contain letters",
-
-          password_min:
-            "Password must be at least 8 characters",
-          password_min_reset:
-            "Password must be at least 6 characters",
-          password_max:
-            "Password must not exceed 20 characters",
-
-          password_uppercase:
-            "Must contain at least one uppercase letter",
-          password_lowercase:
-            "Must contain at least one lowercase letter",
-          password_number:
-            "Must contain at least one number",
-          password_special:
-            "Must contain at least one special character",
-
-          confirm_password_required:
-            "Please confirm your password",
-          passwords_match:
-            "Passwords must match",
           "Current Password": "Current Password",
           "New Password": "New Password",
           "Enter your current password": "Enter your current password",
@@ -281,10 +222,167 @@ i18n
           "Use a strong password": "Use a strong password",
           "Recovery Key": "Recovery Key",
           "Enter your recovery key": "Enter your recovery key",
+          "Resend Code": "Resend Code",
+          "Account Deleted": "Account Deleted",
+          "Your account and all your data have been permanently deleted":
+            "Your account and all your data have been permanently deleted",
+          "Delete Account?": "Delete Account?",
+          "This action is irreversible.": "This action is irreversible.",
+          "Yes, delete it": "Yes, delete it",
+          Error: "Error",
+          "Irreversible action": "Irreversible action",
+          "All your data will be permanently deleted.": "All your data will be permanently deleted.",
+          "Master Password": "Master Password",
+          "Enter your Master password": "Enter your Master password",
+          "Save Recovery Key": "Save Your Recovery Key!",
+          Warning: "Warning",
+          "Save now warning line 1": "Save this now. We cannot reset your account without it.",
+          "Save now warning line 2": "If you lose this and your password, your data is gone forever.",
+          Copy: "Copy",
+          Download: "Download",
+          "I understand": "I understand",
+          "Account Created": "Account Created!",
+          "Account created successfully message":
+            "Your account has been created successfully. You can now sign in.",
+          "Sign In": "Sign In",
+          "Back to Dashboard": "Back to Dashboard",
+          "Add New Credential": "Add New Credential",
+          "Fill in the details to secure your account": "Fill in the details to secure your account",
+
+          "Title / Service Name": "Title / Service Name",
+          "Username / Email": "Username / Email",
+          "Username or email": "Username or email",
+          "Password": "Password",
+
+          "e.g. Google, Netflix, Work Email": "e.g. Google, Netflix, Work Email",
+          "Write a note...": "Write a note...",
+          "Write a tag...": "Write a tag...",
+
+          "Website URL (Optional)": "Website URL (Optional)",
+          "Note (Optional)": "Note (Optional)",
+          "Tags (Optional)": "Tags (Optional)",
+
+          "Strength": "Strength",
+
+          "Save Credential": "Save Credential",
+
+          // extra safety (if not already defined)
+          "Your account has been created successfully. You can now sign in.":
+            "Your account has been created successfully. You can now sign in.",
+          "None": "None",
+          "Enter a password": "Enter a password",
+
+          "Very Weak": "Very Weak",
+          "Weak": "Weak",
+          "Medium": "Medium",
+          "Strong": "Strong",
+          "Very Strong": "Very Strong",
+
+          "Use at least 8 characters": "Use at least 8 characters",
+          "Use 12+ characters for better security": "Use 12+ characters for better security",
+
+          "Add lowercase letters": "Add lowercase letters",
+          "Add uppercase letters": "Add uppercase letters",
+          "Add numbers": "Add numbers",
+          "Add special characters": "Add special characters",
+
+          "Avoid common passwords": "Avoid common passwords",
+          "Avoid repeated characters": "Avoid repeated characters",
+          "Avoid sequential patterns": "Avoid sequential patterns",
+          "Great password!": "Great password!",
+          Success: "Success",
+          "Credential added successfully": "Credential added successfully",
+          "Something went wrong": "Something went wrong",
+          "Account Deleted": "Account Deleted",
+          "Your account and all your data have been permanently deleted":
+            "Your account and all your data have been permanently deleted",
+          OK: "OK",
+          Error: "Error",
+          "Something went wrong": "Something went wrong",
+          "Are you sure?": "Are you sure?",
+          "Do you want to delete this credential?": "Do you want to delete this credential?",
+          "Yes, delete it": "Yes, delete it",
+          "Cancel": "Cancel",
+          "Deleted!": "Deleted!",
+          "Credential deleted successfully": "Credential deleted successfully",
+          Error: "Error",
+          "Something went wrong": "Something went wrong",
+          "Secure your account": "Secure your account",
+          "Enable 2FA": "Enable 2FA",
+          "6-digit code": "6-digit code",
+          "Verify": "Verify",
+          Cancel: "Cancel",
+          "Disable 2FA?": "Disable 2FA?",
+          "Your account will be less secure": "Your account will be less secure",
+          Disable: "Disable",
+          "Disabled title": "Disabled",
+          "2FA Enabled": "2FA Enabled",
+          "Backup Codes": "Backup Codes",
+          Done: "Done",
+          "2FA is enabled": "2FA is enabled",
+          "Recover Account": "Recover Account",
+          "Use your recovery key to regain access": "Use your recovery key to regain access",
+          "Email": "Email",
+          "Enter your email": "Enter your email",
+          "Recovery Key": "Recovery Key",
           "New Password": "New Password",
-          "Enter your new password": "Enter your new password"
+          "Recover Account button": "Recover Account",
+          "Back to Login": "Back to Login",
+          Success: "Success",
+          "Credential added successfully": "Credential added successfully",
+
+          Error: "Error",
+          "Something went wrong": "Something went wrong",
+
+          "Are you sure?": "Are you sure?",
+          "Do you want to delete this credential?": "Do you want to delete this credential?",
+          "Yes, delete it": "Yes, delete it",
+          Cancel: "Cancel",
+          "Deleted!": "Deleted!",
+          "Credential deleted successfully": "Credential deleted successfully",
+
+          "2FA Enabled": "2FA Enabled",
+          "Secure your account": "Secure your account",
+          "Enable 2FA": "Enable 2FA",
+          "6-digit code": "6-digit code",
+          Verify: "Verify",
+          "Cancel": "Cancel",
+          "2FA is enabled": "2FA is enabled",
+          Disable: "Disable",
+          "Disable 2FA?": "Disable 2FA?",
+          "Your account will be less secure": "Your account will be less secure",
+          "Disabled title": "Disabled",
+
+          "Recover Account": "Recover Account",
+          "Use your recovery key to regain access": "Use your recovery key to regain access",
+          "Enter your email": "Enter your email",
+          "Recovery Key": "Recovery Key",
+          "New Password": "New Password",
+          "Recover Account button": "Recover Account",
+          "Back to Login": "Back to Login",
+          "Account Recovered!": "Account Recovered!",
+          "Save your new recovery key — you won't see it again.":
+            "Save your new recovery key — you won't see it again.",
+          "I saved it": "I saved it",
+          "Copied!": "Copied!",
+          Copy: "Copy",
+          Download: "Download",
+          "Recovery Failed": "Recovery Failed",
+          "Enter a password": "Enter a password",
+          "Use at least 8 characters": "Use at least 8 characters",
+          "Use 12+ characters for better security": "Use 12+ characters for better security",
+          "Add lowercase letters": "Add lowercase letters",
+          "Add uppercase letters": "Add uppercase letters",
+          "Add numbers": "Add numbers",
+          "Add special characters": "Add special characters",
+          "Avoid common passwords": "Avoid common passwords",
+          "Avoid repeated characters": "Avoid repeated characters",
+          "Avoid sequential patterns": "Avoid sequential patterns",
+          "Great password!": "Great password!",
+          "If you lose this key and your password, your data cannot be recovered.":"If you lose this key and your password, your data cannot be recovered.",
         }
       },
+
       ar: {
         translation: {
           // Navbar
@@ -297,9 +395,14 @@ i18n
           SignIn: "تسجيل الدخول",
           SignUp: "إنشاء حساب",
 
+          // Profile (NEW)
+          Info: "المعلومات",
+          "Change Password": "تغيير كلمة المرور",
+          Language: "اللغة",
+          "Delete Account": "حذف الحساب",
+
           // Hero
-          "Secure Your Passwords in One Safe Vault ":
-            "احفظ كلمات مرورك في خزنة آمنة",
+          "Secure Your Passwords in One Safe Vault ": "احفظ كلمات مرورك في خزنة آمنة",
           "Store, manage, and generate strong passwords with advanced encryption and two-factor authentication.":
             "خزّن وأدر وولّد كلمات مرور قوية مع تشفير متقدم والمصادقة الثنائية.",
           "Create Account": "إنشاء حساب",
@@ -307,25 +410,18 @@ i18n
           // Features
           Features: "المميزات",
           "Secure Encryption": "تشفير آمن",
-          "Secure Encryption text":
-            "جميع البيانات مشفرة بالكامل.",
-          "Password Generator":
-            "مولّد كلمات المرور",
-          "Password Generator text":
-            "أنشئ كلمات مرور عشوائية قوية.",
-          "Two Factor Authentication":
-            "المصادقة الثنائية",
-          "Two Factor Authentication text":
-            "طبقة حماية إضافية لحسابك.",
+          "Secure Encryption text": "جميع البيانات مشفرة بالكامل.",
+          "Password Generator": "مولّد كلمات المرور",
+          "Password Generator text": "أنشئ كلمات مرور عشوائية قوية.",
+          "Two Factor Authentication": "المصادقة الثنائية",
+          "Two Factor Authentication text": "طبقة حماية إضافية لحسابك.",
           "Fast Search": "بحث سريع",
-          "Fast Search text":
-            "ابحث عن بياناتك فوراً.",
+          "Fast Search text": "ابحث عن بياناتك فوراً.",
 
           // Footer
           "Palestine Technical University – Kadoorie":
             "جامعة فلسطين التقنية – خضوري",
-          "SecureVault – Password Manager":
-            "سيكيور فولت – مدير كلمات المرور",
+          "SecureVault – Password Manager": "سيكيور فولت – مدير كلمات المرور",
           "A secure platform to store and manage your credentials safely.":
             "منصة آمنة لتخزين وإدارة بياناتك بأمان.",
           "Prepared by: Maya Masri, Sojood Zidan":
@@ -335,94 +431,61 @@ i18n
 
           // Login
           "Sign In title": "تسجيل الدخول",
-          "Access your secure vault":
-            "ادخل إلى خزنتك الآمنة",
-          "Don't have an account yet?":
-            "ليس لديك حساب بعد؟",
-          "Enter your email":
-            "أدخل بريدك الإلكتروني",
+          "Access your secure vault": "ادخل إلى خزنتك الآمنة",
+          "Don't have an account yet?": "ليس لديك حساب بعد؟",
+          "Enter your email": "أدخل بريدك الإلكتروني",
           "Remember me": "تذكرني",
-          "Forgot Password?":
-            "نسيت كلمة المرور؟",
-          "Sign In button":
-            "تسجيل الدخول",
+          "Forgot Password?": "نسيت كلمة المرور؟",
+          "Sign In button": "تسجيل الدخول",
 
           // Forgot Password
-          "Recover Account":
-            "استعادة الحساب",
-          "Recover Account button":
-            "استعادة الحساب",
-          "Use your recovery key to regain access":
-            "استخدم مفتاح الاسترداد لاستعادة حسابك",
-          "Recovery Key":
-            "مفتاح الاسترداد",
-          "Back to Login":
-            "العودة لتسجيل الدخول",
+          "Recover Account": "استعادة الحساب",
+          "Recover Account button": "استعادة الحساب",
+          "Use your recovery key to regain access": "استخدم مفتاح الاسترداد لاستعادة حسابك",
+          "Recovery Key": "مفتاح الاسترداد",
+          "Back to Login": "العودة لتسجيل الدخول",
 
           // Register
-          "Sign Up title":
-            "إنشاء حساب",
-          "Create your secure account":
-            "أنشئ حسابك الآمن",
-          "Enter the code sent to your email":
-            "أدخل الكود المرسل إلى بريدك",
-          "Already have an account?":
-            "لديك حساب بالفعل؟",
+          "Sign Up title": "إنشاء حساب",
+          "Create your secure account": "أنشئ حسابك الآمن",
+          "Enter the code sent to your email": "أدخل الكود المرسل إلى بريدك",
+          "Already have an account?": "لديك حساب بالفعل؟",
           "Your name": "اسمك",
-          "Confirm Password":
-            "تأكيد كلمة المرور",
-          "Verification Code":
-            "كود التحقق",
-          "6-digit code":
-            "كود مكون من 6 أرقام",
-          "By creating an account, you agree to our":
-            "بإنشاء حساب، أنت توافق على",
+          "Confirm Password": "تأكيد كلمة المرور",
+          "Verification Code": "كود التحقق",
+          "6-digit code": "كود مكون من 6 أرقام",
+          "By creating an account, you agree to our": "بإنشاء حساب، أنت توافق على",
           Terms: "الشروط",
           and: "و",
-          "Privacy Policy":
-            "سياسة الخصوصية",
-          "Send Verification Code":
-            "إرسال كود التحقق",
-          "Create Account button":
-            "إنشاء الحساب",
+          "Privacy Policy": "سياسة الخصوصية",
+          "Send Verification Code": "إرسال كود التحقق",
+          "Create Account button": "إنشاء الحساب",
           Back: "رجوع",
 
           // Credentials
-          "Credentials Vault":
-            "خزنة البيانات",
+          "Credentials Vault": "خزنة البيانات",
           All: "الكل",
           Personal: "شخصية",
           Work: "أعمال",
           Finance: "مالية",
           Social: "اجتماعية",
           Other: "أخرى",
-          "No credentials found":
-            "لا توجد بيانات",
-          "No results for":
-            "لا نتائج لـ",
-          "No credentials in":
-            "لا توجد بيانات في",
+          "No credentials found": "لا توجد بيانات",
+          "No results for": "لا نتائج لـ",
+          "No credentials in": "لا توجد بيانات في",
           Details: "التفاصيل",
-          "Edit Credential":
-            "تعديل البيانات",
+          "Edit Credential": "تعديل البيانات",
 
           // VaultControl
-          "Search your vault...":
-            "ابحث في خزنتك...",
-          Generator:
-            "مولّد كلمات المرور",
-          "Add New":
-            "إضافة جديد",
+          "Search your vault...": "ابحث في خزنتك...",
+          Generator: "مولّد كلمات المرور",
+          "Add New": "إضافة جديد",
 
           // StatCard
-          "Strong Passwords":
-            "كلمات المرور القوية",
-          "Weak Passwords":
-            "كلمات المرور الضعيفة",
-          "Reused Passwords":
-            "كلمات المرور المكررة",
-          "New Password":
-            "كلمة المرور الجديدة",
+          "Strong Passwords": "كلمات المرور القوية",
+          "Weak Passwords": "كلمات المرور الضعيفة",
+          "Reused Passwords": "كلمات المرور المكررة",
+          "New Password": "كلمة المرور الجديدة",
 
           // PasswordExpiryBanner
           password_expiry_one:
@@ -430,46 +493,30 @@ i18n
           password_expiry_other:
             "{{count}} كلمة مرور لم يتم تحديثها منذ 90+ يوم — راجعها",
 
-          // Verify2FA
-          "Two-Factor Authentication":
-            "المصادقة الثنائية",
-          "Enter your code":
-            "أدخل الكود",
-          "Verified Successfully":
-            "تم التحقق بنجاح",
-          "Redirecting to dashboard...":
-            "جارٍ التوجيه للوحة التحكم...",
+          // 2FA
+          "Two-Factor Authentication": "المصادقة الثنائية",
+          "Enter your code": "أدخل الكود",
+          "Verified Successfully": "تم التحقق بنجاح",
+          "Redirecting to dashboard...": "جارٍ التوجيه للوحة التحكم...",
           Verify: "تحقق",
           code: "الكود",
 
-          // AddCredential
-          "Add New Credential":
-            "إضافة بيانات جديدة",
-          "Fill in the details to secure your account":
-            "أدخل التفاصيل لتأمين حسابك",
-          "Title / Service Name":
-            "العنوان / اسم الخدمة",
-          "e.g. Google, Netflix, Work Email":
-            "مثال: جوجل، نتفليكس، بريد العمل",
-          "Username / Email":
-            "اسم المستخدم / البريد الإلكتروني",
-          "Username or email":
-            "اسم المستخدم أو البريد",
-          "Website URL (Optional)":
-            "رابط الموقع (اختياري)",
-          "Note (Optional)":
-            "ملاحظة (اختياري)",
-          "Write a note...":
-            "اكتب ملاحظة...",
-          "Tags (Optional)":
-            "وسوم (اختياري)",
-          "Write a tag...":
-            "اكتب وسماً...",
-          "Save Credential":
-            "حفظ البيانات",
+          // Add Credential
+          "Add New Credential": "إضافة بيانات جديدة",
+          "Fill in the details to secure your account": "أدخل التفاصيل لتأمين حسابك",
+          "Title / Service Name": "العنوان / اسم الخدمة",
+          "e.g. Google, Netflix, Work Email": "مثال: جوجل، نتفليكس، بريد العمل",
+          "Username / Email": "اسم المستخدم / البريد الإلكتروني",
+          "Username or email": "اسم المستخدم أو البريد",
+          "Website URL (Optional)": "رابط الموقع (اختياري)",
+          "Note (Optional)": "ملاحظة (اختياري)",
+          "Write a note...": "اكتب ملاحظة...",
+          "Tags (Optional)": "وسوم (اختياري)",
+          "Write a tag...": "اكتب وسماً...",
+          "Save Credential": "حفظ البيانات",
           Strength: "القوة",
 
-          // CredentialDetails
+          // Credential Details
           Hide: "إخفاء",
           Show: "إظهار",
           Created: "تاريخ الإنشاء",
@@ -477,46 +524,30 @@ i18n
           "Failed to decrypt data. Wrong master password?":
             "فشل فك التشفير. هل كلمة المرور الرئيسية صحيحة؟",
 
-          // UpdateCredential
-          "Update Credential":
-            "تعديل البيانات",
-          "Update your saved credentials":
-            "عدّل بياناتك المحفوظة",
-          "No Changes":
-            "لا يوجد تغييرات",
-          "You have not made any changes.":
-            "لم تقم بأي تغييرات.",
-          "Write tags...":
-            "اكتب وسوماً...",
+          // Update Credential
+          "Update Credential": "تعديل البيانات",
+          "Update your saved credentials": "عدّل بياناتك المحفوظة",
+          "No Changes": "لا يوجد تغييرات",
+          "You have not made any changes.": "لم تقم بأي تغييرات.",
+          "Write tags...": "اكتب وسوماً...",
 
-          // GeneratePassword
-          "Uppercase (A-Z)":
-            "أحرف كبيرة (A-Z)",
-          "Lowercase (a-z)":
-            "أحرف صغيرة (a-z)",
-          "Numbers (0-9)":
-            "أرقام (0-9)",
-          "Symbols (!@#$)":
-            "رموز (!@#$)",
-          "Create strong, unhackable passwords":
-            "أنشئ كلمات مرور قوية لا يمكن اختراقها",
-          "Click Generate...":
-            "اضغط توليد...",
-          Regenerate:
-            "توليد جديد",
+          // Generate Password
+          "Uppercase (A-Z)": "أحرف كبيرة (A-Z)",
+          "Lowercase (a-z)": "أحرف صغيرة (a-z)",
+          "Numbers (0-9)": "أرقام (0-9)",
+          "Symbols (!@#$)": "رموز (!@#$)",
+          "Create strong, unhackable passwords": "أنشئ كلمات مرور قوية لا يمكن اختراقها",
+          "Click Generate...": "اضغط توليد...",
+          Regenerate: "توليد جديد",
           Copy: "نسخ",
-          "Password Strength":
-            "قوة كلمة المرور",
-          "Password Length":
-            "طول كلمة المرور",
+          "Password Strength": "قوة كلمة المرور",
+          "Password Length": "طول كلمة المرور",
           STRONG: "قوية",
           GOOD: "جيدة",
           FAIR: "مقبولة",
           WEAK: "ضعيفة",
-          "Generating...":
-            "جارٍ التوليد...",
-          "Generate Password":
-            "توليد كلمة مرور",
+          "Generating...": "جارٍ التوليد...",
+          "Generate Password": "توليد كلمة مرور",
 
           // Shared
           Email: "البريد الإلكتروني",
@@ -533,57 +564,28 @@ i18n
           Disabled: "معطّلة",
 
           // Validation
-          title_required:
-            "العنوان مطلوب",
-          title_max:
-            "يجب ألا يتجاوز العنوان 100 حرف",
+          title_required: "العنوان مطلوب",
+          title_max: "يجب ألا يتجاوز العنوان 100 حرف",
+          username_required: "اسم المستخدم مطلوب",
+          password_required: "كلمة المرور مطلوبة",
+          website_max: "يجب ألا يتجاوز الرابط 255 حرف",
+          website_invalid: "أدخل رابط صحيح مثل https://example.com",
+          notes_max: "يجب ألا تتجاوز الملاحظات 1000 حرف",
+          email_required: "البريد الإلكتروني مطلوب",
+          email_invalid: "صيغة البريد الإلكتروني غير صحيحة",
+          email_max: "البريد الإلكتروني طويل جدًا",
+          name_required: "الاسم مطلوب",
+          name_letters_only: "الاسم يجب أن يحتوي على أحرف فقط",
+          password_min: "يجب أن تكون كلمة المرور 8 أحرف على الأقل",
+          password_min_reset: "يجب أن تكون كلمة المرور 6 أحرف على الأقل",
+          password_max: "يجب ألا تتجاوز كلمة المرور 20 حرفًا",
+          password_uppercase: "يجب أن تحتوي على حرف كبير واحد على الأقل",
+          password_lowercase: "يجب أن تحتوي على حرف صغير واحد على الأقل",
+          password_number: "يجب أن تحتوي على رقم واحد على الأقل",
+          password_special: "يجب أن تحتوي على رمز خاص واحد على الأقل",
+          confirm_password_required: "يرجى تأكيد كلمة المرور",
+          passwords_match: "كلمتا المرور غير متطابقتين",
 
-          username_required:
-            "اسم المستخدم مطلوب",
-
-          password_required:
-            "كلمة المرور مطلوبة",
-
-          website_max:
-            "يجب ألا يتجاوز الرابط 255 حرف",
-          website_invalid:
-            "أدخل رابط صحيح مثل https://example.com",
-
-          notes_max:
-            "يجب ألا تتجاوز الملاحظات 1000 حرف",
-
-          email_required:
-            "البريد الإلكتروني مطلوب",
-          email_invalid:
-            "صيغة البريد الإلكتروني غير صحيحة",
-          email_max:
-            "البريد الإلكتروني طويل جدًا",
-
-          name_required:
-            "الاسم مطلوب",
-          name_letters_only:
-            "الاسم يجب أن يحتوي على أحرف فقط",
-
-          password_min:
-            "يجب أن تكون كلمة المرور 8 أحرف على الأقل",
-          password_min_reset:
-            "يجب أن تكون كلمة المرور 6 أحرف على الأقل",
-          password_max:
-            "يجب ألا تتجاوز كلمة المرور 20 حرفًا",
-
-          password_uppercase:
-            "يجب أن تحتوي على حرف كبير واحد على الأقل",
-          password_lowercase:
-            "يجب أن تحتوي على حرف صغير واحد على الأقل",
-          password_number:
-            "يجب أن تحتوي على رقم واحد على الأقل",
-          password_special:
-            "يجب أن تحتوي على رمز خاص واحد على الأقل",
-
-          confirm_password_required:
-            "يرجى تأكيد كلمة المرور",
-          passwords_match:
-            "كلمتا المرور غير متطابقتين",
           "Current Password": "كلمة المرور الحالية",
           "New Password": "كلمة المرور الجديدة",
           "Enter your current password": "أدخل كلمة المرور الحالية",
@@ -592,12 +594,165 @@ i18n
           "Use a strong password": "استخدم كلمة مرور قوية",
           "Recovery Key": "مفتاح الاسترداد",
           "Enter your recovery key": "أدخل مفتاح الاسترداد",
+          "Resend Code": "إعادة إرسال الكود",
+          "Account Deleted": "تم حذف الحساب",
+          "Your account and all your data have been permanently deleted":
+            "تم حذف حسابك وجميع بياناتك بشكل دائم",
+          "Delete Account?": "حذف الحساب؟",
+          "This action is irreversible.": "هذا الإجراء لا يمكن التراجع عنه.",
+          "Yes, delete it": "نعم، احذف",
+          Error: "خطأ",
+          "Irreversible action": "إجراء غير قابل للتراجع",
+          "All your data will be permanently deleted.": "سيتم حذف جميع بياناتك بشكل نهائي.",
+          "Master Password": "كلمة المرور الرئيسية",
+          "Enter your Master password": " أدخل كلمة المرور الرئيسية الخاصة بك",
+          "Save Recovery Key": "احفظ مفتاح الاسترداد!",
+          Warning: "تحذير",
+          "Save now warning line 1": "احفظ هذا المفتاح الآن. لا يمكننا استعادة حسابك بدونه.",
+          "Save now warning line 2": "إذا فقدته مع كلمة المرور، سيتم فقدان بياناتك نهائيًا.",
+          Copy: "نسخ",
+          Download: "تحميل",
+          "I understand": "فهمت",
+          "Account Created": "تم إنشاء الحساب!",
+          "Account created successfully message":
+            "تم إنشاء حسابك بنجاح. يمكنك الآن تسجيل الدخول.",
+          "Sign In": "تسجيل الدخول",
+          "Back to Dashboard": "العودة إلى لوحة التحكم",
+          "Add New Credential": "إضافة بيانات جديدة",
+          "Fill in the details to secure your account": "أدخل التفاصيل لتأمين حسابك",
+
+          "Title / Service Name": "العنوان / اسم الخدمة",
+          "Username / Email": "اسم المستخدم / البريد الإلكتروني",
+          "Username or email": "اسم المستخدم أو البريد",
+          "Password": "كلمة المرور",
+
+          "e.g. Google, Netflix, Work Email": "مثال: جوجل، نتفليكس، بريد العمل",
+          "Write a note...": "اكتب ملاحظة...",
+          "Write a tag...": "اكتب وسماً...",
+
+          "Website URL (Optional)": "رابط الموقع (اختياري)",
+          "Note (Optional)": "ملاحظة (اختياري)",
+          "Tags (Optional)": "وسوم (اختياري)",
+
+          "Strength": "القوة",
+
+          "Save Credential": "حفظ البيانات",
+
+          "Your account has been created successfully. You can now sign in.":
+            "تم إنشاء الحساب بنجاح. يمكنك الآن تسجيل الدخول.",
+          "None": "لا يوجد",
+          "Enter a password": "أدخل كلمة المرور",
+          "Very Weak": "ضعيفة جدًا",
+          "Weak": "ضعيفة",
+          "Medium": "متوسطة",
+          "Strong": "قوية",
+          "Very Strong": "قوية جدًا",
+
+          "Use at least 8 characters": "استخدم 8 أحرف على الأقل",
+          "Use 12+ characters for better security": "استخدم 12 حرفًا أو أكثر لأمان أفضل",
+
+          "Add lowercase letters": "أضف أحرفًا صغيرة",
+          "Add uppercase letters": "أضف أحرفًا كبيرة",
+          "Add numbers": "أضف أرقامًا",
+          "Add special characters": "أضف رموزًا خاصة",
+
+          "Avoid common passwords": "تجنب كلمات المرور الشائعة",
+          "Avoid repeated characters": "تجنب تكرار الأحرف",
+          "Avoid sequential patterns": "تجنب التسلسل",
+
+          "Great password!": "كلمة مرور قوية جدًا!",
+          Success: "نجاح",
+          "Credential added successfully": "تم إضافة البيانات بنجاح",
+          "Something went wrong": "حدث خطأ ما",
+          "Account Deleted": "تم حذف الحساب",
+          "Your account and all your data have been permanently deleted":
+            "تم حذف حسابك وجميع بياناتك بشكل نهائي",
+          OK: "حسناً",
+          Error: "خطأ",
+          "Something went wrong": "حدث خطأ ما",
+          "Are you sure?": "هل أنت متأكد؟",
+          "Do you want to delete this credential?": "هل تريد حذف هذه البيانات؟",
+          "Yes, delete it": "نعم، احذف",
+          "Cancel": "إلغاء",
+          "Deleted!": "تم الحذف!",
+          "Credential deleted successfully": "تم حذف البيانات بنجاح",
+          Error: "خطأ",
+          "Something went wrong": "حدث خطأ ما",
+          "Secure your account": "قم بتأمين حسابك",
+          "Enable 2FA": "تفعيل المصادقة الثنائية",
+          "6-digit code": "رمز مكون من 6 أرقام",
+          "Verify": "تحقق",
+          Cancel: "إلغاء",
+          "Disable 2FA?": "تعطيل المصادقة الثنائية؟",
+          "Your account will be less secure": "سيصبح حسابك أقل أمانًا",
+          Disable: "تعطيل",
+          "Disabled title": "تم التعطيل",
+          "2FA Enabled": "تم تفعيل المصادقة الثنائية",
+          "Backup Codes": "أكواد الاسترداد",
+          Done: "تم",
+          "2FA is enabled": "المصادقة الثنائية مفعلة",
+          "Recover Account": "استعادة الحساب",
+          "Use your recovery key to regain access": "استخدم مفتاح الاسترداد لاستعادة حسابك",
+          "Email": "البريد الإلكتروني",
+          "Enter your email": "أدخل بريدك الإلكتروني",
+          "Recovery Key": "مفتاح الاسترداد",
           "New Password": "كلمة المرور الجديدة",
-          "Enter your new password": "أدخل كلمة المرور الجديدة"
+          "Recover Account button": "استعادة الحساب",
+          "Back to Login": "العودة لتسجيل الدخول",
+          Success: "نجاح",
+          "Credential added successfully": "تم إضافة البيانات بنجاح",
+
+          Error: "خطأ",
+          "Something went wrong": "حدث خطأ ما",
+
+          "Are you sure?": "هل أنت متأكد؟",
+          "Do you want to delete this credential?": "هل تريد حذف هذه البيانات؟",
+          "Yes, delete it": "نعم، احذفها",
+          Cancel: "إلغاء",
+          "Deleted!": "تم الحذف!",
+          "Credential deleted successfully": "تم حذف البيانات بنجاح",
+          "2FA Enabled": "تم تفعيل المصادقة الثنائية",
+          "Secure your account": "قم بتأمين حسابك",
+          "Enable 2FA": "تفعيل 2FA",
+          "6-digit code": "رمز مكون من 6 أرقام",
+          Verify: "تحقق",
+          "Cancel": "إلغاء",
+          "2FA is enabled": "المصادقة الثنائية مفعلة",
+          Disable: "تعطيل",
+          "Disable 2FA?": "هل تريد تعطيل 2FA؟",
+          "Your account will be less secure": "سيكون حسابك أقل أمانًا",
+          Disabled: "تم التعطيل",
+          "Disabled title": "تم تعطيل المصادقة",
+          "Recover Account": "استعادة الحساب",
+          "Use your recovery key to regain access": "استخدم مفتاح الاسترداد لاستعادة الوصول",
+          "Enter your email": "أدخل البريد الإلكتروني",
+          "Recovery Key": "مفتاح الاسترداد",
+          "New Password": "كلمة المرور الجديدة",
+          "Recover Account button": "استعادة الحساب",
+          "Back to Login": "العودة لتسجيل الدخول",
+          "Account Recovered!": "تم استعادة الحساب!",
+          "Save your new recovery key — you won't see it again.":
+            "احفظ مفتاح الاسترداد الجديد — لن تتمكن من رؤيته مرة أخرى.",
+          "I saved it": "لقد حفظته",
+          "Copied!": "تم النسخ!",
+          Copy: "نسخ",
+          Download: "تحميل",
+          "Recovery Failed": "فشل استعادة الحساب",
+          "Enter a password": "أدخل كلمة المرور",
+          "Use at least 8 characters": "استخدم 8 أحرف على الأقل",
+          "Use 12+ characters for better security": "استخدم 12 حرفًا أو أكثر لأمان أفضل",
+          "Add lowercase letters": "أضف أحرفًا صغيرة",
+          "Add uppercase letters": "أضف أحرفًا كبيرة",
+          "Add numbers": "أضف أرقامًا",
+          "Add special characters": "أضف رموزًا خاصة",
+          "Avoid common passwords": "تجنب كلمات المرور الشائعة",
+          "Avoid repeated characters": "تجنب تكرار الأحرف",
+          "Avoid sequential patterns": "تجنب التسلسل",
+          "Great password!": "كلمة مرور قوية جدًا!",
+          "If you lose this key and your password, your data cannot be recovered.":"إذا فقدت هذا المفتاح وكلمة المرور الخاصة بك، فلن تتمكن من استعادة بياناتك."
         }
       }
     },
-
 
     interpolation: {
       escapeValue: false
