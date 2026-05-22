@@ -96,8 +96,8 @@ export default function ProfileInfo() {
                                             <InputAdornment position="end">
                                                 <IconButton onClick={() => setShowPassword(p => !p)} size="small">
                                                     {showPassword
-                                                        ? <Visibility sx={{ color: 'white', fontSize: 18 }} />
-                                                        : <VisibilityOff sx={{ color: 'white', fontSize: 18 }} />}
+                                                        ? <Visibility sx={{ color: 'secondary.dark', fontSize: 18 }} />
+                                                        : <VisibilityOff sx={{ color: 'secondary.dark', fontSize: 18 }} />}
                                                 </IconButton>
                                             </InputAdornment>
                                         )
@@ -118,15 +118,88 @@ export default function ProfileInfo() {
                                 </Typography>
                                 <TextField fullWidth size="small" placeholder={t('6-digit code')} value={code}
                                     onChange={(e) => setCode(e.target.value.replace(/\D/g, '').slice(0, 6))} sx={inputSx} />
-                                <Box display="flex" gap={1}>
-                                    <Button disabled={confirmPending || code.length !== 6}
-                                        onClick={() => confirmEmail(code, { onSuccess: () => { setEditEmail(false); setCodeSent(false); setCode('') } })}
-                                        sx={{ borderRadius: 2, backgroundColor: 'secondary.main', color: 'white', px: 2 }}>
-                                        {confirmPending ? <CircularProgress size={18} sx={{ color: 'white' }} /> : t('Verify')}
-                                    </Button>
-                                    <Button onClick={() => { setCodeSent(false); setCode('') }} sx={{ color: 'rgba(255,255,255,0.4)' }}>{t('Back')}</Button>
+                                <Box
+                                    display="flex"
+                                    flexDirection="column"
+                                    gap={2}
+                                >
+
+                                    {/* أزرار التحقق */}
+                                    <Box display="flex" gap={1} flexWrap="wrap">
+                                        <Button
+                                            disabled={confirmPending || code.length !== 6}
+                                            onClick={() =>
+                                                confirmEmail(code, {
+                                                    onSuccess: () => {
+                                                        setEditEmail(false)
+                                                        setCodeSent(false)
+                                                        setCode('')
+                                                    }
+                                                })
+                                            }
+                                            sx={{
+                                                borderRadius: 2,
+                                                backgroundColor: 'secondary.main',
+                                                color: 'white !important',
+                                                px: 2,
+                                                textTransform: 'none',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                gap: 1
+                                            }}
+                                        >
+                                            {confirmPending ? (
+                                                <CircularProgress size={18} sx={{ color: 'white' }} />
+                                            ) : (
+                                             t('Verify')
+                                            )}
+                                        </Button>
+
+                                        <Button
+                                            onClick={() => {
+                                                setCodeSent(false)
+                                                setCode('')
+                                            }}
+                                            sx={{
+                                                color: 'rgba(255,255,255,0.6)',
+                                                textTransform: 'none'
+                                            }}
+                                        >
+                                            {t('Back')}
+                                        </Button>
+                                    </Box>
+
+                                    <Box display="flex" >
+                                        <Button
+                                            disabled={requestPending}
+                                            onClick={() =>
+                                                requestEmail(
+                                                    { newEmail, password },
+                                                    { onSuccess: () => setCode('') }
+                                                )
+                                            }
+                                            sx={{
+                                                backgroundColor: 'secondary.main',
+                                                color: 'white',
+                                                textTransform: 'none',
+                                                borderRadius: 2,
+                                                px: 2,
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                gap: 1
+                                            }}
+                                        >
+                                            {requestPending ? (
+                                                <CircularProgress size={16} sx={{ color: 'white' }} />
+                                            ) : (
+                                                t('Resend Code')
+                                            )}
+                                        </Button>
+                                    </Box>
+
                                 </Box>
                             </Box>
+
                         )}
                     </Box>
                 </Box>

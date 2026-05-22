@@ -30,6 +30,7 @@ export default function useDeleteCredentials() {
                 icon: "success",
                 title: t('Deleted!'),
                 text: t('Credential deleted successfully'),
+                confirmButtonText: t('OK')
             }).then(() => navigate("/dashboard"));
         },
         onError: (error) => {

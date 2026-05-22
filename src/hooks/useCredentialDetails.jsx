@@ -30,7 +30,6 @@ export default function useCredentialDetails({ id }) {
             const response = await AuthAxiosInstance.get(`/vault/credentials/${id}`)
             return response.data
         },
-        staleTime: 100 * 60 * 5
     })
 
     useEffect(() => {

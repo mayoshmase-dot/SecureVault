@@ -42,6 +42,7 @@ export default function useAddCredentials() {
                 icon: "success",
                 title: t('Success'),
                 text: t('Credential added successfully'),
+                confirmButtonText: t('OK')
             }).then(() => navigate("/dashboard"));
         },
 

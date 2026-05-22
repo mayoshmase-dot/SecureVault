@@ -379,7 +379,17 @@ i18n
           "Avoid repeated characters": "Avoid repeated characters",
           "Avoid sequential patterns": "Avoid sequential patterns",
           "Great password!": "Great password!",
-          "If you lose this key and your password, your data cannot be recovered.":"If you lose this key and your password, your data cannot be recovered.",
+          "If you lose this key and your password, your data cannot be recovered.": "If you lose this key and your password, your data cannot be recovered.",
+          "Update!": "Updated!",
+          "Credential updated successfully": "Credential updated successfully",
+          "OK": "OK",
+          'Failed to update language on server': 'Failed to update language on server',
+          'Choose your preferred language': 'Choose your preferred language',
+          "Account Created!": "Account Created!",
+          "Backup Codes": "Backup Codes",
+          "Save these codes somewhere safe.": "Save these codes somewhere safe.",
+          "You won't be able to see them again.": "You won't be able to see them again.",
+          "Done": "Done"
         }
       },
 
@@ -749,7 +759,17 @@ i18n
           "Avoid repeated characters": "تجنب تكرار الأحرف",
           "Avoid sequential patterns": "تجنب التسلسل",
           "Great password!": "كلمة مرور قوية جدًا!",
-          "If you lose this key and your password, your data cannot be recovered.":"إذا فقدت هذا المفتاح وكلمة المرور الخاصة بك، فلن تتمكن من استعادة بياناتك."
+          "If you lose this key and your password, your data cannot be recovered.": "إذا فقدت هذا المفتاح وكلمة المرور الخاصة بك، فلن تتمكن من استعادة بياناتك.",
+          "Update!": "تم التحديث!",
+          "Credential updated successfully": "تم تحديث بيانات الاعتماد بنجاح",
+          "OK": "حسناً",
+          'Failed to update language on server': "فشل تحديث اللغة على الخادم",
+          'Choose your preferred language': 'اختر لغتك المفضلة',
+          "Account Created!": "تم إنشاء الحساب!",
+          "Backup Codes": "رموز الاسترداد",
+          "Save these codes somewhere safe.": "احفظ هذه الرموز في مكان آمن.",
+          "You won't be able to see them again.": "لن تتمكن من رؤيتها مرة أخرى.",
+          "Done": "تم",
         }
       }
     },

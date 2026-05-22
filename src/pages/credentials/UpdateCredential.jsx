@@ -21,19 +21,32 @@ export default function UpdateCredential() {
     const credential = data?.data || {};
     const [showPassword, setShowPassword] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState(null);
-    const { register, handleSubmit, reset, watch, formState: { errors } } = useForm();
     const { t } = useTranslation();
+
+    const { register, handleSubmit, reset, watch, formState: { errors } } = useForm({
+        defaultValues: {
+            title: '',
+            username: '',
+            password: '',
+            website: '',
+            notes: '',
+            tags: '',
+        }
+    });
+
     const passwordValue = watch('password') || ''
 
     useEffect(() => {
         if (!decryptedData) return;
         reset({
-            title: decryptedData.title,
-            username: decryptedData.username,
-            password: decryptedData.password,
-            website: decryptedData.website,
-            notes: decryptedData.notes,
-            tags: Array.isArray(decryptedData.tags) ? decryptedData.tags.join(", ") : decryptedData.tags,
+            title: decryptedData.title || '',
+            username: decryptedData.username || '',
+            password: decryptedData.password || '',
+            website: decryptedData.website || '',
+            notes: decryptedData.notes || '',
+            tags: Array.isArray(decryptedData.tags) ? decryptedData.tags.join(", ") : (decryptedData.tags || ''),
+        }, {
+            keepDirtyValues: true
         });
         setSelectedCategory(decryptedData.category);
     }, [decryptedData]);
@@ -56,7 +69,7 @@ export default function UpdateCredential() {
         mutate({ title: formData.title, username: formData.username, password: formData.password, website: formData.website, notes: formData.notes || "", tags: formData.tags, category });
     };
 
-    const passwordStrength = passwordAnalyzer(passwordValue)
+    const passwordStrength = passwordAnalyzer(passwordValue, t)
 
     if (isLoading || isDecrypting) return <Loader />;
     if (isError) return <Box>{error.message}</Box>;
@@ -164,7 +177,7 @@ export default function UpdateCredential() {
                     <CategorySelector selected={selectedCategory || credential.category} onChange={setSelectedCategory} />
 
                     <Button type="submit" fullWidth disabled={isPending} startIcon={<SaveOutlined />}
-                        sx={{ mt: 3, py: 1.5, borderRadius: "10px", backgroundColor: "rgb(48,168,90)", color: "white", "&:hover": { backgroundColor: "rgb(40,148,78)" } }}>
+                        sx={{ mt: 3, py: 1.5, borderRadius: "10px", backgroundColor: "rgb(48,168,90)", color: "white", "&:hover": { backgroundColor: "rgb(40,148,78)" } , gap:.5 }}>
                         {isPending ? <CircularProgress size={22} sx={{ color: "white" }} /> : t('Update Credential')}
                     </Button>
                 </Box>

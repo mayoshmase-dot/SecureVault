@@ -47,30 +47,39 @@ export default function Profile2FA() {
         })
         const { data: backupRes } = await fetchBackupCodes()
         const codes = backupRes?.data || []
-Swal.fire({
-  title: t('Backup Codes'),
-  html: `
+        Swal.fire({
+          title: t('Backup Codes'),
+          html: `
     <p style="color:rgba(255,255,255,0.55);font-size:13px;margin-bottom:18px;line-height:1.6">
-      Save these codes somewhere safe.<br/>You won't be able to see them again.
+      ${t('Save these codes somewhere safe.')}
+      <br/>
+      ${t("You won't be able to see them again.")}
     </p>
+
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
       ${codes.map(c => `
         <div style="
           background:rgba(48,168,90,0.08);
           border:1px solid rgba(48,168,90,0.2);
-          padding:12px;border-radius:12px;
+          padding:12px;
+          border-radius:12px;
           color:rgb(53,241,119);
-          font-family:monospace;font-size:13px;
-          letter-spacing:1px;text-align:center;font-weight:600
-        ">${c}</div>
+          font-family:monospace;
+          font-size:13px;
+          letter-spacing:1px;
+          text-align:center;
+          font-weight:600
+        ">
+          ${c}
+        </div>
       `).join('')}
     </div>
   `,
-  background: 'rgb(1,6,46)',
-  color: 'white',
-  confirmButtonText: t('Done'),
-  confirmButtonColor: 'rgb(48,168,90)'
-})
+          background: 'rgb(1,6,46)',
+          color: 'white',
+          confirmButtonText: t('Done'),
+          confirmButtonColor: 'rgb(48,168,90)'
+        })
       }
     })
   }

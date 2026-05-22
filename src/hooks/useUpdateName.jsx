@@ -15,7 +15,8 @@ export default function useUpdateName() {
         },
         onSuccess: (data) => {
             queryClient.invalidateQueries({ queryKey: ['profile'] })
-            Swal.fire({ title: t('Updated!'), text: data.message, icon: 'success', confirmButtonColor: '#7c3aed' })
+            Swal.fire({ title: t('Update!'), text: data.message, icon: 'success', confirmButtonColor: '#7c3aed' ,                 confirmButtonText: t('OK')
+ })
         },
         onError: (error) => {
             Swal.fire({ title: t('Error'), text: error.response?.data?.message || t('Something went wrong'), icon: 'error' })

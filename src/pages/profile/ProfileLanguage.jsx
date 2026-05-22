@@ -10,11 +10,11 @@ export default function ProfileLanguage() {
 
   const changeLanguage = async (lng) => {
     i18n.changeLanguage(lng)
-    localStorage.setItem('language', lng)  // ← ضيفها هون كمان
+    localStorage.setItem('language', lng) 
     try {
         await AuthAxiosInstance.put('/auth/update-language', { language: lng })
     } catch (err) {
-        console.error('Failed to update language on server', err)
+        console.error(t('Failed to update language on server', err))
     }
 }
 

@@ -141,7 +141,7 @@ export default function Register() {
         })
       }
     } catch (error) {
-      setServerErrors(error?.response?.data?.message || 'Something went wrong')
+      setServerErrors(error?.response?.data?.message || t('Something went wrong'))
     }
   }
 
@@ -217,7 +217,7 @@ export default function Register() {
                   placeholder="••••••••" error={!!errors.password} helperText={errors.password?.message} sx={inputSx}
                   InputProps={{
                     startAdornment: <InputAdornment position="start"><LockOutlined sx={{ fontSize: 18, color: 'secondary.dark' }} /></InputAdornment>,
-                    endAdornment: <InputAdornment position="end"><IconButton onClick={() => setShowPassword(p => !p)}>{showPassword ? <VisibilityIcon sx={{ color: 'white' }} /> : <VisibilityOffIcon sx={{ color: 'white' }} />}</IconButton></InputAdornment>
+                    endAdornment: <InputAdornment position="end"><IconButton onClick={() => setShowPassword(p => !p)}>{showPassword ? <VisibilityIcon sx={{ color: 'secondary.dark' }} /> : <VisibilityOffIcon sx={{ color: 'secondary.dark' }} />}</IconButton></InputAdornment>
                   }} />
               </Box>
             )}
@@ -229,7 +229,7 @@ export default function Register() {
                   placeholder="••••••••" error={!!errors.confirmPassword} helperText={errors.confirmPassword?.message} sx={inputSx}
                   InputProps={{
                     startAdornment: <InputAdornment position="start"><LockOutlined sx={{ fontSize: 18, color: 'secondary.dark' }} /></InputAdornment>,
-                    endAdornment: <InputAdornment position="end"><IconButton onClick={() => setShowConfirm(p => !p)}>{showConfirm ? <VisibilityIcon sx={{ color: 'white' }} /> : <VisibilityOffIcon sx={{ color: 'white' }} />}</IconButton></InputAdornment>
+                    endAdornment: <InputAdornment position="end"><IconButton onClick={() => setShowConfirm(p => !p)}>{showConfirm ? <VisibilityIcon sx={{ color: 'secondary.dark' }} /> : <VisibilityOffIcon sx={{ color: 'secondary.dark' }} />}</IconButton></InputAdornment>
                   }} />
               </Box>
             )}
@@ -254,7 +254,7 @@ export default function Register() {
                 mt: 1, borderRadius: 3, py: 1.5,
                 backgroundColor: 'secondary.main', color: 'white', fontWeight: 700, letterSpacing: 1
               }}>
-                {codePending ? <CircularProgress size={24} sx={{ color: 'white' }} /> : t('Send Verification Code')}
+                {codePending ? <CircularProgress size={24} sx={{ color: 'primary.main' }} /> : t('Send Verification Code')}
               </Button>
             )}
 
@@ -264,7 +264,7 @@ export default function Register() {
                   mt: 1, borderRadius: 3, py: 1.5,
                   backgroundColor: 'secondary.main', color: 'white', fontWeight: 700, letterSpacing: 1
                 }}>
-                  {isSubmitting ? <CircularProgress size={24} sx={{ color: 'white' }} /> : t('Create Account button')}
+                  {isSubmitting ? <CircularProgress size={24} sx={{ color: 'primary.mian' }} /> : t('Create Account button')}
                 </Button>
 
                 <Button onClick={handleResendCode} disabled={resendPending} sx={{
@@ -272,7 +272,7 @@ export default function Register() {
                   color: 'rgba(255,255,255,0.5)', fontSize: 13,
                   '&:hover': { color: 'secondary.main' }
                 }}>
-                  {resendPending ? <CircularProgress size={18} sx={{ color: 'white' }} /> : t('Resend Code')}
+                  {resendPending ? <CircularProgress size={18} sx={{ color: 'primary.mian' }} /> : t('Resend Code')}
                 </Button>
 
                 <Button onClick={() => { setStep(1); setCode('') }} sx={{ color: 'rgba(255,255,255,0.4)', fontSize: 13 }}>

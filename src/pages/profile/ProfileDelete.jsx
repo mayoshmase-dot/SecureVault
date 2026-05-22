@@ -20,6 +20,7 @@ export default function ProfileDelete() {
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: t('Yes, delete it'),
+        cancelButtonText: t('Cancel'),   // 👈 ضيف هذا
       confirmButtonColor: '#dc2626',
     }).then(({ isConfirmed }) => {
       if (!isConfirmed) return

@@ -26,7 +26,9 @@ export default function useUpdateCredential({ id }) {
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["credential"] })
-            Swal.fire({ icon: "success", title: t('Update!'), text: t('Credential updated successfully') })
+            Swal.fire({
+                icon: "success", title: t('Update!'), text: t('Credential updated successfully'), confirmButtonText: t('OK')
+            })
                 .then(() => navigate('/dashboard'))
         },
         onError: (error) => {

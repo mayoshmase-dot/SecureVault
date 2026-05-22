@@ -8,7 +8,6 @@ import { useTranslation } from 'react-i18next'
 export default function StatCard() {
     const { data: summary = { strong: 0, weak: 0, reused: 0 } } = useVaultAudit()
     const { t } = useTranslation()
-
     return (
         <Box sx={{ backgroundColor: 'primary.main' }}>
             <Container maxWidth="lg">

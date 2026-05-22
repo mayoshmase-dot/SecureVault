@@ -70,7 +70,9 @@ export default function useChangeMasterPassword() {
                 icon: "success",
                 title: t('Success'),
                 text: data?.message || t('Update Password success'),
-                confirmButtonColor: "#7c3aed"
+                confirmButtonColor: "#7c3aed",
+                confirmButtonText: t('OK')
+
             })
         },
 
