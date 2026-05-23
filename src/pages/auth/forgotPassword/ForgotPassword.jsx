@@ -15,7 +15,6 @@ export default function ForgotPassword() {
     const [newPassword, setNewPassword] = useState('')
     const [newPasswordError, setNewPasswordError] = useState('')
     const [showPassword, setShowPassword] = useState(false)
-
     const { t } = useTranslation();
 
     const schema = yup.object({
@@ -50,20 +49,23 @@ export default function ForgotPassword() {
     }
 
     return (
-        <Box sx={{ backgroundColor: 'primary.main', py: 5 }}>
+        <Box component="main" sx={{ backgroundColor: 'primary.main', py: 5 }}>
             <Container maxWidth="xs">
-                <Box sx={{
-                    borderRadius: 3, backgroundColor: 'primary.main',
-                    boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
-                    border: '1px solid rgba(255,255,255,0.07)', p: 4
-                }}>
+                <Box
+                    role="region"
+                    aria-label={t('Recover Account')}
+                    sx={{
+                        borderRadius: 3, backgroundColor: 'primary.main',
+                        boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
+                        border: '1px solid rgba(255,255,255,0.07)', p: 4
+                    }}>
 
                     <Box display="flex" alignItems="center" gap={1.5} mb={3}>
-                        <Box sx={iconBox}>
+                        <Box sx={iconBox} aria-hidden="true">
                             <LockReset sx={{ fontSize: 20 }} />
                         </Box>
                         <Box>
-                            <Typography sx={{ color: 'white', fontWeight: 600, fontSize: 22 }}>
+                            <Typography component="h1" sx={{ color: 'white', fontWeight: 600, fontSize: 22 }}>
                                 {t('Recover Account')}
                             </Typography>
                             <Typography sx={{ color: 'rgba(255,255,255,0.4)', fontSize: 12 }}>
@@ -75,50 +77,85 @@ export default function ForgotPassword() {
                     <Box display="flex" flexDirection="column" gap={1.5}>
 
                         <Box>
-                            <Typography sx={{ color: 'secondary.dark', fontSize: 12.5, mb: 0.5 }}>{t('Email')}</Typography>
-                            <TextField fullWidth placeholder={t('Enter your email')} value={email}
-                                onChange={(e) => setEmail(e.target.value)} sx={inputSx}
-                                InputProps={{ startAdornment: <InputAdornment position="start"><LanguageOutlined sx={{ fontSize: 18, color: 'secondary.dark' }} /></InputAdornment> }} />
+                            <Typography component="label" htmlFor="email" sx={{ color: 'secondary.dark', fontSize: 12.5, mb: 0.5, display: 'block' }}>
+                                {t('Email')}
+                            </Typography>
+                            <TextField
+                                id="email"
+                                fullWidth
+                                placeholder={t('Enter your email')}
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                sx={inputSx}
+                                inputProps={{ 'aria-label': t('Email') }}
+                                InputProps={{ startAdornment: <InputAdornment position="start"><LanguageOutlined aria-hidden="true" sx={{ fontSize: 18, color: 'secondary.dark' }} /></InputAdornment> }} />
                         </Box>
 
                         <Box>
-                            <Typography sx={{ color: 'secondary.dark', fontSize: 12.5, mb: 0.5 }}>{t('Recovery Key')}</Typography>
-                            <TextField fullWidth placeholder="XXXX-XXXX-XXXX-XXXX-XXXX-XXXX" value={recoveryKey}
-                                onChange={(e) => setRecoveryKey(e.target.value)} sx={inputSx}
-                                InputProps={{ startAdornment: <InputAdornment position="start"><KeyOutlined sx={{ fontSize: 18, color: 'secondary.dark' }} /></InputAdornment> }} />
+                            <Typography component="label" htmlFor="recoveryKey" sx={{ color: 'secondary.dark', fontSize: 12.5, mb: 0.5, display: 'block' }}>
+                                {t('Recovery Key')}
+                            </Typography>
+                            <TextField
+                                id="recoveryKey"
+                                fullWidth
+                                placeholder="XXXX-XXXX-XXXX-XXXX-XXXX-XXXX"
+                                value={recoveryKey}
+                                onChange={(e) => setRecoveryKey(e.target.value)}
+                                sx={inputSx}
+                                inputProps={{ 'aria-label': t('Recovery Key') }}
+                                InputProps={{ startAdornment: <InputAdornment position="start"><KeyOutlined aria-hidden="true" sx={{ fontSize: 18, color: 'secondary.dark' }} /></InputAdornment> }} />
                         </Box>
 
                         <Box>
-                            <Typography sx={{ color: 'secondary.dark', fontSize: 12.5, mb: 0.5 }}>{t('New Password')}</Typography>
-                            <TextField fullWidth placeholder="••••••••" value={newPassword}
+                            <Typography component="label" htmlFor="newPassword" sx={{ color: 'secondary.dark', fontSize: 12.5, mb: 0.5, display: 'block' }}>
+                                {t('New Password')}
+                            </Typography>
+                            <TextField
+                                id="newPassword"
+                                fullWidth
+                                placeholder="••••••••"
+                                value={newPassword}
                                 type={showPassword ? 'text' : 'password'}
-                                onChange={handleNewPasswordChange} sx={inputSx}
+                                onChange={handleNewPasswordChange}
+                                sx={inputSx}
+                                inputProps={{ 'aria-label': t('New Password') }}
                                 InputProps={{
-                                    startAdornment: <InputAdornment position="start"><LockOutlined sx={{ fontSize: 18, color: 'secondary.dark' }} /></InputAdornment>,
+                                    startAdornment: <InputAdornment position="start"><LockOutlined aria-hidden="true" sx={{ fontSize: 18, color: 'secondary.dark' }} /></InputAdornment>,
                                     endAdornment: <InputAdornment position="end">
-                                        <IconButton onClick={() => setShowPassword(p => !p)}>
-                                            {showPassword ? <Visibility sx={{ color: 'secondary.dark', fontSize: 18 }} /> : <VisibilityOff sx={{ color: 'secondary.dark', fontSize: 18 }} />}
+                                        <IconButton
+                                            onClick={() => setShowPassword(p => !p)}
+                                            aria-label={showPassword ? 'Hide password' : 'Show password'}>
+                                            {showPassword
+                                                ? <Visibility aria-hidden="true" sx={{ color: 'secondary.dark', fontSize: 18 }} />
+                                                : <VisibilityOff aria-hidden="true" sx={{ color: 'secondary.dark', fontSize: 18 }} />}
                                         </IconButton>
                                     </InputAdornment>
                                 }} />
                             {newPasswordError && (
-                                <Typography sx={{ color: '#ff6b6b', fontSize: 12, mt: 0.5, ml: 0.5 }}>
+                                <Typography role="alert" sx={{ color: '#ff6b6b', fontSize: 12, mt: 0.5, ml: 0.5 }}>
                                     {newPasswordError}
                                 </Typography>
                             )}
                         </Box>
 
-                        <Button fullWidth
+                        <Button
+                            fullWidth
                             disabled={isPending || !email || !recoveryKey || !newPassword || !!newPasswordError}
-                            onClick={handleRecover} sx={{
+                            onClick={handleRecover}
+                            aria-label={t('Recover Account button')}
+                            sx={{
                                 mt: 1, py: 1.5, borderRadius: 3,
                                 backgroundColor: 'secondary.main',
                                 color: 'white', fontWeight: 700, letterSpacing: 1
                             }}>
-                            {isPending ? <CircularProgress size={22} sx={{ color: "primary.main" }} /> : t('Recover Account button')}
+                            {isPending ? <CircularProgress size={22} sx={{ color: "primary.main" }} aria-label="Loading" /> : t('Recover Account button')}
                         </Button>
 
-                        <Button fullWidth onClick={() => navigate('/login')} sx={{ color: 'rgba(255,255,255,0.4)', fontSize: 13 }}>
+                        <Button
+                            fullWidth
+                            onClick={() => navigate('/login')}
+                            aria-label={t('Back to Login')}
+                            sx={{ color: 'rgba(255,255,255,0.4)', fontSize: 13 }}>
                             {t('Back to Login')}
                         </Button>
 

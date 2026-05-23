@@ -14,7 +14,11 @@ export default function PasswordExpiryBanner() {
 
     return (
         <Box
+            role="alert"
+            aria-live="polite"
             onClick={() => navigate('/credentials')}
+            onKeyDown={(e) => e.key === 'Enter' && navigate('/credentials')}
+            tabIndex={0}
             sx={{
                 display: 'flex',
                 alignItems: 'center',
@@ -27,10 +31,11 @@ export default function PasswordExpiryBanner() {
                 backgroundColor: 'rgba(234,179,8,0.08)',
                 border: '1px solid rgba(234,179,8,0.25)',
                 cursor: 'pointer',
-                '&:hover': { backgroundColor: 'rgba(234,179,8,0.13)' }
+                '&:hover': { backgroundColor: 'rgba(234,179,8,0.13)' },
+                '&:focus-visible': { outline: '2px solid #facc15', outlineOffset: 2 }
             }}
         >
-            <WarningAmberOutlinedIcon sx={{ color: '#facc15', fontSize: 20 }} />
+            <WarningAmberOutlinedIcon aria-hidden="true" sx={{ color: '#facc15', fontSize: 20 }} />
             <Typography sx={{ color: '#facc15', fontSize: 13 }}>
                 {count > 1 ? t('password_expiry_other', { count }) : t('password_expiry_one')}
             </Typography>

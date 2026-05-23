@@ -31,7 +31,7 @@ const getIconStyle = (color) => ({
     }
 })
 
-const CardBox = ({ children, list }) => (
+const CardBox = ({ children, list, label }) => (
     <Tooltip
         arrow
         placement="bottom"
@@ -65,6 +65,8 @@ const CardBox = ({ children, list }) => (
         }
     >
         <Card
+            role="region"
+            aria-label={label}
             sx={{
                 py: 5,
                 px: 4,
@@ -116,16 +118,16 @@ export default function StatCard() {
 
                         {/* STRONG */}
                         <Grid item xs={12} md={6} lg={4}>
-                            <CardBox list={summary?.strongPasswords}>
+                            <CardBox list={summary?.strongPasswords} label={t('Strong Passwords')}>
                                 <Box display="flex" flexDirection="column" alignItems="center" gap={2}>
-                                    <Box sx={getIconStyle('secondary.main')}>
+                                    <Box sx={getIconStyle('secondary.main')} aria-hidden="true">
                                         <GppGoodOutlinedIcon sx={{ fontSize: 42 }} />
                                     </Box>
                                     <Box textAlign="center">
                                         <Typography variant="h5" fontWeight="700" mb={1}>
                                             {t('Strong Passwords')}
                                         </Typography>
-                                        <Typography variant="h2" fontWeight="bold" color="secondary.main">
+                                        <Typography variant="h2" fontWeight="bold" color="secondary.main" aria-label={`${summary?.strong} ${t('Strong Passwords')}`}>
                                             {summary?.strong}
                                         </Typography>
                                     </Box>
@@ -135,16 +137,16 @@ export default function StatCard() {
 
                         {/* WEAK */}
                         <Grid item xs={12} md={6} lg={4}>
-                            <CardBox list={summary?.weakPasswords}>
+                            <CardBox list={summary?.weakPasswords} label={t('Weak Passwords')}>
                                 <Box display="flex" flexDirection="column" alignItems="center" gap={2}>
-                                    <Box sx={getIconStyle('#f59e0b')}>
+                                    <Box sx={getIconStyle('#f59e0b')} aria-hidden="true">
                                         <GppMaybeOutlinedIcon sx={{ fontSize: 42 }} />
                                     </Box>
                                     <Box textAlign="center">
                                         <Typography variant="h5" fontWeight="700" mb={1}>
                                             {t('Weak Passwords')}
                                         </Typography>
-                                        <Typography variant="h2" fontWeight="bold" sx={{ color: '#f59e0b' }}>
+                                        <Typography variant="h2" fontWeight="bold" sx={{ color: '#f59e0b' }} aria-label={`${summary?.weak} ${t('Weak Passwords')}`}>
                                             {summary?.weak}
                                         </Typography>
                                     </Box>
@@ -154,16 +156,16 @@ export default function StatCard() {
 
                         {/* REUSED */}
                         <Grid item xs={12} md={6} lg={4}>
-                            <CardBox list={summary?.reusedPasswords}>
+                            <CardBox list={summary?.reusedPasswords} label={t('Reused Passwords')}>
                                 <Box display="flex" flexDirection="column" alignItems="center" gap={2}>
-                                    <Box sx={getIconStyle('#38bdf8')}>
+                                    <Box sx={getIconStyle('#38bdf8')} aria-hidden="true">
                                         <VpnKeyOutlinedIcon sx={{ fontSize: 42 }} />
                                     </Box>
                                     <Box textAlign="center">
                                         <Typography variant="h5" fontWeight="700" mb={1}>
                                             {t('Reused Passwords')}
                                         </Typography>
-                                        <Typography variant="h2" fontWeight="bold" sx={{ color: '#38bdf8' }}>
+                                        <Typography variant="h2" fontWeight="bold" sx={{ color: '#38bdf8' }} aria-label={`${summary?.reused} ${t('Reused Passwords')}`}>
                                             {summary?.reused}
                                         </Typography>
                                     </Box>

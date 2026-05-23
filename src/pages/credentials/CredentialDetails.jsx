@@ -1,4 +1,4 @@
-import { Box, Container, Typography, IconButton, Divider, Tooltip, Button } from "@mui/material";
+import { Box, Container, Typography, IconButton, Divider, Tooltip } from "@mui/material";
 import { useParams } from "react-router-dom";
 import useCredentialDetails from "../../hooks/useCredentialDetails";
 import Loader from "../../ui/Loader";
@@ -23,30 +23,31 @@ export default function CredentialDetails() {
     const { t } = useTranslation();
 
     if (isLoading || isDecrypting) return <Loader />;
-    if (isError) return <Box>{error.message}</Box>;
-    if (decryptError) return <Box color="error.main" textAlign="center" mt={5}>{t('Failed to decrypt data. Wrong master password?')}</Box>;
+    if (isError) return <Box role="alert">{error.message}</Box>;
+    if (decryptError) return <Box role="alert" color="error.main" textAlign="center" mt={5}>{t('Failed to decrypt data. Wrong master password?')}</Box>;
 
     const credential = data?.data;
     const display = decryptedData ?? credential;
 
     return (
-        <Box sx={{ backgroundColor: "primary.main", display: "flex", flexDirection: "column", px: { xs: 2, sm: 3 }, pt: 1, pb: 5 }}>
+        <Box component="main" sx={{ backgroundColor: "primary.main", display: "flex", flexDirection: "column", px: { xs: 2, sm: 3 }, pt: 1, pb: 5 }}>
             <BackButton />
             <Box sx={{ py: 7 }}>
                 <Container maxWidth="sm">
-                    <Box sx={{ borderRadius: 3, backgroundColor: 'primary.main', userSelect: 'none', p: 5, boxShadow: '0 20px 60px rgba(0,0,0,0.5)', border: '1px solid rgba(255,255,255,0.07)' }}>
+                    <Box role="region" aria-label={credential?.title}
+                        sx={{ borderRadius: 3, backgroundColor: 'primary.main', userSelect: 'none', p: 5, boxShadow: '0 20px 60px rgba(0,0,0,0.5)', border: '1px solid rgba(255,255,255,0.07)' }}>
 
                         <Box display="flex" alignItems="center" gap={2} mb={4}>
-                            <Box sx={iconBox}><LanguageIcon /></Box>
+                            <Box sx={iconBox} aria-hidden="true"><LanguageIcon /></Box>
                             <Box>
-                                <Typography variant="h5" fontWeight={700} color="white">{credential?.title}</Typography>
+                                <Typography component="h1" variant="h5" fontWeight={700} color="white">{credential?.title}</Typography>
                                 <Typography sx={{ fontSize: 13, color: "secondary.main" }}>{credential?.website}</Typography>
                             </Box>
                         </Box>
 
                         <Box sx={cardStyle} mb={2}>
                             <Box display="flex" alignItems="center" gap={1.5}>
-                                <PersonIcon sx={{ color: "secondary.main" }} />
+                                <PersonIcon aria-hidden="true" sx={{ color: "secondary.main" }} />
                                 <Typography color="white">{t('Username')}</Typography>
                             </Box>
                             <Box display="flex" alignItems="center" gap={1}>
@@ -57,16 +58,18 @@ export default function CredentialDetails() {
 
                         <Box sx={cardStyle} mb={2}>
                             <Box display="flex" alignItems="center" gap={1.5}>
-                                <LockIcon sx={{ color: "secondary.main" }} />
+                                <LockIcon aria-hidden="true" sx={{ color: "secondary.main" }} />
                                 <Typography color="white">{t('Password')}</Typography>
                             </Box>
                             <Box display="flex" alignItems="center" gap={1}>
-                                <Typography sx={{ color: "rgba(255,255,255,0.6)", fontSize: 14 }}>
+                                <Typography sx={{ color: "rgba(255,255,255,0.6)", fontSize: 14 }}
+                                    aria-label={showPassword ? display?.password : t('Password hidden')}>
                                     {showPassword ? display?.password : '••••••••'}
                                 </Typography>
                                 <Tooltip title={showPassword ? t('Hide') : t('Show')}>
-                                    <IconButton size="small" sx={{ color: "secondary.main" }} onClick={() => setShowPassword(p => !p)}>
-                                        {showPassword ? <Visibility fontSize="small" /> : <VisibilityOff fontSize="small" />}
+                                    <IconButton size="small" aria-label={showPassword ? t('Hide') : t('Show')}
+                                        sx={{ color: "secondary.main" }} onClick={() => setShowPassword(p => !p)}>
+                                        {showPassword ? <Visibility aria-hidden="true" fontSize="small" /> : <VisibilityOff aria-hidden="true" fontSize="small" />}
                                     </IconButton>
                                 </Tooltip>
                                 <CopyButton value={display?.password} />
@@ -76,7 +79,7 @@ export default function CredentialDetails() {
                         {display?.notes && (
                             <Box sx={cardStyle} mb={2}>
                                 <Box display="flex" alignItems="center" gap={1.5}>
-                                    <NoteIcon sx={{ color: "secondary.main" }} />
+                                    <NoteIcon aria-hidden="true" sx={{ color: "secondary.main" }} />
                                     <Typography color="white">{t('Notes')}</Typography>
                                 </Box>
                                 <Box display="flex" alignItems="center" gap={1}>
@@ -88,7 +91,7 @@ export default function CredentialDetails() {
 
                         <Box sx={cardStyle} mb={2}>
                             <Box display="flex" alignItems="center" gap={1.5}>
-                                <TagIcon sx={{ color: "secondary.main" }} />
+                                <TagIcon aria-hidden="true" sx={{ color: "secondary.main" }} />
                                 <Typography color="white">{t('Tags')}</Typography>
                             </Box>
                             <Box display="flex" alignItems="center" gap={1}>
@@ -99,7 +102,7 @@ export default function CredentialDetails() {
 
                         <Box sx={cardStyle} mb={3}>
                             <Box display="flex" alignItems="center" gap={1.5}>
-                                <CategoryIcon sx={{ color: "secondary.main" }} />
+                                <CategoryIcon aria-hidden="true" sx={{ color: "secondary.main" }} />
                                 <Typography color="white">{t('Category')}</Typography>
                             </Box>
                             <Box display="flex" alignItems="center" gap={1}>

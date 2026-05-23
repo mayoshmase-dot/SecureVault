@@ -10,7 +10,7 @@ import i18n from '../../i18next';
 export default function VaultControl() {
     const { search, setSearch } = useSearchStore();
     const { t } = useTranslation();
-  const isAr = i18n.language === 'ar'
+    const isAr = i18n.language === 'ar'
 
     return (
         <Box bgcolor={'primary.main'}>
@@ -21,12 +21,13 @@ export default function VaultControl() {
                         boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
                         border: '1px solid rgba(255,255,255,0.07)',
                     }}>
-                        <SearchIcon sx={{ color: "secondary.main", mr: 1 }} />
+                        <SearchIcon sx={{ color: "secondary.main", mr: 1 }} aria-hidden="true" />
                         <InputBase
                             fullWidth
                             placeholder={t('Search your vault...')}
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
+                            inputProps={{ 'aria-label': t('Search your vault...') }}
                             sx={{
                                 input: { color: 'secondary.dark' }
                             }}
@@ -36,14 +37,15 @@ export default function VaultControl() {
                     <Box display={'flex'} gap={3} flexDirection={{ xs: 'column', md: 'row' }}>
                         <Button component={Link} to="/generatePassword" sx={{
                             backgroundColor: 'secondary.main', borderRadius: 3, fontWeight: 'bold', color: 'white',
-                            px: 3, py: 1, textTransform: 'none', '&:hover': { backgroundColor: 'secondary.dark', }, gap: isAr ? 1 : 0.5  }} startIcon={<VpnKeyOutlinedIcon />}>
+                            px: 3, py: 1, textTransform: 'none', '&:hover': { backgroundColor: 'secondary.dark', }, gap: isAr ? 1 : 0.5
+                        }} startIcon={<VpnKeyOutlinedIcon aria-hidden="true" />}>
                             {t('Generator')}
                         </Button>
                         <Button component={Link} to="/addCredentials"
-                            variant="contained" startIcon={<AddIcon />}
+                            variant="contained" startIcon={<AddIcon aria-hidden="true" />}
                             sx={{
                                 backgroundColor: 'secondary.main', borderRadius: 3, fontWeight: 'bold', color: 'white',
-                                px: 3, py: 1, textTransform: 'none',gap: isAr ? 1 : 0.5 ,
+                                px: 3, py: 1, textTransform: 'none', gap: isAr ? 1 : 0.5,
                                 '&:hover': { backgroundColor: 'secondary.dark', }
                             }}>
                             {t('Add New')}

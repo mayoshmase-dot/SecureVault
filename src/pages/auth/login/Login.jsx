@@ -14,7 +14,6 @@ import useVaultStore from '../../../store/useVaultStore';
 import { deriveAuthHash } from '../../../crypto';
 import { useTranslation } from 'react-i18next';
 
-
 export default function Login() {
   const [serverErrors, setServerErrors] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -22,8 +21,7 @@ export default function Login() {
   const setToken = useAuthStore((state) => state.setToken);
   const setMasterPassword = useVaultStore((state) => state.setMasterPassword);
   const setTempToken = useAuthStore((state) => state.setTempToken)
-const { t } = useTranslation()
-
+  const { t } = useTranslation()
   const schema = LoginSchema(t)
 
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm({
@@ -31,48 +29,48 @@ const { t } = useTranslation()
     mode: "all"
   });
 
-const LoginForm = async (data) => {
-  try {
-    const kdfRes = await axiosInstance.get(`/auth/kdf-params/${data.email}`)
-    const { masterPasswordSeed, kdfIterations } = kdfRes.data.data
-    const authHash = await deriveAuthHash(data.password, masterPasswordSeed, kdfIterations)
-    const response = await axiosInstance.post('/auth/login', { email: data.email, password: authHash })
-    
-    setMasterPassword(data.password)
-
-    if (response.data.requires2FA) {
-      setTempToken(response.data.tempToken)
-      navigate('/verify2FA')
-      return
+  const LoginForm = async (data) => {
+    try {
+      const kdfRes = await axiosInstance.get(`/auth/kdf-params/${data.email}`)
+      const { masterPasswordSeed, kdfIterations } = kdfRes.data.data
+      const authHash = await deriveAuthHash(data.password, masterPasswordSeed, kdfIterations)
+      const response = await axiosInstance.post('/auth/login', { email: data.email, password: authHash })
+      setMasterPassword(data.password)
+      if (response.data.requires2FA) {
+        setTempToken(response.data.tempToken)
+        navigate('/verify2FA')
+        return
+      }
+      if (response.data.accessToken) {
+        localStorage.setItem("token", response.data.accessToken)
+        localStorage.setItem("refreshToken", response.data.refreshToken)
+        setToken(response.data.accessToken)
+        navigate('/dashboard')
+      }
+    } catch (error) {
+      setServerErrors(error?.response?.data?.message || 'Something went wrong')
     }
-
-    if (response.data.accessToken) {
-      localStorage.setItem("token", response.data.accessToken)
-      localStorage.setItem("refreshToken", response.data.refreshToken)
-      setToken(response.data.accessToken)
-      navigate('/dashboard')
-    }
-  } catch (error) {
-    setServerErrors(error?.response?.data?.message || 'Something went wrong')
   }
-}
 
   return (
-    <Box sx={{ backgroundColor: 'primary.main', py: 5 }}>
+    <Box component="main" sx={{ backgroundColor: 'primary.main', py: 5 }}>
       <Container maxWidth='xs'>
-        <Box sx={{
-          borderRadius: 3, backgroundColor: 'primary.main', userSelect: 'none',
-          boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
-          border: '1px solid rgba(255,255,255,0.07)', p: 4
-        }}>
+        <Box
+          role="region"
+          aria-label={t('Sign In title')}
+          sx={{
+            borderRadius: 3, backgroundColor: 'primary.main', userSelect: 'none',
+            boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
+            border: '1px solid rgba(255,255,255,0.07)', p: 4
+          }}>
 
           <Box display="flex" flexDirection="column" gap={1} mb={2}>
             <Box display="flex" alignItems="center" gap={1.5}>
-              <Box sx={iconBox}>
+              <Box sx={iconBox} aria-hidden="true">
                 <PersonOutline sx={{ fontSize: 20 }} />
               </Box>
               <Box>
-                <Typography sx={{ color: 'white', fontWeight: 600, fontSize: 22 }}>{t('Sign In title')}</Typography>
+                <Typography component="h1" sx={{ color: 'white', fontWeight: 600, fontSize: 22 }}>{t('Sign In title')}</Typography>
                 <Typography sx={{ color: 'rgba(255,255,255,0.4)', fontSize: 12 }}>{t('Access your secure vault')}</Typography>
               </Box>
             </Box>
@@ -85,38 +83,61 @@ const LoginForm = async (data) => {
           </Box>
 
           {serverErrors && (
-            <Typography color={'error'} variant='body2' mb={1}>{serverErrors}</Typography>
+            <Typography role="alert" color={'error'} variant='body2' mb={1}>{serverErrors}</Typography>
           )}
 
           <Box component={'form'} onSubmit={handleSubmit(LoginForm)} display={'flex'} flexDirection={'column'} gap={1.5}>
 
             <Box>
-              <Typography sx={{ color: 'secondary.dark', fontSize: 12.5, mb: 0.5 }}>{t('Email')}</Typography>
-              <TextField {...register('email')} fullWidth placeholder={t('Enter your email')}
-                error={!!errors.email} helperText={errors.email?.message} sx={inputSx}
+              <Typography component="label" htmlFor="email" sx={{ color: 'secondary.dark', fontSize: 12.5, mb: 0.5, display: 'block' }}>
+                {t('Email')}
+              </Typography>
+              <TextField
+                id="email"
+                {...register('email')}
+                fullWidth
+                placeholder={t('Enter your email')}
+                error={!!errors.email}
+                helperText={errors.email?.message}
+                sx={inputSx}
+                inputProps={{ 'aria-label': t('Email') }}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <LanguageOutlined sx={{ fontSize: 18, color: 'secondary.dark' }} />
+                      <LanguageOutlined aria-hidden="true" sx={{ fontSize: 18, color: 'secondary.dark' }} />
                     </InputAdornment>
                   )
                 }} />
             </Box>
 
             <Box>
-              <Typography sx={{ color: 'secondary.dark', fontSize: 12.5, mb: 0.5 }}>{t('Password')}</Typography>
-              <TextField {...register('password')} fullWidth type={showPassword ? 'text' : 'password'}
-                placeholder="••••••••" error={!!errors.password} helperText={errors.password?.message} sx={inputSx}
+              <Typography component="label" htmlFor="password" sx={{ color: 'secondary.dark', fontSize: 12.5, mb: 0.5, display: 'block' }}>
+                {t('Password')}
+              </Typography>
+              <TextField
+                id="password"
+                {...register('password')}
+                fullWidth
+                type={showPassword ? 'text' : 'password'}
+                placeholder="••••••••"
+                error={!!errors.password}
+                helperText={errors.password?.message}
+                sx={inputSx}
+                inputProps={{ 'aria-label': t('Password') }}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <LockOutlined sx={{ fontSize: 18, color: 'secondary.dark' }} />
+                      <LockOutlined aria-hidden="true" sx={{ fontSize: 18, color: 'secondary.dark' }} />
                     </InputAdornment>
                   ),
                   endAdornment: (
                     <InputAdornment position="end">
-                      <IconButton onClick={() => setShowPassword(p => !p)}>
-                        {showPassword ? <VisibilityIcon sx={{ color: 'secondary.dark' }} /> : <VisibilityOffIcon sx={{ color: 'secondary.dark' }} />}
+                      <IconButton
+                        onClick={() => setShowPassword(p => !p)}
+                        aria-label={showPassword ? 'Hide password' : 'Show password'}>
+                        {showPassword
+                          ? <VisibilityIcon aria-hidden="true" sx={{ color: 'secondary.dark' }} />
+                          : <VisibilityOffIcon aria-hidden="true" sx={{ color: 'secondary.dark' }} />}
                       </IconButton>
                     </InputAdornment>
                   )
@@ -125,20 +146,28 @@ const LoginForm = async (data) => {
 
             <Box display="flex" justifyContent="space-between" alignItems="center">
               <Box display="flex" alignItems="center" sx={{ color: 'white' }}>
-                <Checkbox sx={{ color: 'white', '&:hover': { color: 'secondary.main' } }} />
+                <Checkbox
+                  aria-label={t('Remember me')}
+                  sx={{ color: 'white', '&:hover': { color: 'secondary.main' } }} />
                 {t('Remember me')}
               </Box>
-              <Typography sx={{ cursor: 'pointer', color: 'white', '&:hover': { color: 'secondary.main' } }}
-                onClick={() => navigate('/forgotPassword')}>
+              <Typography
+                component="button"
+                onClick={() => navigate('/forgotPassword')}
+                sx={{
+                  cursor: 'pointer', color: 'white', background: 'none',
+                  border: 'none', fontSize: 'inherit',
+                  '&:hover': { color: 'secondary.main' }
+                }}>
                 {t('Forgot Password?')}
               </Typography>
             </Box>
 
-            <Button type='submit' disabled={isSubmitting} sx={{
+            <Button type='submit' disabled={isSubmitting} aria-label={t('SignIn')} sx={{
               mt: 1, borderRadius: 3, py: 1.5,
               backgroundColor: 'secondary.main', color: 'white', fontWeight: 700, letterSpacing: 1
             }}>
-              {isSubmitting ? <CircularProgress size={24} /> : t('SignIn')}
+              {isSubmitting ? <CircularProgress size={24} aria-label="Loading" /> : t('SignIn')}
             </Button>
 
           </Box>

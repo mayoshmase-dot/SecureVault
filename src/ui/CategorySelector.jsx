@@ -6,21 +6,21 @@ import {
 import { useTranslation } from "react-i18next";
 
 const CATEGORIES = [
-    { key: "Personal", icon: <PersonRounded fontSize="small" /> },
-    { key: "Work", icon: <WorkOutline fontSize="small" /> },
-    { key: "Finance", icon: <AccountBalanceOutlined fontSize="small" /> },
-    { key: "Social", icon: <GroupOutlined fontSize="small" /> },
-    { key: "Other", icon: <MoreHorizOutlined fontSize="small" /> },
+    { key: "Personal", icon: <PersonRounded fontSize="small" aria-hidden="true" /> },
+    { key: "Work", icon: <WorkOutline fontSize="small" aria-hidden="true" /> },
+    { key: "Finance", icon: <AccountBalanceOutlined fontSize="small" aria-hidden="true" /> },
+    { key: "Social", icon: <GroupOutlined fontSize="small" aria-hidden="true" /> },
+    { key: "Other", icon: <MoreHorizOutlined fontSize="small" aria-hidden="true" /> },
 ];
 
 export default function CategorySelector({ selected, onChange }) {
     const { t } = useTranslation();
     return (
         <Box mt={3}>
-            <Typography sx={{ color: "white", fontSize: 12.5, mb: 1, fontWeight: 500 }}>
+            <Typography component="label" sx={{ color: "white", fontSize: 12.5, mb: 1, fontWeight: 500, display: 'block' }}>
                 {t('Category')}
             </Typography>
-            <Box display="flex" gap={1}>
+            <Box display="flex" gap={1} role="group" aria-label={t('Category')}>
                 {CATEGORIES.map(({ key, icon }) => {
                     const active = selected === key;
                     return (
@@ -28,6 +28,8 @@ export default function CategorySelector({ selected, onChange }) {
                             key={key}
                             onClick={() => onChange(key)}
                             startIcon={icon}
+                            aria-pressed={active}
+                            aria-label={t(key)}
                             sx={{
                                 flex: '1 1 60px',
                                 flexDirection: "column",

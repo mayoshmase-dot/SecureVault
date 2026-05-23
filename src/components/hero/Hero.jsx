@@ -10,7 +10,8 @@ export default function Hero() {
 
   return (
     <Box
-      aria-label="Hero background image"
+      component="section"
+      aria-label={t("Secure Your Passwords in One Safe Vault ")}
       sx={{
         position: 'relative',
         height: "100vh",
@@ -30,21 +31,36 @@ export default function Hero() {
           direction: isAr ? 'rtl' : 'ltr'
         }}>
 
-        <Typography variant="h4" sx={{ fontWeight: "bold", fontSize: { xs: "28px", sm: "34px", md: "40px" } }}>
+        <Typography component="h1" variant="h4" sx={{ fontWeight: "bold", fontSize: { xs: "28px", sm: "34px", md: "40px" } }}>
           {t("Secure Your Passwords in One Safe Vault ")}
         </Typography>
 
-        <Typography sx={{ maxWidth: "500px", fontSize: { xs: "14px", sm: "16px" } }}>
+        <Typography component="p" sx={{ maxWidth: "500px", fontSize: { xs: "14px", sm: "16px" } }}>
           {t("Store, manage, and generate strong passwords with advanced encryption and two-factor authentication.")}
         </Typography>
 
-        <Box display="flex" gap={3} flexDirection={{ xs: "column", sm: "row" }} width={{ xs: "100%", sm: "auto" }}>
-          <Link component={LinkReact} to="/register" underline="none"
+        <Box
+          display="flex"
+          gap={3}
+          flexDirection={{ xs: "column", sm: "row" }}
+          width={{ xs: "100%", sm: "auto" }}
+          role="group"
+          aria-label="Call to action buttons"
+        >
+          <Link
+            component={LinkReact}
+            to="/register"
+            underline="none"
+            aria-label={t("Create Account")}
             sx={{ borderRadius: 7, px: 5, py: 2, backgroundColor: "secondary.main", boxShadow: '0 0 20px rgba(48,168,90,0.1)', color: "white", textAlign: "center" }}>
             {t("Create Account")}
           </Link>
 
-          <Link component={LinkReact} to="/login" underline="none"
+          <Link
+            component={LinkReact}
+            to="/login"
+            underline="none"
+            aria-label={t("SignIn")}
             sx={{ borderRadius: 7, px: 5, py: 2, backgroundColor: "secondary.main", boxShadow: '0 0 20px rgba(48,168,90,0.1)', color: "white", textAlign: "center" }}>
             {t("SignIn")}
           </Link>

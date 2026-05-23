@@ -16,10 +16,7 @@ export default function GeneratePassword() {
 
     const [length, setLength] = useState(16);
     const [options, setOptions] = useState({
-        uppercase: false,
-        lowercase: true,
-        numbers: false,
-        symbols: false,
+        uppercase: false, lowercase: true, numbers: false, symbols: false,
     });
 
     const { mutate, isPending, data } = useGeneratePassword();
@@ -44,17 +41,19 @@ export default function GeneratePassword() {
                     : { label: t('WEAK'), color: '#ef4444', width: '20%' };
 
     return (
-        <Box sx={{ backgroundColor: 'primary.main', minHeight: '100vh', display: 'flex', alignItems: 'center', py: 5 }}>
+        <Box component="main" sx={{ backgroundColor: 'primary.main', minHeight: '100vh', display: 'flex', alignItems: 'center', py: 5 }}>
             <Container maxWidth="sm">
-                <Box sx={{
-                    border: '1px solid rgba(255,255,255,0.08)',
-                    borderRadius: 4,
-                    p: { xs: 3, sm: 4 },
-                    boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
-                }}>
+                <Box
+                    role="region"
+                    aria-label={t('Password Generator')}
+                    sx={{
+                        border: '1px solid rgba(255,255,255,0.08)',
+                        borderRadius: 4, p: { xs: 3, sm: 4 },
+                        boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
+                    }}>
 
                     <Box display="flex" alignItems="center" gap={1.5} mb={3}>
-                        <Box sx={{
+                        <Box aria-hidden="true" sx={{
                             width: 40, height: 40, borderRadius: 2,
                             backgroundColor: 'secondary.main',
                             display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -62,7 +61,7 @@ export default function GeneratePassword() {
                             <Bolt sx={{ color: 'white', fontSize: 22 }} />
                         </Box>
                         <Box>
-                            <Typography variant="h6" fontWeight={700} color="white">
+                            <Typography component="h1" variant="h6" fontWeight={700} color="white">
                                 {t('Password Generator')}
                             </Typography>
                             <Typography sx={{ fontSize: 12, color: 'rgba(255,255,255,0.4)' }}>
@@ -77,30 +76,26 @@ export default function GeneratePassword() {
                         border: '1px solid rgba(255,255,255,0.1)',
                         borderRadius: 2, px: 2, py: 1.5, mb: 2.5,
                     }}>
-                        <Typography sx={{
-                            color: password ? 'white' : 'rgba(255,255,255,0.3)',
-                            fontFamily: 'monospace',
-                            fontSize: 18,
-                            fontWeight: 600,
-                            flex: 1,
-                        }}>
+                        <Typography
+                            aria-live="polite"
+                            aria-label={password ? `${t('Generated password')}: ${password}` : t('Click Generate...')}
+                            sx={{
+                                color: password ? 'white' : 'rgba(255,255,255,0.3)',
+                                fontFamily: 'monospace', fontSize: 18, fontWeight: 600, flex: 1,
+                            }}>
                             {password || t('Click Generate...')}
                         </Typography>
 
                         <Box display="flex" gap={0.5}>
                             <Tooltip title={t('Regenerate')}>
-                                <IconButton onClick={generate} disabled={isPending} sx={{ color: 'secondary.main' }}>
-                                    <Refresh fontSize="small" />
+                                <IconButton onClick={generate} disabled={isPending} aria-label={t('Regenerate')} sx={{ color: 'secondary.main' }}>
+                                    <Refresh aria-hidden="true" fontSize="small" />
                                 </IconButton>
                             </Tooltip>
-
                             <Tooltip title={t('Copy')}>
-                                <IconButton
-                                    size="small"
-                                    sx={{ color: "secondary.main" }}
-                                    onClick={() => navigator.clipboard.writeText(password)}
-                                >
-                                    <ContentCopy fontSize="small" />
+                                <IconButton size="small" aria-label={t('Copy')} sx={{ color: "secondary.main" }}
+                                    onClick={() => navigator.clipboard.writeText(password)}>
+                                    <ContentCopy aria-hidden="true" fontSize="small" />
                                 </IconButton>
                             </Tooltip>
                         </Box>
@@ -111,19 +106,13 @@ export default function GeneratePassword() {
                             <Typography sx={{ fontSize: 12, color: 'rgba(255,255,255,0.5)' }}>
                                 {t('Password Strength')}
                             </Typography>
-                            <Typography sx={{ fontSize: 12, color: strength.color, fontWeight: 700 }}>
+                            <Typography aria-live="polite" sx={{ fontSize: 12, color: strength.color, fontWeight: 700 }}>
                                 {strength.label}
                             </Typography>
                         </Box>
-
-                        <Box sx={{ height: 5, borderRadius: 5, backgroundColor: 'rgba(255,255,255,0.08)' }}>
-                            <Box sx={{
-                                height: '100%',
-                                borderRadius: 5,
-                                width: strength.width,
-                                backgroundColor: strength.color,
-                                transition: '0.4s'
-                            }} />
+                        <Box role="progressbar" aria-valuenow={parseInt(strength.width)} aria-valuemin={0} aria-valuemax={100}
+                            sx={{ height: 5, borderRadius: 5, backgroundColor: 'rgba(255,255,255,0.08)' }}>
+                            <Box sx={{ height: '100%', borderRadius: 5, width: strength.width, backgroundColor: strength.color, transition: '0.4s' }} />
                         </Box>
                     </Box>
 
@@ -131,56 +120,42 @@ export default function GeneratePassword() {
                         <Typography sx={{ fontSize: 12, color: 'rgba(255,255,255,0.5)', mb: 1 }}>
                             {t('Password Length')}: <b style={{ color: 'white' }}>{length}</b>
                         </Typography>
-
                         <Slider
-                            value={length}
-                            min={6}
-                            max={32}
+                            value={length} min={6} max={32}
                             onChange={(_, val) => setLength(val)}
+                            aria-label={t('Password Length')}
                             sx={{ color: 'secondary.main' }}
                         />
                     </Box>
 
-                    <Box display="grid" gridTemplateColumns="1fr 1fr" gap={1.5} mb={3}>
+                    <Box display="grid" gridTemplateColumns="1fr 1fr" gap={1.5} mb={3} role="group" aria-label="Password options">
                         {OPTIONS.map(({ key, label, icon }) => {
                             const active = options[key];
-
                             return (
-                                <Box key={key} onClick={() => toggleOption(key)} sx={{
-                                    display: 'flex',
-                                    justifyContent: 'space-between',
-                                    alignItems: 'center',
-                                    px: 2,
-                                    py: 1.5,
-                                    borderRadius: 2,
-                                    cursor: 'pointer',
-                                    border: active
-                                        ? '1.5px solid rgb(48,168,90)'
-                                        : '1px solid rgba(255,255,255,0.1)',
-                                    backgroundColor: active
-                                        ? 'rgba(48,168,90,0.1)'
-                                        : 'rgba(255,255,255,0.03)',
-                                }}>
+                                <Box
+                                    key={key}
+                                    role="checkbox"
+                                    aria-checked={active}
+                                    tabIndex={0}
+                                    onClick={() => toggleOption(key)}
+                                    onKeyDown={(e) => e.key === 'Enter' && toggleOption(key)}
+                                    sx={{
+                                        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                                        px: 2, py: 1.5, borderRadius: 2, cursor: 'pointer',
+                                        border: active ? '1.5px solid rgb(48,168,90)' : '1px solid rgba(255,255,255,0.1)',
+                                        backgroundColor: active ? 'rgba(48,168,90,0.1)' : 'rgba(255,255,255,0.03)',
+                                        '&:focus-visible': { outline: '2px solid rgb(48,168,90)', outlineOffset: 2 }
+                                    }}>
                                     <Box display="flex" alignItems="center" gap={1}>
-                                        <Typography sx={{ color: 'secondary.main', fontWeight: 700 }}>
-                                            {icon}
-                                        </Typography>
-                                        <Typography sx={{ color: 'white', fontSize: 12.5 }}>
-                                            {label}
-                                        </Typography>
+                                        <Typography aria-hidden="true" sx={{ color: 'secondary.main', fontWeight: 700 }}>{icon}</Typography>
+                                        <Typography sx={{ color: 'white', fontSize: 12.5 }}>{label}</Typography>
                                     </Box>
-
                                     {active && (
-                                        <Box sx={{
-                                            width: 18,
-                                            height: 18,
-                                            borderRadius: '50%',
+                                        <Box aria-hidden="true" sx={{
+                                            width: 18, height: 18, borderRadius: '50%',
                                             backgroundColor: 'secondary.main',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            fontSize: 11,
-                                            color: 'white'
+                                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                            fontSize: 11, color: 'white'
                                         }}>✓</Box>
                                     )}
                                 </Box>
@@ -188,13 +163,19 @@ export default function GeneratePassword() {
                         })}
                     </Box>
 
-                    <Box onClick={generate} sx={{
-                        textAlign: 'center',
-                        py: 1.5,
-                        borderRadius: 2,
-                        backgroundColor: 'rgb(48,168,90)',
-                        cursor: isPending ? 'not-allowed' : 'pointer',
-                    }}>
+                    <Box
+                        role="button"
+                        tabIndex={0}
+                        onClick={generate}
+                        onKeyDown={(e) => e.key === 'Enter' && generate()}
+                        aria-label={t('Generate Password')}
+                        aria-disabled={isPending}
+                        sx={{
+                            textAlign: 'center', py: 1.5, borderRadius: 2,
+                            backgroundColor: 'rgb(48,168,90)',
+                            cursor: isPending ? 'not-allowed' : 'pointer',
+                            '&:focus-visible': { outline: '2px solid white', outlineOffset: 2 }
+                        }}>
                         <Typography sx={{ color: 'white', fontWeight: 600 }}>
                             {isPending ? t('Generating...') : t('Generate Password')}
                         </Typography>

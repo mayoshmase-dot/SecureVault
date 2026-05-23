@@ -50,7 +50,7 @@ export default function Profile() {
                 </List>
             </Box>
 
-            <Box sx={{ flex: 1, backgroundColor: 'primary.main', p: 2 }}>
+            <Box sx={{ flex: 1, backgroundColor: 'primary.main', p: 2 }} >
                 <Outlet />
             </Box>
         </Box>

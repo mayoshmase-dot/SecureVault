@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import LogoSecure from '../../assets/img/LogoSecure.png'
+import LogoSecure from '../../assets/img/LogoSecure.webp'
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import HomeIcon from '@mui/icons-material/Home';
 import DashboardIcon from '@mui/icons-material/Dashboard';
@@ -37,7 +37,7 @@ export default function Navbar() {
   const toggleLanguage = async () => {
     const newLng = i18n.language === 'ar' ? 'en' : 'ar'
     i18n.changeLanguage(newLng)
-    localStorage.setItem('language', newLng)  
+    localStorage.setItem('language', newLng)
 
     if (token) {
       try {
@@ -56,8 +56,14 @@ export default function Navbar() {
         <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
 
           <Box display="flex" alignItems="center" component={RouterLink} to='/' sx={{ textDecoration: 'none', color: 'white' }}>
-            <Box component="img" src={LogoSecure} sx={{ height: 50 }} />
-            <Typography fontWeight={700}>{t('SecureVault')}</Typography>
+            <Box
+              component="img"
+              src={LogoSecure}
+              alt="SecureVault Logo"
+              width={90}
+              height={70}
+            />
+            <Typography component={'h1'} variant='h5' fontWeight={'bold'}>{t('SecureVault')}</Typography>
           </Box>
 
           <Box sx={{ display: { xs: 'none', md: 'flex' } }} alignItems="center" gap={2}>
@@ -114,18 +120,21 @@ export default function Navbar() {
               </>
             )}
 
-            <IconButton onClick={toggleLanguage}
+            <IconButton
+              onClick={toggleLanguage}
+              aria-label={isAr ? 'Switch to English' : 'التبديل للعربية'}
               sx={{ color: 'white', '&:hover': { color: 'secondary.main' } }}>
               <LanguageIcon />
             </IconButton>
 
           </Box>
 
-          <Box sx={{ display: { xs: 'flex', md: 'none' } }} alignItems="center" gap={1}>
-            <IconButton onClick={toggleLanguage} sx={{ color: 'white' }}>
-              <LanguageIcon />
-            </IconButton>
-            <IconButton sx={{ color: 'white' }} onClick={() => setDrawerOpen(true)}>
+          {/* موبايل — بس زر الميو */}
+          <Box sx={{ display: { xs: 'flex', md: 'none' } }} alignItems="center">
+            <IconButton
+              aria-label="Open navigation menu"
+              sx={{ color: 'white' }}
+              onClick={() => setDrawerOpen(true)}>
               <MenuIcon />
             </IconButton>
           </Box>
@@ -226,7 +235,9 @@ export default function Navbar() {
             <Divider sx={{ borderColor: 'rgba(255,255,255,0.1)', my: 1 }} />
 
             <ListItem disablePadding>
-              <ListItemButton onClick={() => { toggleLanguage(); setDrawerOpen(false); }}
+              <ListItemButton
+                onClick={() => { toggleLanguage(); setDrawerOpen(false); }}
+                aria-label={isAr ? 'Switch to English' : 'التبديل للعربية'}
                 sx={{ '&:hover': { backgroundColor: 'rgba(48,168,90,0.15)', color: 'secondary.main' } }}>
                 <ListItemIcon sx={{ color: 'white' }}><LanguageIcon /></ListItemIcon>
                 <ListItemText primary={isAr ? 'English' : 'العربية'} />

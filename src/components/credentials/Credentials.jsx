@@ -47,6 +47,8 @@ export default function Credentials() {
                         {categories.map((cat) => (
                             <Box
                                 key={cat}
+                                role="button"
+                                aria-pressed={category === cat}
                                 onClick={() => setCategory(cat)}
                                 sx={{
                                     px: 2, py: 1, borderRadius: 10, cursor: "pointer",
@@ -77,41 +79,72 @@ export default function Credentials() {
                         <Box display="flex" flexDirection="column" gap={2}>
                             {filteredCredentials.map((credential) => (
                                 <Box key={credential._id} sx={{
-                                    display: "flex", alignItems: "center", justifyContent: "space-between",
-                                    gap: 2, p: 2, borderRadius: 3, backgroundColor: "primary.main",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "space-between",
+                                    gap: 1,
+                                    p: { xs: 1.5, sm: 2 },
+                                    borderRadius: 3,
+                                    backgroundColor: "primary.main",
                                     border: '1px solid rgba(255,255,255,0.08)',
-                                    backdropFilter: "blur(10px)", transition: "0.25s",
+                                    backdropFilter: "blur(10px)",
+                                    transition: "0.25s",
                                     "&:hover": {
                                         transform: "translateY(-2px)",
                                         boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
                                         border: "1px solid rgba(255,255,255,0.15)",
                                     }
                                 }}>
+
+                                    {/* ICON */}
                                     <Box sx={{
-                                        width: 42, height: 42, borderRadius: 2, flexShrink: 0,
-                                        display: "flex", alignItems: "center", justifyContent: "center",
-                                        backgroundColor: 'secondary.main', color: 'white'
+                                        width: { xs: 36, sm: 42 },
+                                        height: { xs: 36, sm: 42 },
+                                        borderRadius: 2,
+                                        flexShrink: 0,
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        backgroundColor: 'secondary.main',
+                                        color: 'white'
                                     }}>
-                                        <LanguageIcon />
+                                        <LanguageIcon aria-hidden="true" fontSize="small" />
                                     </Box>
 
+                                    {/* TITLE + WEBSITE */}
                                     <Box sx={{ flex: 1, minWidth: 0 }}>
-                                        <Typography sx={{ color: "white", fontWeight: 600, fontSize: 16 }}>
+                                        <Typography sx={{
+                                            color: "white",
+                                            fontWeight: 600,
+                                            fontSize: { xs: 14, sm: 16 },
+                                            overflow: "hidden",
+                                            textOverflow: "ellipsis",
+                                            whiteSpace: "nowrap"
+                                        }}>
                                             {credential.title}
                                         </Typography>
                                         <Typography sx={{
-                                            fontSize: 13, color: "rgba(255,255,255,0.5)",
-                                            overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap"
+                                            fontSize: { xs: 11, sm: 13 },
+                                            color: "rgba(255,255,255,0.5)",
+                                            overflow: "hidden",
+                                            textOverflow: "ellipsis",
+                                            whiteSpace: "nowrap"
                                         }}>
                                             {credential.website}
                                         </Typography>
                                     </Box>
 
-                                    <Box display="flex" alignItems="center" gap={1}>
+                                    {/* DATE + ACTIONS */}
+                                    <Box display="flex" alignItems="center" gap={{ xs: 0.5, sm: 1 }} flexShrink={0}>
+
                                         <Typography sx={{
-                                            fontSize: 11, color: "rgba(255,255,255,0.4)",
+                                            fontSize: 11,
+                                            color: "rgba(255,255,255,0.4)",
                                             backgroundColor: "rgba(255,255,255,0.05)",
-                                            px: 1, py: 0.3, borderRadius: 1, whiteSpace: "nowrap"
+                                            px: 1, py: 0.3,
+                                            borderRadius: 1,
+                                            whiteSpace: "nowrap",
+                                            display: { xs: 'none', sm: 'block' }
                                         }}>
                                             {new Date(credential.createdAt).toLocaleDateString()}
                                         </Typography>
@@ -119,7 +152,9 @@ export default function Credentials() {
                                         <Tooltip title={t('Details')} componentsProps={{
                                             tooltip: { sx: { backgroundColor: 'secondary.main', color: 'white', fontSize: 12, p: 1 } }
                                         }}>
-                                            <IconButton size="small"
+                                            <IconButton
+                                                size="small"
+                                                aria-label={t('Details')}
                                                 sx={{ color: "rgba(255,255,255,0.3)", '&:hover': { color: "secondary.main" } }}
                                                 onClick={() => navigate(`/credential/${credential._id}`)}>
                                                 <OpenInNewIcon fontSize="small" />
@@ -129,7 +164,9 @@ export default function Credentials() {
                                         <Tooltip title={t('Delete')} componentsProps={{
                                             tooltip: { sx: { backgroundColor: 'secondary.main', color: 'white', fontSize: 12, p: 1 } }
                                         }}>
-                                            <IconButton size="small"
+                                            <IconButton
+                                                size="small"
+                                                aria-label={t('Delete')}
                                                 disabled={deletingId === credential._id && isPending}
                                                 sx={{ color: "rgba(255,255,255,0.3)", '&:hover': { color: "error.main" } }}
                                                 onClick={() => {
@@ -143,7 +180,9 @@ export default function Credentials() {
                                         <Tooltip title={t('Edit Credential')} componentsProps={{
                                             tooltip: { sx: { backgroundColor: 'secondary.main', color: 'white', fontSize: 12, p: 1 } }
                                         }}>
-                                            <IconButton size="small"
+                                            <IconButton
+                                                size="small"
+                                                aria-label={t('Edit Credential')}
                                                 sx={{ color: "rgba(255,255,255,0.3)", '&:hover': { color: "secondary.main" } }}
                                                 onClick={() => navigate(`/update/${credential._id}`)}>
                                                 <MoreHorizIcon fontSize="small" />

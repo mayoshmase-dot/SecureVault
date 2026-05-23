@@ -44,30 +44,34 @@ export default function Verify2FA() {
     }
 
     return (
-        <Box sx={{
-            backgroundColor: 'primary.main',
-            minHeight: '100vh',
-            display: 'flex',
-            alignItems: 'center',
-            py: 5
-        }}>
+        <Box
+            component="main"
+            sx={{
+                backgroundColor: 'primary.main',
+                minHeight: '100vh',
+                display: 'flex',
+                alignItems: 'center',
+                py: 5
+            }}>
             <Container maxWidth="xs">
-
-                <Box sx={{
-                    borderRadius: 3,
-                    backgroundColor: 'primary.main',
-                    boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
-                    border: '1px solid rgba(255,255,255,0.07)',
-                    p: 4
-                }}>
+                <Box
+                    role="region"
+                    aria-label={t('Two-Factor Authentication')}
+                    sx={{
+                        borderRadius: 3,
+                        backgroundColor: 'primary.main',
+                        boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
+                        border: '1px solid rgba(255,255,255,0.07)',
+                        p: 4
+                    }}>
 
                     <Box display="flex" alignItems="center" gap={1.5} mb={3}>
-                        <Box sx={iconBox}>
+                        <Box sx={iconBox} aria-hidden="true">
                             <ShieldOutlined sx={{ fontSize: 20 }} />
                         </Box>
 
                         <Box>
-                            <Typography sx={{ color: 'white', fontWeight: 600 }}>
+                            <Typography component="h1" sx={{ color: 'white', fontWeight: 600 }}>
                                 {t('Two-Factor Authentication')}
                             </Typography>
                             <Typography sx={{ color: 'rgba(255,255,255,0.4)', fontSize: 12 }}>
@@ -83,10 +87,11 @@ export default function Verify2FA() {
                         onChange={(e) => setCode(e.target.value.replace(/[^a-zA-Z0-9]/g, '').slice(0, 8))}
                         onKeyDown={(e) => e.key === 'Enter' && handleVerify()}
                         sx={inputSx}
+                        inputProps={{ 'aria-label': t('Enter your code') }}
                         InputProps={{
                             startAdornment: (
                                 <InputAdornment position="start">
-                                    <KeyOutlined sx={{ fontSize: 18, color: 'secondary.main' }} />
+                                    <KeyOutlined aria-hidden="true" sx={{ fontSize: 18, color: 'secondary.main' }} />
                                 </InputAdornment>
                             )
                         }}
@@ -96,6 +101,7 @@ export default function Verify2FA() {
                         fullWidth
                         onClick={handleVerify}
                         disabled={(code.length !== 6 && code.length !== 8) || isPending}
+                        aria-label={t('Verify')}
                         sx={{
                             borderRadius: 3,
                             py: 1.5,
@@ -106,7 +112,7 @@ export default function Verify2FA() {
                         }}
                     >
                         {isPending ? (
-                            <CircularProgress size={22} sx={{ color: 'white' }} />
+                            <CircularProgress size={22} sx={{ color: 'white' }} aria-label="Loading" />
                         ) : (
                             t('Verify')
                         )}

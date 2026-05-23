@@ -8,10 +8,11 @@ export default function BackButton({ to = "/dashboard" }) {
     const { t } = useTranslation();
     return (
         <Button
-            startIcon={<ArrowBack />}
+            startIcon={<ArrowBack aria-hidden="true" />}
             onClick={() => navigate(to)}
+            aria-label={t('Back to Dashboard')}
             sx={{
-                display: "flex",gap:.5,
+                display: "flex", gap: .5,
                 justifyContent: "flex-start",
                 cursor: "pointer",
                 color: "white",

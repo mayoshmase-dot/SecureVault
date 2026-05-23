@@ -389,7 +389,12 @@ i18n
           "Backup Codes": "Backup Codes",
           "Save these codes somewhere safe.": "Save these codes somewhere safe.",
           "You won't be able to see them again.": "You won't be able to see them again.",
-          "Done": "Done"
+          "Done": "Done",
+          'Please fill in all fields': 'Please fill in all fields',
+          'Title cannot be empty': 'Title cannot be empty',
+          'Username cannot be empty': 'Username cannot be empty',
+          'Password cannot be empty': 'Password cannot be empty',
+
         }
       },
 
@@ -770,6 +775,11 @@ i18n
           "Save these codes somewhere safe.": "احفظ هذه الرموز في مكان آمن.",
           "You won't be able to see them again.": "لن تتمكن من رؤيتها مرة أخرى.",
           "Done": "تم",
+          'Please fill in all fields': 'يرجى ملء جميع الحقول',
+          'Title cannot be empty': 'العنوان لا يمكن أن يكون فارغاً',
+          'Username cannot be empty': 'اسم المستخدم لا يمكن أن يكون فارغاً',
+          'Password cannot be empty': 'كلمة المرور لا يمكن أن تكون فارغة',
+
         }
       }
     },
