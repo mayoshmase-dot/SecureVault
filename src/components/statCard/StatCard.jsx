@@ -1,74 +1,174 @@
-import { Box, Card, Container, Grid, IconButton, Typography } from '@mui/material'
+import {
+    Box,
+    Card,
+    Container,
+    Grid,
+    Tooltip,
+    Typography
+} from '@mui/material'
+
 import GppGoodOutlinedIcon from '@mui/icons-material/GppGoodOutlined'
 import GppMaybeOutlinedIcon from '@mui/icons-material/GppMaybeOutlined'
 import VpnKeyOutlinedIcon from '@mui/icons-material/VpnKeyOutlined'
+
 import useVaultAudit from '../../utility/AuditVault'
 import { useTranslation } from 'react-i18next'
 
+const getIconStyle = (color) => ({
+    bgcolor: 'rgba(255,255,255,0.08)',
+    color,
+    width: 78,
+    height: 78,
+    borderRadius: '50%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    transition: '0.3s',
+    '&:hover': {
+        bgcolor: color,
+        color: 'primary.main',
+        transform: 'scale(1.15)'
+    }
+})
+
+const CardBox = ({ children, list }) => (
+    <Tooltip
+        arrow
+        placement="bottom"
+        slotProps={{
+            tooltip: {
+                sx: {
+                    bgcolor: 'primary.main',
+                    color: 'white',
+                    border: '1px solid',
+                    borderColor: 'secondary.main',
+                    borderRadius: 4,
+                    px: 2,
+                    py: 1.5,
+                    boxShadow: '0 20px 50px rgba(0,0,0,0.5)'
+                }
+            },
+            arrow: {
+                sx: { color: '#111827' }
+            }
+        }}
+        title={
+            <Box minWidth={200}>
+                {list?.length ? (
+                    list.map((item, i) => (
+                        <Typography key={i}>• {item}</Typography>
+                    ))
+                ) : (
+                    <Typography>No Data</Typography>
+                )}
+            </Box>
+        }
+    >
+        <Card
+            sx={{
+                py: 5,
+                px: 4,
+                bgcolor: 'primary.main',
+                color: 'white',
+                borderRadius: 5,
+                position: 'relative',
+                overflow: 'hidden',
+                border: '1px solid rgba(255,255,255,0.08)',
+                boxShadow: '0 15px 50px rgba(0,0,0,0.45)',
+                transition: 'all 0.3s ease',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                '&:hover': {
+                    transform: 'translateY(-6px)',
+                    borderColor: 'secondary.main',
+                    boxShadow: '0 30px 40px -15px rgba(0,0,0,0.75)'
+                },
+                '&::before': {
+                    content: '""',
+                    position: 'absolute',
+                    top: 0,
+                    left: '-100%',
+                    width: '100%',
+                    height: '100%',
+                    background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent)',
+                    transition: '0.8s'
+                },
+                '&:hover::before': {
+                    left: '100%'
+                }
+            }}
+        >
+            {children}
+        </Card>
+    </Tooltip>
+)
+
 export default function StatCard() {
-    const { data: summary = { strong: 0, weak: 0, reused: 0 } } = useVaultAudit()
+    const { data: summary } = useVaultAudit()
     const { t } = useTranslation()
+
     return (
         <Box sx={{ backgroundColor: 'primary.main' }}>
             <Container maxWidth="lg">
-                <Box py={5}>
-                    <Grid container spacing={5}>
+                <Box py={7}>
+                    <Grid container spacing={5} justifyContent="center">
 
-                        <Grid size={{ xs: 12, md: 6, lg: 4 }} flex={1}>
-                            <Card sx={{
-                                py: 4, px: 3, bgcolor: "primary.main",
-                                boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
-                                border: '1px solid rgba(255,255,255,0.07)',
-                                color: "white", height: "100%", borderRadius: 3
-                            }}>
-                                <Box display="flex" flexDirection={{ xs: 'column', md: 'row' }} alignItems="center" gap={2}>
-                                    <IconButton sx={{ color: "secondary.main" }}>
-                                        <GppGoodOutlinedIcon fontSize="large" />
-                                    </IconButton>
-                                    <Box textAlign="center" display="flex" flexDirection="column">
-                                        <Typography component="h2" variant="h6">{t('Strong Passwords')}</Typography>
-                                        <Typography fontWeight="bold">{summary.strong}</Typography>
+                        {/* STRONG */}
+                        <Grid item xs={12} md={6} lg={4}>
+                            <CardBox list={summary?.strongPasswords}>
+                                <Box display="flex" flexDirection="column" alignItems="center" gap={2}>
+                                    <Box sx={getIconStyle('secondary.main')}>
+                                        <GppGoodOutlinedIcon sx={{ fontSize: 42 }} />
+                                    </Box>
+                                    <Box textAlign="center">
+                                        <Typography variant="h5" fontWeight="700" mb={1}>
+                                            {t('Strong Passwords')}
+                                        </Typography>
+                                        <Typography variant="h2" fontWeight="bold" color="secondary.main">
+                                            {summary?.strong}
+                                        </Typography>
                                     </Box>
                                 </Box>
-                            </Card>
+                            </CardBox>
                         </Grid>
 
-                        <Grid size={{ xs: 12, md: 6, lg: 4 }} flex={1}>
-                            <Card sx={{
-                                py: 4, px: 3, bgcolor: "primary.main",
-                                boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
-                                border: '1px solid rgba(255,255,255,0.07)',
-                                color: "white", height: "100%", borderRadius: 3
-                            }}>
-                                <Box display="flex" flexDirection={{ xs: 'column', md: 'row' }} alignItems="center" gap={2}>
-                                    <IconButton sx={{ color: "orange" }}>
-                                        <GppMaybeOutlinedIcon fontSize="large" />
-                                    </IconButton>
+                        {/* WEAK */}
+                        <Grid item xs={12} md={6} lg={4}>
+                            <CardBox list={summary?.weakPasswords}>
+                                <Box display="flex" flexDirection="column" alignItems="center" gap={2}>
+                                    <Box sx={getIconStyle('#f59e0b')}>
+                                        <GppMaybeOutlinedIcon sx={{ fontSize: 42 }} />
+                                    </Box>
                                     <Box textAlign="center">
-                                        <Typography component="h2" variant="h6">{t('Weak Passwords')}</Typography>
-                                        <Typography fontWeight="bold">{summary.weak}</Typography>
+                                        <Typography variant="h5" fontWeight="700" mb={1}>
+                                            {t('Weak Passwords')}
+                                        </Typography>
+                                        <Typography variant="h2" fontWeight="bold" sx={{ color: '#f59e0b' }}>
+                                            {summary?.weak}
+                                        </Typography>
                                     </Box>
                                 </Box>
-                            </Card>
+                            </CardBox>
                         </Grid>
 
-                        <Grid size={{ xs: 12, md: 6, lg: 4 }} flex={1}>
-                            <Card sx={{
-                                py: 4, px: 3, bgcolor: "primary.main",
-                                boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
-                                border: '1px solid rgba(255,255,255,0.07)',
-                                color: "white", height: "100%", borderRadius: 3
-                            }}>
-                                <Box display="flex" flexDirection={{ xs: 'column', md: 'row' }} alignItems="center" gap={2}>
-                                    <IconButton sx={{ color: "dodgerblue" }}>
-                                        <VpnKeyOutlinedIcon fontSize="large" />
-                                    </IconButton>
+                        {/* REUSED */}
+                        <Grid item xs={12} md={6} lg={4}>
+                            <CardBox list={summary?.reusedPasswords}>
+                                <Box display="flex" flexDirection="column" alignItems="center" gap={2}>
+                                    <Box sx={getIconStyle('#38bdf8')}>
+                                        <VpnKeyOutlinedIcon sx={{ fontSize: 42 }} />
+                                    </Box>
                                     <Box textAlign="center">
-                                        <Typography component="h2" variant="h6">{t('Reused Passwords')}</Typography>
-                                        <Typography fontWeight="bold">{summary.reused}</Typography>
+                                        <Typography variant="h5" fontWeight="700" mb={1}>
+                                            {t('Reused Passwords')}
+                                        </Typography>
+                                        <Typography variant="h2" fontWeight="bold" sx={{ color: '#38bdf8' }}>
+                                            {summary?.reused}
+                                        </Typography>
                                     </Box>
                                 </Box>
-                            </Card>
+                            </CardBox>
                         </Grid>
 
                     </Grid>

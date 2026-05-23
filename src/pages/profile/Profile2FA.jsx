@@ -43,7 +43,8 @@ export default function Profile2FA() {
           title: t('2FA Enabled'),
           text: res.message,
           icon: 'success',
-          confirmButtonColor: '#7c3aed'
+          confirmButtonColor: '#7c3aed',
+          confirmButtonText: t('OK')
         })
         const { data: backupRes } = await fetchBackupCodes()
         const codes = backupRes?.data || []

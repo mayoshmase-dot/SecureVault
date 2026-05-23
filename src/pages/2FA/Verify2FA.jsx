@@ -34,7 +34,8 @@ export default function Verify2FA() {
                         title: t('Verified Successfully'),
                         text: t('Redirecting to dashboard...'),
                         timer: 1500,
-                        showConfirmButton: false
+                        showConfirmButton: false,
+                        confirmButtonText: t('OK')
                     }).then(() => {
                         navigate('/dashboard')
                     })
