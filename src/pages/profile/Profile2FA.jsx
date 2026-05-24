@@ -24,7 +24,7 @@ export default function Profile2FA() {
   const { t } = useTranslation()
 
   if (isLoading) return <Loader />
-  if (isError) return <Box color="red">{error.message}</Box>
+  if (isError) return <Box role="alert" color="red">{error.message}</Box>
 
   const enabled = data?.data?.twoFactorEnabled
 
@@ -40,46 +40,28 @@ export default function Profile2FA() {
         setCode('')
         queryClient.invalidateQueries({ queryKey: ['profile'] })
         await Swal.fire({
-          title: t('2FA Enabled'),
-          text: res.message,
-          icon: 'success',
-          confirmButtonColor: '#7c3aed',
-          confirmButtonText: t('OK')
+          title: t('2FA Enabled'), text: res.message, icon: 'success',
+          confirmButtonColor: '#7c3aed', confirmButtonText: t('OK')
         })
         const { data: backupRes } = await fetchBackupCodes()
         const codes = backupRes?.data || []
         Swal.fire({
           title: t('Backup Codes'),
           html: `
-    <p style="color:rgba(255,255,255,0.55);font-size:13px;margin-bottom:18px;line-height:1.6">
-      ${t('Save these codes somewhere safe.')}
-      <br/>
-      ${t("You won't be able to see them again.")}
-    </p>
-
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-      ${codes.map(c => `
-        <div style="
-          background:rgba(48,168,90,0.08);
-          border:1px solid rgba(48,168,90,0.2);
-          padding:12px;
-          border-radius:12px;
-          color:rgb(53,241,119);
-          font-family:monospace;
-          font-size:13px;
-          letter-spacing:1px;
-          text-align:center;
-          font-weight:600
-        ">
-          ${c}
-        </div>
-      `).join('')}
-    </div>
-  `,
-          background: 'rgb(1,6,46)',
-          color: 'white',
-          confirmButtonText: t('Done'),
-          confirmButtonColor: 'rgb(48,168,90)'
+            <p style="color:rgba(255,255,255,0.55);font-size:13px;margin-bottom:18px;line-height:1.6">
+              ${t('Save these codes somewhere safe.')}<br/>
+              ${t("You won't be able to see them again.")}
+            </p>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+              ${codes.map(c => `
+                <div style="background:rgba(48,168,90,0.08);border:1px solid rgba(48,168,90,0.2);padding:12px;border-radius:12px;color:rgb(53,241,119);font-family:monospace;font-size:13px;letter-spacing:1px;text-align:center;font-weight:600">
+                  ${c}
+                </div>
+              `).join('')}
+            </div>
+          `,
+          background: 'rgb(1,6,46)', color: 'white',
+          confirmButtonText: t('Done'), confirmButtonColor: 'rgb(48,168,90)'
         })
       }
     })
@@ -87,12 +69,9 @@ export default function Profile2FA() {
 
   const handleDisable = () => {
     Swal.fire({
-      title: t('Disable 2FA?'),
-      text: t('Your account will be less secure'),
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: t('Disable'),
-      confirmButtonColor: '#dc2626'
+      title: t('Disable 2FA?'), text: t('Your account will be less secure'),
+      icon: 'warning', showCancelButton: true,
+      confirmButtonText: t('Disable'), confirmButtonColor: '#dc2626'
     }).then((r) => {
       if (!r.isConfirmed) return
       disable(undefined, {
@@ -107,43 +86,50 @@ export default function Profile2FA() {
   return (
     <Box sx={{ backgroundColor: 'primary.main', minHeight: '80vh', display: 'flex', alignItems: 'center' }}>
       <Container maxWidth="xs">
-        <Box sx={{ borderRadius: 3, backgroundColor: 'primary.main', boxShadow: '0 20px 60px rgba(0,0,0,0.5)', border: '1px solid rgba(255,255,255,0.07)', p: 4 }}>
+        <Box
+          role="region"
+          aria-label={t('Two-Factor Authentication')}
+          sx={{ borderRadius: 3, backgroundColor: 'primary.main', boxShadow: '0 20px 60px rgba(0,0,0,0.5)', border: '1px solid rgba(255,255,255,0.07)', p: 4 }}>
 
           <Box display="flex" alignItems="center" gap={1.5} mb={3}>
-            <Box sx={iconBox}><SecurityOutlined sx={{ fontSize: 20 }} /></Box>
+            <Box sx={iconBox} aria-hidden="true"><SecurityOutlined sx={{ fontSize: 20 }} /></Box>
             <Box>
-              <Typography sx={{ color: 'white', fontWeight: 600 }}>{t('Two-Factor Authentication')}</Typography>
+              <Typography component="h1" sx={{ color: 'white', fontWeight: 600 }}>{t('Two-Factor Authentication')}</Typography>
               <Typography sx={{ color: 'rgba(255,255,255,0.4)', fontSize: 12 }}>{t('Secure your account')}</Typography>
             </Box>
           </Box>
 
           {!enabled && !qrCode && (
-            <Button fullWidth disabled={qrLoading} onClick={handleEnable}
+            <Button fullWidth disabled={qrLoading} onClick={handleEnable} aria-label={t('Enable 2FA')}
               sx={{ borderRadius: 3, py: 1.5, backgroundColor: 'secondary.main', color: 'white', fontWeight: 700 }}>
-              {qrLoading ? <CircularProgress size={22} /> : t('Enable 2FA')}
+              {qrLoading ? <CircularProgress size={22} aria-label="Loading" /> : t('Enable 2FA')}
             </Button>
           )}
 
           {qrCode && (
             <Box display="flex" flexDirection="column" gap={2}>
               <Box sx={{ backgroundColor: '#fff', borderRadius: 4, p: 2, mx: 'auto' }}>
-                <img src={qrCode} width={180} height={180} alt="QR" />
+                <img src={qrCode} width={180} height={180} alt="QR Code for two-factor authentication" />
               </Box>
-              <TextField fullWidth placeholder={t('6-digit code')} value={code}
+              <TextField
+                fullWidth
+                placeholder={t('6-digit code')}
+                value={code}
                 onChange={(e) => setCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                inputProps={{ 'aria-label': t('6-digit code') }}
                 sx={inputSx}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <KeyOutlined sx={{ fontSize: 18, color: 'secondary.dark' }} />
+                      <KeyOutlined aria-hidden="true" sx={{ fontSize: 18, color: 'secondary.dark' }} />
                     </InputAdornment>
                   )
                 }} />
-              <Button fullWidth disabled={code.length !== 6 || confirmLoading} onClick={handleConfirm}
+              <Button fullWidth disabled={code.length !== 6 || confirmLoading} onClick={handleConfirm} aria-label={t('Verify')}
                 sx={{ borderRadius: 3, py: 1.5, backgroundColor: 'secondary.main', color: 'white', fontWeight: 700 }}>
-                {confirmLoading ? <CircularProgress size={22} /> : t('Verify')}
+                {confirmLoading ? <CircularProgress size={22} aria-label="Loading" /> : t('Verify')}
               </Button>
-              <Button fullWidth onClick={() => { setQrCode(''); setCode('') }} sx={{ color: 'rgba(255,255,255,0.4)' }}>
+              <Button fullWidth onClick={() => { setQrCode(''); setCode('') }} aria-label={t('Cancel')} sx={{ color: 'rgba(255,255,255,0.4)' }}>
                 {t('Cancel')}
               </Button>
             </Box>
@@ -151,10 +137,10 @@ export default function Profile2FA() {
 
           {enabled && !qrCode && (
             <Box display="flex" flexDirection="column" gap={2}>
-              <Typography sx={{ color: 'white', fontSize: 14 }}>{t('2FA is enabled')}</Typography>
-              <Button fullWidth disabled={disableLoading} onClick={handleDisable}
+              <Typography role="status" sx={{ color: 'white', fontSize: 14 }}>{t('2FA is enabled')}</Typography>
+              <Button fullWidth disabled={disableLoading} onClick={handleDisable} aria-label={t('Disable')}
                 sx={{ borderRadius: 3, py: 1.5, backgroundColor: 'rgba(220,38,38,0.15)', color: '#f87171' }}>
-                {disableLoading ? <CircularProgress size={22} /> : t('Disable')}
+                {disableLoading ? <CircularProgress size={22} aria-label="Loading" /> : t('Disable')}
               </Button>
             </Box>
           )}

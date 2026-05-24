@@ -1,4 +1,3 @@
-// useGeneratePassword.js
 import { useMutation } from '@tanstack/react-query'
 import AuthAxiosInstance from '../api/AuthAxiosInstance'
 import Swal from 'sweetalert2'

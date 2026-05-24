@@ -394,7 +394,15 @@ i18n
           'Title cannot be empty': 'Title cannot be empty',
           'Username cannot be empty': 'Username cannot be empty',
           'Password cannot be empty': 'Password cannot be empty',
-
+          "New email": "New email",
+          'Export': 'Export',
+          'Import': 'Import',
+          'Importing...': 'Importing...',
+          'Export Successful': 'Export Successful',
+          'Your credentials have been exported': 'Your credentials have been exported',
+          'Import Successful': 'Import Successful',
+          'Imported': 'Imported',
+          'Failed': 'Failed',
         }
       },
 
@@ -779,7 +787,15 @@ i18n
           'Title cannot be empty': 'العنوان لا يمكن أن يكون فارغاً',
           'Username cannot be empty': 'اسم المستخدم لا يمكن أن يكون فارغاً',
           'Password cannot be empty': 'كلمة المرور لا يمكن أن تكون فارغة',
-
+          "New email": "بريد إلكتروني جديد",
+          'Export': 'تصدير',
+          'Import': 'استيراد',
+          'Importing...': 'جارٍ الاستيراد...',
+          'Export Successful': 'تم التصدير بنجاح',
+          'Your credentials have been exported': 'تم تصدير بياناتك بنجاح',
+          'Import Successful': 'تم الاستيراد بنجاح',
+          'Imported': 'تم استيراد',
+          'Failed': 'فشل',
         }
       }
     },

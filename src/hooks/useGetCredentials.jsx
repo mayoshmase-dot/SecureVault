@@ -12,5 +12,5 @@ export default function useGetCredentials() {
         queryKey: ['credential'],
         queryFn: getCredentials,
     });
-    return query;
+    return query;ش
 }
