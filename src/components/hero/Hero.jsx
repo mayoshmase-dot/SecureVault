@@ -9,19 +9,32 @@ export default function Hero() {
   const isAr = i18n.language === 'ar'
 
   return (
-    <Box
+        <Box
       component="section"
-      aria-label={t("Secure Your Passwords in One Safe Vault ")}
+      aria-label={t("Secure Your Passwords in One Safe Vault")}
       sx={{
-        position: 'relative',
+        position: "relative",
         height: "100vh",
-        userSelect: 'none',
-        backgroundImage: `url(${heroImg})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
+        userSelect: "none",
+        overflow: "hidden",
       }}
     >
+      <Box
+        component="img"
+        src={heroImg}
+        alt="Hero Background"
+        fetchPriority="high"
+        loading="eager"
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          zIndex: -1,
+        }}
+      />
       <Box color="white" position="absolute" top={0} left={0} right={0} bottom={0}
         sx={{
           display: "flex", flexDirection: "column", justifyContent: "center",

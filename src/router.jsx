@@ -17,6 +17,7 @@ import GeneratePassword from "./pages/genaratePassword/GenaratePassword";
 import UpdateCredential from "./pages/credentials/UpdateCredential";
 import ProfileDelete from "./pages/profile/ProfileDelete";
 import ChangePassword from "./pages/profile/ChangePassword";
+import MagicImport from "./pages/credentials/MagicImport";
 
 const router = createBrowserRouter([
     {
@@ -81,6 +82,15 @@ const router = createBrowserRouter([
                         <UpdateCredential />
                     </ProtectedRouter>
             },
+            { 
+                path: 'magic-import', 
+                element: 
+                <ProtectedRouter>
+                    <MagicImport />
+                </ProtectedRouter> 
+
+            },
+
             {
                 path: 'profile',
                 element:

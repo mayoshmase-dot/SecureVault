@@ -50,7 +50,7 @@ export default function useImportCredentials() {
                 title: t('Import Successful'),
                 text: `${t('Imported')}: ${data.imported} | ${t('Failed')}: ${data.failed}`,
                 background: 'rgb(1,6,46)', color: '#fff',
-                confirmButtonColor: 'rgb(48,168,90)'
+                confirmButtonColor: 'rgb(48,168,90)',
             })
         },
 
