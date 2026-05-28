@@ -33,7 +33,6 @@ const CredentialCard = ({ cred, index, onEdit, onDelete }) => {
             transition: '0.2s',
             position: 'relative'
         }}>
-            {/* Header */}
             <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
                 <Box display="flex" alignItems="center" gap={1}>
                     <Box sx={{
@@ -69,7 +68,6 @@ const CredentialCard = ({ cred, index, onEdit, onDelete }) => {
                 </Box>
             </Box>
 
-            {/* Fields */}
             <Box display="grid" gridTemplateColumns={{ xs: '1fr', sm: '1fr 1fr' }} gap={1.5}>
                 {[
                     { label: t('Website URL (Optional)'), field: 'website', type: 'text' },
@@ -89,7 +87,6 @@ const CredentialCard = ({ cred, index, onEdit, onDelete }) => {
                     </Box>
                 ))}
 
-                {/* Password with show/hide */}
                 <Box>
                     <Typography sx={{ color: 'secondary.dark', fontSize: 11, mb: 0.3 }}>{t('Password')}</Typography>
                     {editing ? (
@@ -214,7 +211,7 @@ export default function MagicImport() {
                 text: `${t('Credential added successfully')}`,
                 background: 'rgb(1,6,46)', color: '#fff',
                 confirmButtonColor: 'rgb(48,168,90)',
-                          confirmButtonText: t('OK')
+                confirmButtonText: t('OK')
 
             })
 

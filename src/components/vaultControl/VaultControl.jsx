@@ -74,7 +74,6 @@ export default function VaultControl() {
             <Container>
                 <Box py={4} display="flex" flexDirection="column" gap={3}>
 
-                    {/* Row 1 — Search + Primary Actions */}
                     <Box display="flex" flexDirection={{ xs: 'column', md: 'row' }}
                         justifyContent="space-between" alignItems="center" gap={3}>
 
@@ -106,7 +105,6 @@ export default function VaultControl() {
                         </Box>
                     </Box>
 
-                    {/* Row 2 — Secondary Actions */}
                     <Box>
                         <Typography sx={{ color: 'rgba(255,255,255,0.3)', fontSize: 11, mb: 1.5, letterSpacing: 1, textTransform: 'uppercase' }}>
                             {t('Import & Export')}

@@ -58,7 +58,9 @@ export default function useExportCredentials() {
                 title: t('Export Successful'),
                 text: t('Your credentials have been exported'),
                 background: 'rgb(1,6,46)', color: '#fff',
-                confirmButtonColor: 'rgb(48,168,90)'
+                confirmButtonColor: 'rgb(48,168,90)',
+                confirmButtonText: t('OK')
+
             })
         } catch (err) {
             Swal.fire({

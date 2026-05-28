@@ -14,20 +14,10 @@ export default function useAICredentialParser() {
                 '/vault/magic-import',
                 { text }
             )
-
-            console.log('RESPONSE =>', response.data)
-
             return response.data
         },
 
         onError: (error) => {
-
-            console.log('FULL ERROR =>', error)
-
-            console.log('ERROR RESPONSE =>', error?.response)
-
-            console.log('ERROR DATA =>', error?.response?.data)
-
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
@@ -41,7 +31,6 @@ export default function useAICredentialParser() {
                 color: '#fff',
                 confirmButtonColor: 'rgb(48,168,90)',
                 confirmButtonText: t('OK')
-
             })
         }
     })

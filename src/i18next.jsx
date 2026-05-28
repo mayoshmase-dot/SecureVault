@@ -396,7 +396,7 @@ i18n
           'Password cannot be empty': 'Password cannot be empty',
           "New email": "New email",
           'Export': 'Export',
-          'Import': 'Import',
+          'Import CSV': 'Import CSV',
           'Importing...': 'Importing...',
           'Export Successful': 'Export Successful',
           'Your credentials have been exported': 'Your credentials have been exported',
@@ -419,6 +419,13 @@ i18n
           'Username': 'Username',
           'Password': 'Password',
           'Category': 'Category',
+          'Select All': 'Select All',
+          'You are about to delete': 'You are about to delete',
+          'credentials': 'credentials',
+          'Deselect All': 'Deselect All',
+          'Import & Export':'Import & Export',
+          'Send Code':'Send Code',
+
         }
       },
 
@@ -805,7 +812,8 @@ i18n
           'Password cannot be empty': 'كلمة المرور لا يمكن أن تكون فارغة',
           "New email": "بريد إلكتروني جديد",
           'Export': 'تصدير',
-          'Import': 'استيراد',
+          'Import & Export':'استيراد و تصدير',
+          'Import CSV': 'CSV استيراد',
           'Importing...': 'جارٍ الاستيراد...',
           'Export Successful': 'تم التصدير بنجاح',
           'Your credentials have been exported': 'تم تصدير بياناتك بنجاح',
@@ -827,6 +835,11 @@ i18n
           'Username': 'اسم المستخدم',
           'Password': 'كلمة المرور',
           'Category': 'الفئة',
+          'Select All': 'تحديد الكل',
+          'You are about to delete': 'أنت على وشك حذف',
+          'credentials': 'بيانات',
+          'Deselect All': 'إلغاء تحديد الكل',
+          'Send Code': 'إرسال الرمز'
         }
       }
     },

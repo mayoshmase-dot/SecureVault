@@ -14,10 +14,12 @@ export default function useConfirmEmailChange() {
         },
         onSuccess: (data) => {
             queryClient.invalidateQueries({ queryKey: ['profile'] })
-            Swal.fire({ title: t('Email Updated!'), text: data.message, icon: 'success', confirmButtonColor: '#7c3aed' })
+            Swal.fire({ title: t('Email Updated!'), text: data.message, icon: 'success', confirmButtonColor: '#7c3aed', confirmButtonText: t('OK') })
         },
         onError: (error) => {
-            Swal.fire({ title: t('Error'), text: error.response?.data?.message || t('Something went wrong'), icon: 'error' })
+            Swal.fire({
+                title: t('Error'), text: error.response?.data?.message || t('Something went wrong'), icon: 'error', confirmButtonText: t('OK')
+            })
         }
     })
 }
