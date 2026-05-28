@@ -106,7 +106,7 @@ export default function CredentialDetails() {
                                 <Typography color="white">{t('Category')}</Typography>
                             </Box>
                             <Box display="flex" alignItems="center" gap={1}>
-                                <FieldValue value={credential?.category} />
+                                <FieldValue value={t(credential?.category)} />
                                 <CopyButton value={credential?.tags} />
                             </Box>
                         </Box>
