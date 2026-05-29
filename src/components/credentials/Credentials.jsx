@@ -63,8 +63,10 @@ export default function Credentials() {
             icon: 'warning',
             showCancelButton: true,
             confirmButtonText: t('Yes, delete it'),
+            cancelButtonText: t('Cancel'),
             confirmButtonColor: '#dc2626',
             background: 'rgb(1,6,46)', color: '#fff'
+
         }).then(({ isConfirmed }) => {
             if (!isConfirmed) return
             bulkDelete(selected, {

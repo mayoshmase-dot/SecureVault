@@ -293,7 +293,6 @@ i18n
           Success: "Success",
           "Credential added successfully": "Credential added successfully",
           "Something went wrong": "Something went wrong",
-          "Account Deleted": "Account Deleted",
           "Your account and all your data have been permanently deleted":
             "Your account and all your data have been permanently deleted",
           OK: "OK",
@@ -304,6 +303,7 @@ i18n
           "Yes, delete it": "Yes, delete it",
           "Cancel": "Cancel",
           "Deleted!": "Deleted!",
+          "Deleted": "Deleted",
           "Credential deleted successfully": "Credential deleted successfully",
           Error: "Error",
           "Something went wrong": "Something went wrong",
@@ -403,7 +403,6 @@ i18n
           'Import Successful': 'Import Successful',
           'Imported': 'Imported',
           'Failed': 'Failed',
-          // en
           'Magic Import': 'Magic Import',
           'Paste any messy text and AI will extract your credentials': 'Paste any messy text and AI will extract your credentials',
           'Paste your text here': 'Paste your text here',
@@ -428,11 +427,20 @@ i18n
           "Password History": "Password History",
           "No history available": "No history available",
           "Restore": "Restore",
-          "Password Restored":"Password Restored",
+          "Password Restored": "Password Restored",
           "Password restored successfully": "Password restored successfully",
+          "Email Updated!": "Email Updated!",
+          'AI Magic Import': 'AI Magic Import',
+          'AI Magic Import text': 'Paste any messy text and AI will extract your credentials automatically.',
+          'Password History': 'Password History',
+          'Password History text': 'View and restore previous passwords from your credential history.',
+          'Export & Import': 'Export & Import',
+          'Export Import text': 'Export your vault as CSV or import from other password managers.',
+          'Multilingual': 'Multilingual',
+          'Multilingual text': 'Full Arabic and English support throughout the app.',
+          
         }
       },
-
       ar: {
         translation: {
           // Navbar
@@ -714,7 +722,6 @@ i18n
           Success: "نجاح",
           "Credential added successfully": "تم إضافة البيانات بنجاح",
           "Something went wrong": "حدث خطأ ما",
-          "Account Deleted": "تم حذف الحساب",
           "Your account and all your data have been permanently deleted":
             "تم حذف حسابك وجميع بياناتك بشكل نهائي",
           OK: "حسناً",
@@ -725,6 +732,7 @@ i18n
           "Yes, delete it": "نعم، احذف",
           "Cancel": "إلغاء",
           "Deleted!": "تم الحذف!",
+          "Deleted": "حذف",
           "Credential deleted successfully": "تم حذف البيانات بنجاح",
           Error: "خطأ",
           "Something went wrong": "حدث خطأ ما",
@@ -849,14 +857,91 @@ i18n
           "Restore": "استعادة",
           "Password Restored": "تم استعادة كلمة المرور",
           "Password restored successfully": "تم استرجاع كلمة المرور بنجاح",
+          "Email Updated!": "تم تحديث البريد الإلكتروني!",
+          'AI Magic Import': 'استيراد ذكي',
+          'AI Magic Import text': 'الصق أي نص وسيستخرج الذكاء الاصطناعي بياناتك تلقائياً.',
+          'Password History text': 'عرض واستعادة كلمات المرور السابقة من سجل البيانات.',
+          'Export & Import': 'تصدير واستيراد',
+          'Export Import text': 'صدّر خزنتك كـ CSV أو استورد من مدراء كلمات مرور أخرى.',
+          'Multilingual': 'متعدد اللغات',
+          'Multilingual text': 'دعم كامل للعربية والإنجليزية في جميع أنحاء التطبيق.',
+          'How It Works':'كيف يعمل؟',
+          'About': 'حول',
+          
+  "how_title": "كيف يعمل SecureVault",
+  "how_subtitle": "دليل خطوة بخطوة لاستخدام جميع المميزات",
+  "how_desc": "يقوم SecureVault بتشفير كل شيء على جهازك قبل أن يصل إلى الخادم. هذا الدليل يشرح جميع الميزات لتستفيد من التطبيق بأفضل شكل.",
+
+  "how_footer_line1": "كل شيء مشفر على جهازك · كلمة المرور الرئيسية لا تُرسل أبداً · نظام بدون معرفة مسبقة",
+  "how_footer_line2": "الجامعة التقنية الفلسطينية – خضوري · 2025 / 2026",
+
+  "how_section_1_title": "1. إنشاء الحساب",
+  "how_section_1_steps_1": "اذهب إلى صفحة التسجيل وأدخل الاسم والبريد وكلمة مرور قوية.",
+  "how_section_1_steps_2": "سيتم إرسال رمز تأكيد إلى بريدك الإلكتروني للتحقق.",
+  "how_section_1_steps_3": "سيتم إنشاء مفتاح استرجاع خاص — احتفظ به جيداً.",
+  "how_section_1_steps_4": "يتم تشفير كلمة المرور باستخدام PBKDF2 على جهازك قبل الإرسال.",
+
+  "how_section_2_title": "2. إضافة بياناتك",
+  "how_section_2_steps_1": "اضغط على إضافة جديد من لوحة التحكم.",
+  "how_section_2_steps_2": "أدخل العنوان واسم المستخدم وكلمة المرور والموقع والملاحظات.",
+  "how_section_2_steps_3": "يتم تشفير البيانات باستخدام AES-GCM على جهازك.",
+  "how_section_2_steps_4": "السيرفر لا يرى أي بيانات غير مشفرة.",
+
+  "how_section_3_title": "3. إدارة البحث",
+  "how_section_3_steps_1": "عرض جميع البيانات من لوحة التحكم.",
+  "how_section_3_steps_2": "استخدم البحث للوصول السريع.",
+  "how_section_3_steps_3": "عرض التفاصيل بعد فك التشفير.",
+  "how_section_3_steps_4": "تعديل أو حذف أي عنصر.",
+  "how_section_3_steps_5": "حذف جماعي لعدة عناصر.",
+  "how_section_3_steps_6": "عرض قوة كلمات المرور ومعرفة الضعيف منها.",
+
+  "how_section_4_title": "4. توليد كلمات مرور قوية",
+  "how_section_4_steps_1": "اذهب إلى صفحة التوليد.",
+  "how_section_4_steps_2": "اختر الطول ونوع الحروف.",
+  "how_section_4_steps_3": "اضغط توليد للحصول على كلمة مرور قوية.",
+  "how_section_4_steps_4": "انسخها واستخدمها مباشرة.",
+
+  "how_section_5_title": "5. تفعيل التحقق الثنائي",
+  "how_section_5_steps_1": "اذهب إلى الملف الشخصي → 2FA.",
+  "how_section_5_steps_2": "امسح رمز QR.",
+  "how_section_5_steps_3": "أدخل الرمز لتأكيد التفعيل.",
+  "how_section_5_steps_4": "احفظ أكواد النسخ الاحتياطي.",
+  "how_section_5_steps_5": "استخدم الرمز عند تسجيل الدخول.",
+
+  "how_section_6_title": "6. سجل كلمات المرور",
+  "how_section_6_steps_1": "افتح تفاصيل أي عنصر.",
+  "how_section_6_steps_2": "انزل إلى سجل الكلمات.",
+  "how_section_6_steps_3": "يتم حفظ آخر 5 كلمات مرور.",
+  "how_section_6_steps_4": "يمكنك استرجاع أي كلمة قديمة.",
+
+  "how_section_7_title": "7. الاستيراد الذكي بالذكاء الاصطناعي",
+  "how_section_7_steps_1": "اذهب إلى الاستيراد الذكي.",
+  "how_section_7_steps_2": "الصق أي نص يحتوي بيانات دخول.",
+  "how_section_7_steps_3": "الذكاء الاصطناعي يستخرج البيانات تلقائياً.",
+  "how_section_7_steps_4": "راجع البيانات ثم احفظها.",
+  "how_section_7_steps_5": "كل شيء يتم تشفيره قبل الحفظ.",
+
+  "how_section_8_title": "8. التصدير والاستيراد",
+  "how_section_8_steps_1": "تصدير البيانات كملف CSV مشفر.",
+  "how_section_8_steps_2": "يتم فك التشفير محلياً.",
+  "how_section_8_steps_3": "استيراد من ملفات أخرى.",
+  "how_section_8_steps_4": "التطبيق يطابق الأعمدة تلقائياً.",
+  "how_section_8_steps_5": "كل البيانات تبقى مشفرة.",
+
+  "how_section_9_title": "9. استرجاع الحساب",
+  "how_section_9_steps_1": "اذهب إلى صفحة الاسترجاع.",
+  "how_section_9_steps_2": "أدخل البريد ومفتاح الاسترجاع.",
+  "how_section_9_steps_3": "أنشئ كلمة مرور جديدة.",
+  "how_section_9_steps_4": "سيتم إنشاء مفتاح جديد.",
+  "how_section_9_steps_5": "البيانات تبقى مشفرة وآمنة."
 
         }
-        }
-      },
-
-      interpolation: {
-        escapeValue: false
       }
-    });
+    },
+
+    interpolation: {
+      escapeValue: false
+    }
+  });
 
 export default i18n;

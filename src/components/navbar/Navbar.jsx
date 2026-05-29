@@ -73,10 +73,6 @@ export default function Navbar() {
               sx={{ '&:hover': { color: 'secondary.main' }, gap: isAr ? 1 : 0.5 }}>
               {t('Home')}
             </Button>
-            <Button component={RouterLink} to='/about' color="inherit" startIcon={<InfoOutlinedIcon />}
-              sx={{ '&:hover': { color: 'secondary.main' }, gap: isAr ? 1 : 0.5 }}>
-              {t('About')}
-            </Button>
             {token ? (
               <>
                 <Button component={RouterLink} to='/dashboard' color="inherit" startIcon={<DashboardIcon />}
@@ -177,16 +173,6 @@ export default function Navbar() {
                 sx={{ '&:hover': { backgroundColor: 'rgba(48,168,90,0.15)', color: 'secondary.main' } }}>
                 <ListItemIcon sx={{ color: 'white' }}><HomeIcon /></ListItemIcon>
                 <ListItemText primary={t('Home')} />
-              </ListItemButton>
-            </ListItem>
-
-            <Divider sx={{ borderColor: 'rgba(255,255,255,0.1)', my: 1 }} />
-
-            <ListItem disablePadding>
-              <ListItemButton component={RouterLink} to='/about' onClick={() => setDrawerOpen(false)}
-                sx={{ '&:hover': { backgroundColor: 'rgba(48,168,90,0.15)', color: 'secondary.main' } }}>
-                <ListItemIcon sx={{ color: 'white' }}><InfoOutlinedIcon /></ListItemIcon>
-                <ListItemText primary={t('About')} />
               </ListItemButton>
             </ListItem>
 

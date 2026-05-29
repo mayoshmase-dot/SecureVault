@@ -18,6 +18,8 @@ import UpdateCredential from "./pages/credentials/UpdateCredential";
 import ProfileDelete from "./pages/profile/ProfileDelete";
 import ChangePassword from "./pages/profile/ChangePassword";
 import MagicImport from "./pages/credentials/MagicImport";
+import About from "./pages/about/About";
+import HowItWorks from "./pages/howItWorks/HowItWorks";
 
 const router = createBrowserRouter([
     {
@@ -28,7 +30,10 @@ const router = createBrowserRouter([
                 index: true,
                 element: <Home />
             },
-
+             {
+                path: 'about',
+                element: <About />
+            },
             {
                 path: 'login',
                 element: <Login />
@@ -36,7 +41,12 @@ const router = createBrowserRouter([
             {
                 path: 'register',
                 element: <Register />
-            }, {
+            }, 
+            {
+                path: 'howItWorks',
+                element: <HowItWorks />
+            }, 
+            {
                 path: 'verify2FA',
                 element: (
                     <Verify2FA />
@@ -55,6 +65,7 @@ const router = createBrowserRouter([
                         <GeneratePassword />
                     </ProtectedRouter>
             },
+            
             {
                 path: 'dashboard',
                 element:

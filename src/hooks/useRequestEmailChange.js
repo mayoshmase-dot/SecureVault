@@ -24,7 +24,7 @@ export default function useRequestEmailChange() {
                 title: t('Error'),
                 text: error.response?.data?.message || t('Something went wrong'),
                 icon: 'error',
-                                confirmButtonText: t('OK')
+                confirmButtonText: t('OK')
 
             })
         }
