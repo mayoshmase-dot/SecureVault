@@ -45,7 +45,9 @@ const getCharacterPoolSize = (password) => {
 
 const calculateEntropy = (password) => {
   const poolSize = getCharacterPoolSize(password)
+
   if (!poolSize) return 0
+
   return Math.floor(password.length * Math.log2(poolSize))
 }
 
@@ -62,6 +64,7 @@ export const passwordAnalyzer = (password = '', t) => {
       checks: {
         hasMinLength: false,
         hasGoodLength: false,
+        hasExcellentLength: false,
         hasLowercase: false,
         hasUppercase: false,
         hasNumbers: false,
@@ -78,27 +81,32 @@ export const passwordAnalyzer = (password = '', t) => {
   let score = 0
   const feedback = []
 
+  // Length checks
   const hasMinLength = password.length >= 8
   const hasGoodLength = password.length >= 12
   const hasExcellentLength = password.length >= 16
 
+  // Character type checks
   const hasLowercase = /[a-z]/.test(password)
   const hasUppercase = /[A-Z]/.test(password)
   const hasNumbers = /[0-9]/.test(password)
   const hasSymbols = /[^a-zA-Z0-9]/.test(password)
 
+  // Security checks
   const noCommonPassword =
     !COMMON_PASSWORDS.has(password.toLowerCase())
 
+  // Detects aaa, 111, $$$, etc.
   const noRepeatedChars =
     !/(.)\1{2,}/.test(password)
 
+  // Detects abc, 123, qwerty, etc.
   const noSequentialChars =
     !SEQUENTIAL_PATTERNS.some((seq) =>
       password.toLowerCase().includes(seq)
     )
 
-  // Score
+  // Base score
   if (hasMinLength) score += 1
   if (hasGoodLength) score += 1
   if (hasExcellentLength) score += 1
@@ -108,13 +116,16 @@ export const passwordAnalyzer = (password = '', t) => {
   if (hasNumbers) score += 1.5
   if (hasSymbols) score += 2
 
+  // Penalties
   if (!noRepeatedChars) score -= 1
   if (!noSequentialChars) score -= 0.5
 
+  // Common passwords penalty
   if (!noCommonPassword) {
     score = Math.min(score, 1)
   }
 
+  // Entropy bonus
   const entropy = calculateEntropy(password)
 
   if (entropy >= 80) {
@@ -123,11 +134,13 @@ export const passwordAnalyzer = (password = '', t) => {
     score += 0.5
   }
 
+  // Clamp score
   score = Math.max(0, Math.min(10, score))
   score = Math.round(score * 10) / 10
 
   const percentage = Math.round((score / 10) * 100)
 
+  // Password level
   let level = t('Very Weak')
 
   if (score > 8) {
@@ -142,7 +155,7 @@ export const passwordAnalyzer = (password = '', t) => {
 
   const isStrong = score >= 6
 
-  // Feedback (all translated)
+  // Feedback
   if (!hasMinLength) {
     feedback.push(t('Use at least 8 characters'))
   }

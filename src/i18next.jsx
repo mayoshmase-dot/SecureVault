@@ -423,9 +423,13 @@ i18n
           'You are about to delete': 'You are about to delete',
           'credentials': 'credentials',
           'Deselect All': 'Deselect All',
-          'Import & Export':'Import & Export',
-          'Send Code':'Send Code',
-
+          'Import & Export': 'Import & Export',
+          'Send Code': 'Send Code',
+          "Password History": "Password History",
+          "No history available": "No history available",
+          "Restore": "Restore",
+          "Password Restored":"Password Restored",
+          "Password restored successfully": "Password restored successfully",
         }
       },
 
@@ -812,7 +816,7 @@ i18n
           'Password cannot be empty': 'كلمة المرور لا يمكن أن تكون فارغة',
           "New email": "بريد إلكتروني جديد",
           'Export': 'تصدير',
-          'Import & Export':'استيراد و تصدير',
+          'Import & Export': 'استيراد و تصدير',
           'Import CSV': 'CSV استيراد',
           'Importing...': 'جارٍ الاستيراد...',
           'Export Successful': 'تم التصدير بنجاح',
@@ -839,14 +843,20 @@ i18n
           'You are about to delete': 'أنت على وشك حذف',
           'credentials': 'بيانات',
           'Deselect All': 'إلغاء تحديد الكل',
-          'Send Code': 'إرسال الرمز'
-        }
-      }
-    },
+          'Send Code': 'إرسال الرمز',
+          "Password History": "سجل كلمات المرور",
+          "No history available": "لا يوجد سجل",
+          "Restore": "استعادة",
+          "Password Restored": "تم استعادة كلمة المرور",
+          "Password restored successfully": "تم استرجاع كلمة المرور بنجاح",
 
-    interpolation: {
-      escapeValue: false
-    }
-  });
+        }
+        }
+      },
+
+      interpolation: {
+        escapeValue: false
+      }
+    });
 
 export default i18n;

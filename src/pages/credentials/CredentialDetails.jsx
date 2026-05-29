@@ -15,6 +15,7 @@ import CopyButton from "../../ui/CopyButton";
 import FieldValue from "../../ui/FieldValue";
 import { cardStyle, iconBox } from "../../constants/styles";
 import { useTranslation } from "react-i18next";
+import PasswordHistory from '../../components/history/PasswordHistory'
 
 export default function CredentialDetails() {
     const { id } = useParams();
@@ -111,7 +112,9 @@ export default function CredentialDetails() {
                             </Box>
                         </Box>
 
-                        <Divider sx={{ borderColor: "secondary.main", mb: 2 }} />
+                        <PasswordHistory credentialId={id} />
+
+                        <Divider sx={{ borderColor: "secondary.main", my: 2 }} />
 
                         <Box display="flex" justifyContent="space-between">
                             <Typography sx={{ fontSize: 12, color: "rgba(255,255,255,0.3)" }}>

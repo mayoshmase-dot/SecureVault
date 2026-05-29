@@ -5,7 +5,9 @@ import useCheckPasswordExpiry from '../../hooks/useCheckPasswordExpiry'
 import { useTranslation } from 'react-i18next'
 
 export default function PasswordExpiryBanner() {
-    const { data } = useCheckPasswordExpiry()
+    const { data , isLoading , isError , error} = useCheckPasswordExpiry()
+    console.log(data)
+console.log(error)
     const navigate = useNavigate()
     const { t } = useTranslation()
 
