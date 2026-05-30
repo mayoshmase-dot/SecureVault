@@ -9,9 +9,9 @@ import './i18next.jsx';
 import { useTranslation } from 'react-i18next';
 import { useEffect } from 'react';
 
+  const queryClient = new QueryClient()
 
 export default function App() {
-  const queryClient = new QueryClient()
   const mode = useThemeStore((state) => state.mode)
   const { i18n } = useTranslation()
   useEffect(() => {

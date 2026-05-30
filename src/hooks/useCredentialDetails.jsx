@@ -32,12 +32,6 @@ export default function useCredentialDetails({ id }) {
             return response.data
         },
     })
-  console.log({
-        masterPassword,
-        credential: query.data?.data,
-        isDecrypting,
-        decryptError
-    })
 
     useEffect(() => {
         const credential = query.data?.data
