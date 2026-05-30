@@ -2,12 +2,17 @@ import { useMutation } from '@tanstack/react-query'
 import axiosInstance from '../api/axiosInstance'
 import Swal from 'sweetalert2'
 import { useNavigate } from 'react-router-dom'
-import { deriveAuthHash, generateRecoveryKey, hashValue } from '../crypto'
+import { deriveAuthHash, generateRecoveryKey, hashValue, decrypt, encrypt } from '../crypto'
 import { useTranslation } from 'react-i18next'
+import useAuthStore from '../store/useAuthStore'
+import useVaultStore from '../store/useVaultStore'
 
 export default function useRecoverAccount() {
     const navigate = useNavigate()
     const { t } = useTranslation()
+    const setToken = useAuthStore((state) => state.setToken)
+    const setMasterPassword = useVaultStore((state) => state.setMasterPassword)
+    const masterPassword = useVaultStore((state) => state.masterPassword)
 
     return useMutation({
         mutationFn: async ({ email, recoveryKey, newPassword }) => {
@@ -16,10 +21,50 @@ export default function useRecoverAccount() {
             const newAuthHash = await deriveAuthHash(newPassword, masterPasswordSeed, kdfIterations)
             const { recoveryKey: newRecoveryKey, recoveryKeyHash: newRecoveryKeyHash } = await generateRecoveryKey()
             const hashedRecoveryKey = await hashValue(recoveryKey)
+
             const response = await axiosInstance.post('/auth/recover-account', {
-                email, recoveryKey: hashedRecoveryKey,
-                newPassword: newAuthHash, newMasterPasswordSeed: masterPasswordSeed, newRecoveryKeyHash
+                email,
+                recoveryKey: hashedRecoveryKey,
+                newPassword: newAuthHash,
+                newMasterPasswordSeed: masterPasswordSeed,
+                newRecoveryKeyHash
             })
+
+            // جيب التوكن المؤقت من الريسبونس لو موجود
+            const tempToken = response.data?.data?.accessToken
+            if (tempToken) {
+                // أعد تشفير الـ credentials
+                try {
+                    const credRes = await axiosInstance.get('/vault/credentials', {
+                        headers: { Authorization: `Bearer ${tempToken}` }
+                    })
+                    const credentials = credRes.data?.data || []
+
+                    await Promise.all(
+                        credentials.map(async (cred) => {
+                            try {
+                                const res = await axiosInstance.get(`/vault/credentials/${cred._id}`, {
+                                    headers: { Authorization: `Bearer ${tempToken}` }
+                                })
+                                const full = res.data?.data
+
+                                const decryptedUsername = masterPassword ? await decrypt(full.username, masterPassword).catch(() => '') : ''
+                                const decryptedPassword = masterPassword ? await decrypt(full.password, masterPassword).catch(() => '') : ''
+                                const decryptedNotes = masterPassword ? await decrypt(full.notes || '', masterPassword).catch(() => '') : ''
+
+                                await axiosInstance.put(`/vault/credentials/${cred._id}`, {
+                                    username: await encrypt(decryptedUsername, newPassword),
+                                    password: await encrypt(decryptedPassword, newPassword),
+                                    notes: await encrypt(decryptedNotes, newPassword),
+                                }, {
+                                    headers: { Authorization: `Bearer ${tempToken}` }
+                                })
+                            } catch { /* تجاهل الـ credential اللي ما اشتغل */ }
+                        })
+                    )
+                } catch { /* لو ما في credentials أو فشل */ }
+            }
+
             return { data: response.data, newRecoveryKey }
         },
 
@@ -36,13 +81,9 @@ export default function useRecoverAccount() {
                         ${t('If you lose this key and your password, your data cannot be recovered.')}
                     </div>
                     <div style="display:flex;justify-content:center;gap:10px">
- <button id="copyBtn" style="background: rgb(53, 241, 119);border:none;padding:10px 14px;border-radius:8px;color:white;cursor:pointer;font-weight:600;">
-        📋 ${t('Copy')}
-      </button>
-      <button id="downloadBtn" style="background: rgb(53, 241, 119);border:none;padding:10px 14px;border-radius:8px;color:white;cursor:pointer;font-weight:700;">
-        💾 ${t('Download')}
-      </button>
-       </div>
+                        <button id="copyBtn" style="background:rgb(53,241,119);border:none;padding:10px 14px;border-radius:8px;color:white;cursor:pointer;font-weight:600;">📋 ${t('Copy')}</button>
+                        <button id="downloadBtn" style="background:rgb(53,241,119);border:none;padding:10px 14px;border-radius:8px;color:white;cursor:pointer;font-weight:700;">💾 ${t('Download')}</button>
+                    </div>
                 `,
                 confirmButtonText: t('I saved it'),
                 confirmButtonColor: 'rgb(48,168,90)',
@@ -68,7 +109,10 @@ export default function useRecoverAccount() {
             Swal.fire({
                 title: t('Recovery Failed'),
                 text: error?.response?.data?.message || t('Something went wrong'),
-                icon: 'error', confirmButtonColor: 'rgb(48,168,90)'
+                icon: 'error',
+                confirmButtonColor: 'rgb(48,168,90)',
+                confirmButtonText: t('OK')
+
             })
         }
     })

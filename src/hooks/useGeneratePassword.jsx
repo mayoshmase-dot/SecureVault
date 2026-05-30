@@ -16,6 +16,8 @@ export default function useGeneratePassword() {
                 icon: 'error',
                 title: t('Error'),
                 text: error?.response?.data?.message || t('Failed to generate password'),
+                confirmButtonText: t('OK')
+
             });
         },
     });

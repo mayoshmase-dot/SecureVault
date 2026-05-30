@@ -61,7 +61,9 @@ export default function useImportCredentials() {
                 title: t('Error'),
                 text: error?.response?.data?.message || t('Something went wrong'),
                 background: 'rgb(1,6,46)', color: '#fff',
-                confirmButtonColor: 'rgb(48,168,90)'
+                confirmButtonColor: 'rgb(48,168,90)',
+                          confirmButtonText: t('OK')
+
             })
         }
     })

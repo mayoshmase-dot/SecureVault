@@ -92,13 +92,15 @@ export default function Profile2FA() {
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: t('Disable'),
-      confirmButtonColor: '#dc2626'
+      cancelButtonText: t('Cancel'),
+      confirmButtonColor: '#dc2626',
+
     }).then((r) => {
       if (!r.isConfirmed) return
       disable(undefined, {
         onSuccess: (res) => {
           queryClient.invalidateQueries({ queryKey: ['profile'] })
-          Swal.fire({ title: t('Disabled title'), text: res.message, icon: 'success', confirmButtonColor: '#7c3aed' })
+          Swal.fire({ title: t('Disabled title'), text: res.message, icon: 'success', confirmButtonColor: '#7c3aed', confirmButtonText: t('OK') })
         }
       })
     })

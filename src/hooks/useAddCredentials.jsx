@@ -51,6 +51,7 @@ export default function useAddCredentials() {
                 icon: "error",
                 title: t('Error'),
                 text: error.response?.data?.message || error.message || t('Something went wrong'),
+                          confirmButtonText: t('OK'),
             });
         },
     });

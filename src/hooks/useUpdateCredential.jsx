@@ -32,7 +32,7 @@ export default function useUpdateCredential({ id }) {
                 .then(() => navigate('/dashboard'))
         },
         onError: (error) => {
-            Swal.fire({ icon: 'error', title: t('Error'), text: error?.response?.data?.message || t('Failed to update credential') })
+            Swal.fire({ icon: 'error', title: t('Error'), text: error?.response?.data?.message || t('Failed to update credential'),  confirmButtonText: t('OK') })
         },
     })
 }

@@ -68,7 +68,9 @@ export default function useExportCredentials() {
                 title: t('Error'),
                 text: t('Something went wrong'),
                 background: 'rgb(1,6,46)', color: '#fff',
-                confirmButtonColor: 'rgb(48,168,90)'
+                confirmButtonColor: 'rgb(48,168,90)',
+                confirmButtonText: t('OK')
+
             })
         }
     }

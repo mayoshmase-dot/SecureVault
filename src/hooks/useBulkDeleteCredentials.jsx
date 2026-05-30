@@ -27,7 +27,9 @@ export default function useBulkDeleteCredentials() {
             Swal.fire({
                 title: t('Error'),
                 text: error.response?.data?.message || t('Something went wrong'),
-                icon: 'error'
+                icon: 'error',
+                confirmButtonText: t('OK')
+
             })
         }
     })

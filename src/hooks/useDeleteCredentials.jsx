@@ -39,6 +39,7 @@ export default function useDeleteCredentials() {
                 icon: "error",
                 title: t('Error'),
                 text: error.response?.data?.message || t('Something went wrong'),
+                          confirmButtonText: t('OK')
             });
         }
     });

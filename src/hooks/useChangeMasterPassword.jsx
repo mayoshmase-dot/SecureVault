@@ -81,7 +81,9 @@ export default function useChangeMasterPassword() {
                 icon: "error",
                 title: t('Error'),
                 text: error?.response?.data?.message || t('Something went wrong'),
-                confirmButtonColor: "#dc2626"
+                confirmButtonColor: "#dc2626",
+                          confirmButtonText: t('OK')
+
             })
         }
     });

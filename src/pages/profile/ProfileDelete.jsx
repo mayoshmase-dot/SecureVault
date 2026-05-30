@@ -30,6 +30,7 @@ export default function ProfileDelete() {
             title: t('Error'),
             text: err?.response?.data?.message || 'Something went wrong',
             icon: 'error',
+            confirmButtonText: t('OK')
           })
         }
       })
@@ -70,7 +71,7 @@ export default function ProfileDelete() {
             type={showPassword ? 'text' : 'password'}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            placeholder={t('Enter Master password')}
+            placeholder={t('Enter your Master password')}
             inputProps={{ 'aria-label': t('Master Password') }}
             sx={inputSx}
             InputProps={{

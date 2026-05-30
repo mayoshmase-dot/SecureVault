@@ -104,7 +104,8 @@ export default function UpdateCredential() {
             Swal.fire({
                 icon: "info",
                 title: t("No Changes"),
-                text: t("You have not made any changes.")
+                text: t("You have not made any changes."),
+                confirmButtonText: t('OK')
             });
 
             return;
