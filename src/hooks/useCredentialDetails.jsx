@@ -14,6 +14,7 @@ const decryptField = async (field, masterPassword) => {
 }
 
 export default function useCredentialDetails({ id }) {
+    
     const { masterPassword } = useVaultStore()
     const navigate = useNavigate()
     const [decryptedData, setDecryptedData] = useState(null)
@@ -30,6 +31,12 @@ export default function useCredentialDetails({ id }) {
             const response = await AuthAxiosInstance.get(`/vault/credentials/${id}`)
             return response.data
         },
+    })
+  console.log({
+        masterPassword,
+        credential: query.data?.data,
+        isDecrypting,
+        decryptError
     })
 
     useEffect(() => {

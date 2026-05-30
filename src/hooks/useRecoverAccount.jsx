@@ -10,19 +10,26 @@ import useVaultStore from '../store/useVaultStore'
 export default function useRecoverAccount() {
     const navigate = useNavigate()
     const { t } = useTranslation()
-    const setToken = useAuthStore((state) => state.setToken)
-    const setMasterPassword = useVaultStore((state) => state.setMasterPassword)
-    const masterPassword = useVaultStore((state) => state.masterPassword)
+    const logout = useAuthStore((state) => state.logout)
+    const { masterPassword, clearMasterPassword } = useVaultStore()
 
     return useMutation({
         mutationFn: async ({ email, recoveryKey, newPassword }) => {
+            // 1. جيب الـ KDF params
             const kdfRes = await axiosInstance.get(`/auth/kdf-params/${email}`)
             const { masterPasswordSeed, kdfIterations } = kdfRes.data.data
+
+            // 2. اشتق الـ auth hash الجديد
             const newAuthHash = await deriveAuthHash(newPassword, masterPasswordSeed, kdfIterations)
+
+            // 3. ولّد recovery key جديد
             const { recoveryKey: newRecoveryKey, recoveryKeyHash: newRecoveryKeyHash } = await generateRecoveryKey()
+
+            // 4. hash الـ recovery key القديم
             const hashedRecoveryKey = await hashValue(recoveryKey)
 
-            const response = await axiosInstance.post('/auth/recover-account', {
+            // 5. ابعت للـ backend
+            await axiosInstance.post('/auth/recover-account', {
                 email,
                 recoveryKey: hashedRecoveryKey,
                 newPassword: newAuthHash,
@@ -30,13 +37,19 @@ export default function useRecoverAccount() {
                 newRecoveryKeyHash
             })
 
-            // جيب التوكن المؤقت من الريسبونس لو موجود
-            const tempToken = response.data?.data?.accessToken
-            if (tempToken) {
-                // أعد تشفير الـ credentials
+            // 6. لو عندنا masterPassword القديم — اعمل login وأعد تشفير الكريدنشلز
+            if (masterPassword) {
                 try {
+                    const loginRes = await axiosInstance.post('/auth/login', {
+                        email,
+                        password: newAuthHash
+                    })
+
+                    const accessToken = loginRes.data?.accessToken
+                    if (!accessToken) throw new Error('No token')
+
                     const credRes = await axiosInstance.get('/vault/credentials', {
-                        headers: { Authorization: `Bearer ${tempToken}` }
+                        headers: { Authorization: `Bearer ${accessToken}` }
                     })
                     const credentials = credRes.data?.data || []
 
@@ -44,31 +57,38 @@ export default function useRecoverAccount() {
                         credentials.map(async (cred) => {
                             try {
                                 const res = await axiosInstance.get(`/vault/credentials/${cred._id}`, {
-                                    headers: { Authorization: `Bearer ${tempToken}` }
+                                    headers: { Authorization: `Bearer ${accessToken}` }
                                 })
                                 const full = res.data?.data
 
-                                const decryptedUsername = masterPassword ? await decrypt(full.username, masterPassword).catch(() => '') : ''
-                                const decryptedPassword = masterPassword ? await decrypt(full.password, masterPassword).catch(() => '') : ''
-                                const decryptedNotes = masterPassword ? await decrypt(full.notes || '', masterPassword).catch(() => '') : ''
+                                const decryptedUsername = await decrypt(full.username, masterPassword).catch(() => '')
+                                const decryptedPassword = await decrypt(full.password, masterPassword).catch(() => '')
+                                const decryptedNotes = full.notes ? await decrypt(full.notes, masterPassword).catch(() => '') : ''
 
                                 await axiosInstance.put(`/vault/credentials/${cred._id}`, {
+                                    title: full.title,
+                                    website: full.website || '',
+                                    category: full.category || 'Other',
+                                    tags: full.tags || [],
                                     username: await encrypt(decryptedUsername, newPassword),
                                     password: await encrypt(decryptedPassword, newPassword),
                                     notes: await encrypt(decryptedNotes, newPassword),
                                 }, {
-                                    headers: { Authorization: `Bearer ${tempToken}` }
+                                    headers: { Authorization: `Bearer ${accessToken}` }
                                 })
-                            } catch { /* تجاهل الـ credential اللي ما اشتغل */ }
+                            } catch { }
                         })
                     )
-                } catch { /* لو ما في credentials أو فشل */ }
+                } catch { }
             }
 
-            return { data: response.data, newRecoveryKey }
+            return { newRecoveryKey }
         },
 
         onSuccess: async ({ newRecoveryKey }) => {
+            clearMasterPassword()
+            logout()
+
             await Swal.fire({
                 title: t('Account Recovered!'),
                 background: 'rgb(1, 6, 46)', color: '#fff', width: 500,
@@ -102,6 +122,7 @@ export default function useRecoverAccount() {
                     })
                 }
             })
+
             navigate('/login')
         },
 
@@ -111,8 +132,9 @@ export default function useRecoverAccount() {
                 text: error?.response?.data?.message || t('Something went wrong'),
                 icon: 'error',
                 confirmButtonColor: 'rgb(48,168,90)',
-                confirmButtonText: t('OK')
-
+                confirmButtonText: t('OK'),
+                background: 'rgb(1,6,46)',
+                color: '#fff'
             })
         }
     })

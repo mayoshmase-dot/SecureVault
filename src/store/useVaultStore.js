@@ -11,7 +11,6 @@ const useVaultStore = create(
     {
       name: "vault-storage",
       storage: createJSONStorage(() => sessionStorage),
-      
     }
   )
 );

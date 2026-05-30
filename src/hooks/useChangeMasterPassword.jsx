@@ -3,25 +3,33 @@ import AuthAxiosInstance from "../api/AuthAxiosInstance";
 import axiosInstance from "../api/axiosInstance";
 import Swal from "sweetalert2";
 import useVaultStore from "../store/useVaultStore";
-import { decrypt, encrypt, safeParse, deriveAuthHash } from "../crypto";
+import { decrypt, encrypt, deriveAuthHash } from "../crypto";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import useAuthStore from "../store/useAuthStore";
 
 export default function useChangeMasterPassword() {
     const queryClient = useQueryClient();
-    const setMasterPassword = useVaultStore((state) => state.setMasterPassword);
+    const { setMasterPassword, clearMasterPassword } = useVaultStore();
+    const logout = useAuthStore((state) => state.logout);
     const { t } = useTranslation();
+    const navigate = useNavigate();
 
     return useMutation({
         mutationFn: async ({ currentPassword, newPassword }) => {
+            // 1. جيب الـ email
             const profileRes = await AuthAxiosInstance.get('/auth/me')
             const email = profileRes.data?.data?.email
 
+            // 2. جيب الـ KDF params
             const kdfRes = await axiosInstance.get(`/auth/kdf-params/${email}`)
             const { masterPasswordSeed, kdfIterations } = kdfRes.data.data
 
+            // 3. اشتق الـ hashes
             const currentAuthHash = await deriveAuthHash(currentPassword, masterPasswordSeed, kdfIterations)
             const newAuthHash = await deriveAuthHash(newPassword, masterPasswordSeed, kdfIterations)
 
+            // 4. جيب كل الكريدنشلز وافك تشفيرهم بالقديم
             const credRes = await AuthAxiosInstance.get('/vault/credentials')
             const credentials = credRes.data?.data || []
 
@@ -30,14 +38,20 @@ export default function useChangeMasterPassword() {
                     try {
                         const res = await AuthAxiosInstance.get(`/vault/credentials/${cred._id}`)
                         const full = res.data?.data
-                        const decryptedPassword = await decrypt(safeParse(full.password), currentPassword)
-                        const decryptedUsername = await decrypt(safeParse(full.username), currentPassword)
-                        const decryptedNotes = await decrypt(safeParse(full.notes), currentPassword)
+
+                        const decryptedUsername = await decrypt(full.username, currentPassword).catch(() => '')
+                        const decryptedPassword = await decrypt(full.password, currentPassword).catch(() => '')
+                        const decryptedNotes = full.notes ? await decrypt(full.notes, currentPassword).catch(() => '') : ''
+
                         return {
                             id: cred._id,
-                            password: await encrypt(decryptedPassword, newPassword),
+                            title: full.title,
+                            website: full.website || '',
+                            category: full.category || 'Other',
+                            tags: full.tags || [],
                             username: await encrypt(decryptedUsername, newPassword),
-                            notes: await encrypt(decryptedNotes || '', newPassword)
+                            password: await encrypt(decryptedPassword, newPassword),
+                            notes: await encrypt(decryptedNotes, newPassword),
                         }
                     } catch {
                         return null
@@ -45,34 +59,40 @@ export default function useChangeMasterPassword() {
                 })
             )
 
+            // 5. غير كلمة المرور بالـ backend
             const response = await AuthAxiosInstance.put('/auth/change-password', {
                 currentPassword: currentAuthHash,
                 newPassword: newAuthHash
             })
 
+            // 6. حدّث كل الكريدنشلز بالتشفير الجديد
             await Promise.all(
                 reEncrypted
                     .filter(Boolean)
-                    .map(({ id, password, username, notes }) =>
-                        AuthAxiosInstance.put(`/vault/credentials/${id}`, {
-                            password, username, notes
-                        })
+                    .map(({ id, ...data }) =>
+                        AuthAxiosInstance.put(`/vault/credentials/${id}`, data)
                     )
             )
 
             return response.data
         },
 
-        onSuccess: (data, { newPassword }) => {
+        onSuccess: (_, { newPassword }) => {
             setMasterPassword(newPassword)
             queryClient.invalidateQueries({ queryKey: ['credential'] })
+            queryClient.invalidateQueries({ queryKey: ['vaultAudit'] })
+
             Swal.fire({
                 icon: "success",
-                title: t('Success'),
-                text: data?.message || t('Update Password success'),
-                confirmButtonColor: "#7c3aed",
-                confirmButtonText: t('OK')
-
+                title: t('Update!'),
+                text: t('Credential updated successfully'),
+                confirmButtonColor: 'rgb(48,168,90)',
+                confirmButtonText: t('OK'),
+                background: 'rgb(1,6,46)',
+                color: '#fff'
+            }).then(() => {
+                clearMasterPassword()
+                logout()
             })
         },
 
@@ -81,9 +101,10 @@ export default function useChangeMasterPassword() {
                 icon: "error",
                 title: t('Error'),
                 text: error?.response?.data?.message || t('Something went wrong'),
-                confirmButtonColor: "#dc2626",
-                          confirmButtonText: t('OK')
-
+                confirmButtonColor: 'rgb(48,168,90)',
+                confirmButtonText: t('OK'),
+                background: 'rgb(1,6,46)',
+                color: '#fff'
             })
         }
     });
