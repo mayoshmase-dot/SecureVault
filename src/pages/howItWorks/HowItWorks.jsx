@@ -1,4 +1,6 @@
 import { Box, Container, Typography, Divider, Chip } from '@mui/material'
+import { useTranslation } from 'react-i18next'
+import { useEffect } from 'react'
 import PersonAddOutlinedIcon from '@mui/icons-material/PersonAddOutlined'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import ShieldOutlinedIcon from '@mui/icons-material/ShieldOutlined'
@@ -9,163 +11,41 @@ import VpnKeyOutlinedIcon from '@mui/icons-material/VpnKeyOutlined'
 import HistoryOutlinedIcon from '@mui/icons-material/HistoryOutlined'
 import KeyOutlinedIcon from '@mui/icons-material/KeyOutlined'
 import SchoolIcon from '@mui/icons-material/School'
-import { useEffect } from 'react'
-import { useTranslation } from 'react-i18next'
 
-const sections = [
-    {
-        icon: <PersonAddOutlinedIcon sx={{ fontSize: 32 }} />,
-        color: '#30A85A',
-        title: '1. Create Your Account',
-        steps: [
-            'Go to Sign Up and enter your name, email, and a strong master password.',
-            'A verification code will be sent to your email — enter it to confirm your identity.',
-            'A unique recovery key will be generated — save it somewhere safe. You will need it if you ever forget your master password.',
-            'Your master password is hashed on your device using PBKDF2 before being sent. We never store or see it in plain text.',
-        ]
-    },
-    {
-        icon: <LockOutlinedIcon sx={{ fontSize: 32 }} />,
-        color: '#61DAFB',
-        title: '2. Add Your Credentials',
-        steps: [
-            'Click "Add New" from the dashboard.',
-            'Fill in the title, username, password, website, notes, category, and tags.',
-            'Your username, password, and notes are encrypted on your device using AES-GCM before being saved.',
-            'The server only receives and stores encrypted data — it cannot read your credentials.',
-        ]
-    },
-    {
-        icon: <SearchOutlinedIcon sx={{ fontSize: 32 }} />,
-        color: '#F59E0B',
-        title: '3. Manage & Search Your Vault',
-        steps: [
-            'View all your credentials from the dashboard, organized by category tabs.',
-            'Use the search bar to instantly find any credential by name.',
-            'Click the details icon to view full decrypted information including username, password, and notes.',
-            'Edit or delete any credential at any time.',
-            'Select multiple credentials and bulk delete them at once.',
-            'The password health cards show how many passwords are strong, weak, or reused — hover to see which ones.',
-        ]
-    },
-    {
-        icon: <VpnKeyOutlinedIcon sx={{ fontSize: 32 }} />,
-        color: '#A78BFA',
-        title: '4. Generate Strong Passwords',
-        steps: [
-            'Go to Generate from the navbar.',
-            'Choose the password length and which character types to include (uppercase, lowercase, numbers, symbols).',
-            'Click Generate to get a strong random password with a strength indicator.',
-            'Copy it and use it directly when adding or updating a credential.',
-        ]
-    },
-    {
-        icon: <ShieldOutlinedIcon sx={{ fontSize: 32 }} />,
-        color: '#F87171',
-        title: '5. Enable Two-Factor Authentication (2FA)',
-        steps: [
-            'Go to Profile → 2FA.',
-            'Click "Enable 2FA" and scan the QR code with Google Authenticator or Authy.',
-            'Enter the 6-digit code to confirm activation.',
-            'Backup codes will be shown once — save them in case you lose access to your authenticator app.',
-            'On next login, you will be asked to enter your 6-digit code or an 8-character backup code.',
-        ]
-    },
-    {
-        icon: <HistoryOutlinedIcon sx={{ fontSize: 32 }} />,
-        color: '#34D399',
-        title: '6. View Password History',
-        steps: [
-            'Open any credential\'s details page.',
-            'Scroll down to the Password History section.',
-            'Every time you update a password, the previous one is saved automatically (up to 5 entries).',
-            'Click Restore on any entry to revert to that password.',
-        ]
-    },
-    {
-        icon: <AutoFixHighOutlinedIcon sx={{ fontSize: 32 }} />,
-        color: '#4285F4',
-        title: '7. AI Magic Import',
-        steps: [
-            'Go to Magic Import from the dashboard.',
-            'Paste any messy text — WhatsApp messages, notes, emails — containing login information.',
-            'Our AI powered by Google Gemini will extract and structure your credentials automatically.',
-            'Review the parsed credentials, edit any mistakes, then confirm to save them all at once.',
-            'All credentials are encrypted on your device before being saved — the AI response is never stored.',
-        ]
-    },
-    {
-        icon: <FileDownloadOutlinedIcon sx={{ fontSize: 32 }} />,
-        color: '#F59E0B',
-        title: '8. Export & Import',
-        steps: [
-            'Click Export from the dashboard to download your entire vault as an encrypted CSV file.',
-            'The CSV is decrypted on your device before download — keep the file safe.',
-            'To import, click Import and select a CSV file from SecureVault or other password managers like Chrome or LastPass.',
-            'The app handles column name differences (name vs title, url vs website) automatically.',
-            'All imported credentials are encrypted on your device before being saved.',
-        ]
-    },
-    {
-        icon: <KeyOutlinedIcon sx={{ fontSize: 32 }} />,
-        color: '#EC4899',
-        title: '9. Account Recovery',
-        steps: [
-            'If you forget your master password, go to Recover Account from the login page.',
-            'Enter your email and the recovery key you saved at registration.',
-            'Set a new master password.',
-            'A new recovery key will be generated — save it again.',
-            'Note: all your credentials remain encrypted and accessible after recovery because the key derivation is re-done with the new password.',
-        ]
-    },
+const sectionsData = [
+    { icon: <PersonAddOutlinedIcon sx={{ fontSize: 32 }} />, color: '#30A85A', titleKey: 'how_s1_title', stepKeys: ['how_s1_1','how_s1_2','how_s1_3','how_s1_4'] },
+    { icon: <LockOutlinedIcon sx={{ fontSize: 32 }} />, color: '#61DAFB', titleKey: 'how_s2_title', stepKeys: ['how_s2_1','how_s2_2','how_s2_3','how_s2_4'] },
+    { icon: <SearchOutlinedIcon sx={{ fontSize: 32 }} />, color: '#F59E0B', titleKey: 'how_s3_title', stepKeys: ['how_s3_1','how_s3_2','how_s3_3','how_s3_4','how_s3_5','how_s3_6'] },
+    { icon: <VpnKeyOutlinedIcon sx={{ fontSize: 32 }} />, color: '#A78BFA', titleKey: 'how_s4_title', stepKeys: ['how_s4_1','how_s4_2','how_s4_3','how_s4_4'] },
+    { icon: <ShieldOutlinedIcon sx={{ fontSize: 32 }} />, color: '#F87171', titleKey: 'how_s5_title', stepKeys: ['how_s5_1','how_s5_2','how_s5_3','how_s5_4','how_s5_5'] },
+    { icon: <HistoryOutlinedIcon sx={{ fontSize: 32 }} />, color: '#34D399', titleKey: 'how_s6_title', stepKeys: ['how_s6_1','how_s6_2','how_s6_3','how_s6_4'] },
+    { icon: <AutoFixHighOutlinedIcon sx={{ fontSize: 32 }} />, color: '#4285F4', titleKey: 'how_s7_title', stepKeys: ['how_s7_1','how_s7_2','how_s7_3','how_s7_4','how_s7_5'] },
+    { icon: <FileDownloadOutlinedIcon sx={{ fontSize: 32 }} />, color: '#F59E0B', titleKey: 'how_s8_title', stepKeys: ['how_s8_1','how_s8_2','how_s8_3','how_s8_4','how_s8_5'] },
+    { icon: <KeyOutlinedIcon sx={{ fontSize: 32 }} />, color: '#EC4899', titleKey: 'how_s9_title', stepKeys: ['how_s9_1','how_s9_2','how_s9_3','how_s9_4','how_s9_5'] },
 ]
 
 export default function HowItWorks() {
-    const {t} = useTranslation();
-    useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+    const { t } = useTranslation()
+    useEffect(() => { window.scrollTo(0, 0) }, [])
 
     return (
         <Box component="main" sx={{ backgroundColor: 'primary.main', color: 'white', pb: 10 }}>
 
             {/* Hero */}
-            <Box sx={{
-                py: { xs: 8, md: 12 },
-                background: 'linear-gradient(180deg, rgba(48,168,90,0.08) 0%, transparent 100%)',
-                borderBottom: '1px solid rgba(255,255,255,0.06)'
-            }}>
+            <Box sx={{ py: { xs: 8, md: 12 }, background: 'linear-gradient(180deg, rgba(48,168,90,0.08) 0%, transparent 100%)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
                 <Container maxWidth="md">
                     <Box textAlign="center">
-                        <Chip
-                            label="Palestine Technical University – Kadoorie"
+                        <Chip label={t("Palestine Technical University – Kadoorie")}
                             icon={<SchoolIcon sx={{ fontSize: '16px !important', color: 'secondary.main !important' }} />}
-                            sx={{
-                                mb: 3, backgroundColor: 'rgba(48,168,90,0.1)',
-                                border: '1px solid rgba(48,168,90,0.3)',
-                                color: 'secondary.main', fontSize: 12, px: 1
-                            }} />
-
-                        <Typography component="h1" fontWeight={800} sx={{
-                            mb: 2,
-                            background: 'linear-gradient(135deg, #ffffff 0%, rgb(53,241,119) 100%)',
-                            WebkitBackgroundClip: 'text',
-                            WebkitTextFillColor: 'transparent',
-                            fontSize: { xs: '2rem', md: '3rem' }
-                        }}>
-                            How SecureVault Works
+                            sx={{ mb: 3, backgroundColor: 'rgba(48,168,90,0.1)', border: '1px solid rgba(48,168,90,0.3)', color: 'secondary.main', fontSize: 12, px: 1 }} />
+                        <Typography component="h1" fontWeight={800} sx={{ mb: 2, background: 'linear-gradient(135deg, #ffffff 0%, rgb(53,241,119) 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', fontSize: { xs: '2rem', md: '3rem' } }}>
+                            {t('how_hero_title')}
                         </Typography>
-
                         <Typography variant="h6" sx={{ color: 'rgba(255,255,255,0.5)', mb: 3, fontWeight: 400 }}>
-                            A step-by-step guide to using every feature
+                            {t('how_hero_subtitle')}
                         </Typography>
-
-                        <Typography sx={{
-                            color: 'rgba(255,255,255,0.6)', maxWidth: 560, mx: 'auto',
-                            lineHeight: 1.9, fontSize: 15
-                        }}>
-                            SecureVault encrypts everything on your device before it ever reaches our servers.
-                            This guide walks you through each feature so you can get the most out of your vault.
+                        <Typography sx={{ color: 'rgba(255,255,255,0.6)', maxWidth: 560, mx: 'auto', lineHeight: 1.9, fontSize: 15 }}>
+                            {t('how_hero_desc')}
                         </Typography>
                     </Box>
                 </Container>
@@ -174,51 +54,21 @@ export default function HowItWorks() {
             {/* Sections */}
             <Container maxWidth="md" sx={{ mt: 8 }}>
                 <Box display="flex" flexDirection="column" gap={4}>
-                    {sections.map((section, i) => (
-                        <Box key={i} sx={{
-                            p: { xs: 3, sm: 4 }, borderRadius: 3,
-                            border: `1px solid ${section.color}22`,
-                            backgroundColor: `${section.color}08`,
-                            transition: '0.3s',
-                            '&:hover': {
-                                border: `1px solid ${section.color}44`,
-                                backgroundColor: `${section.color}0f`,
-                            }
-                        }}>
-                            {/* Header */}
+                    {sectionsData.map((section, i) => (
+                        <Box key={i} sx={{ p: { xs: 3, sm: 4 }, borderRadius: 3, border: `1px solid ${section.color}22`, backgroundColor: `${section.color}08`, transition: '0.3s', '&:hover': { border: `1px solid ${section.color}44`, backgroundColor: `${section.color}0f` } }}>
                             <Box display="flex" alignItems="center" gap={2} mb={3}>
-                                <Box sx={{
-                                    width: 56, height: 56, borderRadius: 2, flexShrink: 0,
-                                    backgroundColor: `${section.color}15`,
-                                    border: `1px solid ${section.color}33`,
-                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                    color: section.color
-                                }}>
+                                <Box sx={{ width: 56, height: 56, borderRadius: 2, flexShrink: 0, backgroundColor: `${section.color}15`, border: `1px solid ${section.color}33`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: section.color }}>
                                     {section.icon}
                                 </Box>
-                                <Typography fontWeight={700} fontSize={{ xs: 17, sm: 20 }}>
-                                    {section.title}
-                                </Typography>
+                                <Typography fontWeight={700} fontSize={{ xs: 17, sm: 20 }}>{t(section.titleKey)}</Typography>
                             </Box>
-
-                            {/* Steps */}
                             <Box display="flex" flexDirection="column" gap={1.5}>
-                                {section.steps.map((step, j) => (
+                                {section.stepKeys.map((key, j) => (
                                     <Box key={j} display="flex" gap={2} alignItems="flex-start">
-                                        <Box sx={{
-                                            width: 22, height: 22, borderRadius: '50%',
-                                            backgroundColor: `${section.color}20`,
-                                            border: `1px solid ${section.color}44`,
-                                            display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                            flexShrink: 0, mt: 0.2
-                                        }}>
-                                            <Typography sx={{ color: section.color, fontSize: 11, fontWeight: 700 }}>
-                                                {j + 1}
-                                            </Typography>
+                                        <Box sx={{ width: 22, height: 22, borderRadius: '50%', backgroundColor: `${section.color}20`, border: `1px solid ${section.color}44`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, mt: 0.2 }}>
+                                            <Typography sx={{ color: section.color, fontSize: 11, fontWeight: 700 }}>{j + 1}</Typography>
                                         </Box>
-                                        <Typography sx={{ color: 'rgba(255,255,255,0.7)', fontSize: 14, lineHeight: 1.8 }}>
-                                            {step}
-                                        </Typography>
+                                        <Typography sx={{ color: 'rgba(255,255,255,0.7)', fontSize: 14, lineHeight: 1.8 }}>{t(key)}</Typography>
                                     </Box>
                                 ))}
                             </Box>
@@ -226,17 +76,12 @@ export default function HowItWorks() {
                     ))}
                 </Box>
 
-                {/* Footer note */}
-                <Box sx={{
-                    mt: 6, p: 3, borderRadius: 3, textAlign: 'center',
-                    border: '1px solid rgba(48,168,90,0.2)',
-                    backgroundColor: 'rgba(48,168,90,0.03)'
-                }}>
+                <Box sx={{ mt: 6, p: 3, borderRadius: 3, textAlign: 'center', border: '1px solid rgba(48,168,90,0.2)', backgroundColor: 'rgba(48,168,90,0.03)' }}>
                     <Typography sx={{ color: 'rgba(255,255,255,0.5)', fontSize: 14, lineHeight: 1.8 }}>
-                        Everything encrypted on your device · Master password never transmitted · Zero-knowledge architecture
+                        {t('how_footer_note')}
                     </Typography>
                     <Typography sx={{ color: 'rgba(255,255,255,0.2)', fontSize: 12, mt: 1 }}>
-                        Palestine Technical University – Kadoorie · 2025 / 2026
+                        {t("Palestine Technical University – Kadoorie · 2025 / 2026")}
                     </Typography>
                 </Box>
             </Container>
