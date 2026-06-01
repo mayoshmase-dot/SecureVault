@@ -29,11 +29,6 @@ AuthAxiosInstance.interceptors.response.use(
             try {
                 const refreshToken = localStorage.getItem("refreshToken")
 
-                console.log(
-                    'Refreshing token with:',
-                    refreshToken
-                )
-
                 const refreshResponse = await axios.post(
                     'https://backend-project-nwve.onrender.com/api/auth/refresh-token',
                     { refreshToken },
@@ -41,30 +36,18 @@ AuthAxiosInstance.interceptors.response.use(
                 )
 
                 const newAccessToken = refreshResponse.data.accessToken
-
                 useAuthStore.getState().setToken(newAccessToken)
-
-                localStorage.setItem(
-                    "token",
-                    newAccessToken
-                )
-
-                originalRequest.headers.Authorization =
-                    `Bearer ${newAccessToken}`
+                localStorage.setItem("token", newAccessToken)
+                originalRequest.headers.Authorization = `Bearer ${newAccessToken}`
 
                 return AuthAxiosInstance(originalRequest)
             }
 
             catch (err) {
-                console.error('Refresh failed:', err)
-
                 localStorage.removeItem("token")
                 localStorage.removeItem("refreshToken")
-
-                useAuthStore.getState().logout()
-
+                useAuthStore.getState().logout?.()
                 window.location.href = "/login"
-
                 return Promise.reject(err)
             }
         }

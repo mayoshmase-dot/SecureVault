@@ -36,9 +36,6 @@ const useAuthStore = create((set) => ({
 
         localStorage.removeItem('token')
         localStorage.removeItem('tempToken')
-
-        // مهم جداً
-        localStorage.removeItem('refreshToken')
     }
 
 }))
