@@ -114,7 +114,7 @@ export default function VaultControl() {
                             <Button onClick={exportCredentials}
                                 aria-label={t('Export')}
                                 sx={exportBtnSx}
-                                startIcon={<FileDownloadOutlinedIcon aria-hidden="true" sx={{ fontSize: 18 }} />}>
+                                startIcon={<FileUploadOutlinedIcon aria-hidden="true" sx={{ fontSize: 18 }} />}>
                                 {t('Export')}
                             </Button>
 
@@ -123,7 +123,7 @@ export default function VaultControl() {
                                 disabled={importPending}
                                 aria-label={t('Import CSV')}
                                 sx={importBtnSx}
-                                startIcon={<FileUploadOutlinedIcon aria-hidden="true" sx={{ fontSize: 18 }} />}>
+                                startIcon={<FileDownloadOutlinedIcon aria-hidden="true" sx={{ fontSize: 18 }} />}>
                                 {importPending ? t('Importing...') : t('Import CSV')}
                             </Button>
 

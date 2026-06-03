@@ -45,10 +45,20 @@ export default function useImportCredentials() {
 
         onSuccess: (data) => {
             queryClient.invalidateQueries({ queryKey: ['credential'] })
+
+            const summary = data?.summary
+            const skipped = data?.errors?.length || 0
+
             Swal.fire({
-                icon: 'success',
+                icon: summary?.failed > 0 ? 'warning' : 'success',
                 title: t('Import Successful'),
-                text: `${t('Imported')}: ${data.imported} | ${t('Failed')}: ${data.failed}`,
+                html: `
+            <p style="color:rgba(255,255,255,0.8);font-size:14px">
+                ✅ ${t('Imported')}: <b>${summary?.success ?? 0}</b>
+                &nbsp;|&nbsp;
+                ⚠️ ${t('Failed')}: <b>${summary?.failed ?? 0}</b>
+            </p>
+        `,
                 background: 'rgb(1,6,46)', color: '#fff',
                 confirmButtonColor: 'rgb(48,168,90)',
                 confirmButtonText: t('OK'),
@@ -62,7 +72,7 @@ export default function useImportCredentials() {
                 text: error?.response?.data?.message || t('Something went wrong'),
                 background: 'rgb(1,6,46)', color: '#fff',
                 confirmButtonColor: 'rgb(48,168,90)',
-                          confirmButtonText: t('OK')
+                confirmButtonText: t('OK')
 
             })
         }

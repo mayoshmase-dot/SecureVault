@@ -559,8 +559,9 @@ i18n
           'Click to review': 'Click to review',
           'name_required': 'Name is required',
           'name_letters_only': 'Name can only contain letters',
-
-          // ar
+          'No valid credentials': 'No valid credentials',
+          'All credentials are missing title, username, or password.': 'All credentials are missing title, username, or password.',
+          'skipped due to missing fields': 'skipped due to missing fields',
         }
       },
       ar: {
@@ -1107,17 +1108,16 @@ i18n
           'Click to review': 'اضغط للمراجعة',
           'name_required': 'الاسم مطلوب',
           'name_letters_only': 'الاسم يجب أن يحتوي على أحرف فقط',
-
-
-
-
+          'No valid credentials': 'لا توجد بيانات صالحة',
+          'All credentials are missing title, username, or password.': 'جميع البيانات تفتقر إلى العنوان أو اسم المستخدم أو كلمة المرور.',
+          'skipped due to missing fields': 'تم تخطيها بسبب حقول مفقودة',
         }
-      }
-    },
+        }
+      },
 
-    interpolation: {
-      escapeValue: false
-    }
-  });
+      interpolation: {
+        escapeValue: false
+      }
+    });
 
 export default i18n;

@@ -187,20 +187,36 @@ export default function MagicImport() {
     if (!parsed.length) return
     setSaving(true)
     try {
-        const encrypted = await Promise.all(
+        const processed = await Promise.all(
             parsed.map(async (cred) => ({
                 title: cred.title || '',
                 website: cred.website || '',
-                username: await encrypt(cred.username || '', masterPassword),
-                password: await encrypt(cred.password || '', masterPassword),
-                notes: await encrypt(cred.notes || '', masterPassword),
+                username: cred.username ? await encrypt(cred.username, masterPassword) : '',
+                password: cred.password ? await encrypt(cred.password, masterPassword) : '',
+                notes: cred.notes ? await encrypt(cred.notes, masterPassword) : '',
                 category: cred.category || 'Other',
                 tags: []
             }))
         )
 
+        const valid = processed.filter(c => c.title && c.username && c.password)
+        const skipped = processed.length - valid.length
+
+        if (valid.length === 0) {
+            Swal.fire({
+                icon: 'warning',
+                title: t('No valid credentials'),
+                text: t('All credentials are missing title, username, or password.'),
+                background: 'rgb(1,6,46)', color: '#fff',
+                confirmButtonColor: 'rgb(48,168,90)',
+                confirmButtonText: t('OK')
+            })
+            setSaving(false)
+            return
+        }
+
         const response = await AuthAxiosInstance.post('/vault/credentials/import', {
-            credentials: encrypted
+            credentials: valid
         })
 
         queryClient.invalidateQueries({ queryKey: ['credential'] })
@@ -209,13 +225,19 @@ export default function MagicImport() {
         const errors = response.data?.errors || []
 
         await Swal.fire({
-            icon: summary?.failed > 0 ? 'warning' : 'success',
+            icon: (summary?.failed > 0 || skipped > 0) ? 'warning' : 'success',
             title: t('Import Successful'),
             html: `
                 <p style="color:rgba(255,255,255,0.8);font-size:14px">
-                    ✅ ${t('Imported')}: <b>${summary?.success || 0}</b> &nbsp;|&nbsp;
-                    ⚠️ ${t('Failed')}: <b>${summary?.failed || 0}</b>
+                    ✅ ${t('Imported')}: <b>${summary?.success ?? valid.length}</b>
+                    &nbsp;|&nbsp;
+                    ⚠️ ${t('Failed')}: <b>${(summary?.failed ?? 0) + skipped}</b>
                 </p>
+                ${skipped > 0 ? `
+                    <p style="color:rgba(255,255,255,0.5);font-size:12px;margin-top:8px">
+                        ${skipped} ${t('skipped due to missing fields')}
+                    </p>
+                ` : ''}
                 ${errors.length ? `
                     <div style="margin-top:12px;text-align:left">
                         ${errors.map(e => `
