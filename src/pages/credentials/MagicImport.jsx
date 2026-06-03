@@ -183,90 +183,52 @@ export default function MagicImport() {
         setParsed(prev => prev.filter((_, i) => i !== index))
     }
 
-   const handleSave = async () => {
-    if (!parsed.length) return
-    setSaving(true)
-    try {
-        const processed = await Promise.all(
-            parsed.map(async (cred) => ({
-                title: cred.title || '',
-                website: cred.website || '',
-                username: cred.username ? await encrypt(cred.username, masterPassword) : '',
-                password: cred.password ? await encrypt(cred.password, masterPassword) : '',
-                notes: cred.notes ? await encrypt(cred.notes, masterPassword) : '',
-                category: cred.category || 'Other',
-                tags: []
-            }))
-        )
+    const handleSave = async () => {
+        if (!parsed.length) return
+        setSaving(true)
+        try {
+            const encrypted = await Promise.all(
+                parsed.map(async (cred) => ({
+                    title: cred.title || '',
+                    website: cred.website || '',
+                    username: await encrypt(cred.username || '', masterPassword),
+                    password: await encrypt(cred.password || '', masterPassword),
+                    notes: await encrypt(cred.notes || '', masterPassword),
+                    category: cred.category || 'Other',
+                    tags: []
+                }))
+            )
 
-        const valid = processed.filter(c => c.title && c.username && c.password)
-        const skipped = processed.length - valid.length
+            const response = await AuthAxiosInstance.post('/vault/credentials/import', {
+                credentials: encrypted
+            })
 
-        if (valid.length === 0) {
+            queryClient.invalidateQueries({ queryKey: ['credential'] })
+
+            await Swal.fire({
+                icon: 'success',
+                title: t('Success'),
+                text: `${t('Credential added successfully')}`,
+                background: 'rgb(1,6,46)', color: '#fff',
+                confirmButtonColor: 'rgb(48,168,90)',
+                confirmButtonText: t('OK')
+
+            })
+
+            navigate('/dashboard')
+        } catch (error) {
             Swal.fire({
-                icon: 'warning',
-                title: t('No valid credentials'),
-                text: t('All credentials are missing title, username, or password.'),
+                icon: 'error',
+                title: t('Error'),
+                text: error?.response?.data?.message || t('Something went wrong'),
                 background: 'rgb(1,6,46)', color: '#fff',
                 confirmButtonColor: 'rgb(48,168,90)',
                 confirmButtonText: t('OK')
             })
+        } finally {
             setSaving(false)
-            return
         }
-
-        const response = await AuthAxiosInstance.post('/vault/credentials/import', {
-            credentials: valid
-        })
-
-        queryClient.invalidateQueries({ queryKey: ['credential'] })
-
-        const summary = response.data?.summary
-        const errors = response.data?.errors || []
-
-        await Swal.fire({
-            icon: (summary?.failed > 0 || skipped > 0) ? 'warning' : 'success',
-            title: t('Import Successful'),
-            html: `
-                <p style="color:rgba(255,255,255,0.8);font-size:14px">
-                    ✅ ${t('Imported')}: <b>${summary?.success ?? valid.length}</b>
-                    &nbsp;|&nbsp;
-                    ⚠️ ${t('Failed')}: <b>${(summary?.failed ?? 0) + skipped}</b>
-                </p>
-                ${skipped > 0 ? `
-                    <p style="color:rgba(255,255,255,0.5);font-size:12px;margin-top:8px">
-                        ${skipped} ${t('skipped due to missing fields')}
-                    </p>
-                ` : ''}
-                ${errors.length ? `
-                    <div style="margin-top:12px;text-align:left">
-                        ${errors.map(e => `
-                            <div style="color:#f87171;font-size:12px;padding:4px 0">
-                                • ${e.title || `Row ${e.index + 1}`}: ${e.reason}
-                            </div>
-                        `).join('')}
-                    </div>
-                ` : ''}
-            `,
-            background: 'rgb(1,6,46)', color: '#fff',
-            confirmButtonColor: 'rgb(48,168,90)',
-            confirmButtonText: t('OK')
-        })
-
-        navigate('/dashboard')
-    } catch (error) {
-        Swal.fire({
-            icon: 'error',
-            title: t('Error'),
-            text: error?.response?.data?.message || t('Something went wrong'),
-            background: 'rgb(1,6,46)', color: '#fff',
-            confirmButtonColor: 'rgb(48,168,90)',
-            confirmButtonText: t('OK')
-        })
-    } finally {
-        setSaving(false)
     }
-}
 
     return (
         <Box component="main" sx={{ backgroundColor: 'primary.main', minHeight: '100vh', pb: 5 }}>

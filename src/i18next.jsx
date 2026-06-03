@@ -555,13 +555,13 @@ i18n
           "category_database": "Database",
           "category_security": "Security",
           "category_ai": "AI",
-          // en
           'Click to review': 'Click to review',
           'name_required': 'Name is required',
           'name_letters_only': 'Name can only contain letters',
           'No valid credentials': 'No valid credentials',
           'All credentials are missing title, username, or password.': 'All credentials are missing title, username, or password.',
           'skipped due to missing fields': 'skipped due to missing fields',
+          'No valid credentials found in the file': 'No valid credentials found in the file. Make sure the CSV has title, username, and password columns.',
         }
       },
       ar: {
@@ -1111,13 +1111,14 @@ i18n
           'No valid credentials': 'لا توجد بيانات صالحة',
           'All credentials are missing title, username, or password.': 'جميع البيانات تفتقر إلى العنوان أو اسم المستخدم أو كلمة المرور.',
           'skipped due to missing fields': 'تم تخطيها بسبب حقول مفقودة',
+          'No valid credentials found in the file': 'لم يتم العثور على بيانات صالحة في الملف. تأكد إن الملف يحتوي على أعمدة العنوان واسم المستخدم وكلمة المرور.',
         }
-        }
-      },
-
-      interpolation: {
-        escapeValue: false
       }
-    });
+    },
+
+    interpolation: {
+      escapeValue: false
+    }
+  });
 
 export default i18n;
