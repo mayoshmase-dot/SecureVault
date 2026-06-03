@@ -14,26 +14,55 @@ export default function PasswordHistory({ credentialId }) {
     const { data } = useGetPasswordHistory(credentialId)
     const { mutate: restore, isPending } = useRestorePasswordFromHistory(credentialId)
     const [decryptedHistory, setDecryptedHistory] = useState([])
-
     useEffect(() => {
         const history = data?.data || []
-        if (!history.length || !masterPassword) return
+
+        console.log('====================')
+        console.log('MASTER PASSWORD:', masterPassword)
+        console.log('RAW HISTORY:', history)
+        console.log('====================')
+
+        if (!history.length || !masterPassword) {
+            setDecryptedHistory([])
+            return
+        }
+
         const decryptAll = async () => {
             const result = await Promise.all(
                 history.map(async (item) => {
                     try {
-                        const plain = await decrypt(item.encryptedPassword, masterPassword)
-                        return { ...item, plainPassword: plain }
-                    } catch {
-                        return { ...item, plainPassword: '••••••••' }
+                        console.log('Trying decrypt:', item)
+
+                        const plain = await decrypt(
+                            item.encryptedPassword,
+                            masterPassword
+                        )
+
+                        console.log('SUCCESS:', plain)
+
+                        return {
+                            ...item,
+                            plainPassword: plain
+                        }
+                    } catch (err) {
+                        console.error('FAILED:', item)
+                        console.error(err)
+
+                        return {
+                            ...item,
+                            plainPassword: '••••••••'
+                        }
                     }
                 })
             )
+
+            console.log('FINAL RESULT:', result)
+
             setDecryptedHistory(result)
         }
+
         decryptAll()
     }, [data, masterPassword])
-
     if (!decryptedHistory.length) return null
 
     return (

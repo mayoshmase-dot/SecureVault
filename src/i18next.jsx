@@ -27,7 +27,7 @@ i18n
           "Delete Account": "Delete Account",
 
           // Hero
-          "Secure Your Passwords in One Safe Vault ": "Secure Your Passwords in One Safe Vault",
+          "Secure Your Passwords in One Safe Vault ": "Secure Your Passwords in One Safe Vault ",
           "Store, manage, and generate strong passwords with advanced encryption and two-factor authentication.":
             "Store, manage, and generate strong passwords with advanced encryption and two-factor authentication.",
           "Create Account": "Create Account",
@@ -557,6 +557,9 @@ i18n
           "category_ai": "AI",
           // en
           'Click to review': 'Click to review',
+          'name_required': 'Name is required',
+          'name_letters_only': 'Name can only contain letters',
+
           // ar
         }
       },
@@ -1101,7 +1104,9 @@ i18n
           "category_database": "قاعدة البيانات",
           "category_security": "الأمان",
           "category_ai": "الذكاء الاصطناعي",
-                    'Click to review': 'اضغط للمراجعة',
+          'Click to review': 'اضغط للمراجعة',
+          'name_required': 'الاسم مطلوب',
+          'name_letters_only': 'الاسم يجب أن يحتوي على أحرف فقط',
 
 
 

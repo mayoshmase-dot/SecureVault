@@ -183,52 +183,68 @@ export default function MagicImport() {
         setParsed(prev => prev.filter((_, i) => i !== index))
     }
 
-    const handleSave = async () => {
-        if (!parsed.length) return
-        setSaving(true)
-        try {
-            const encrypted = await Promise.all(
-                parsed.map(async (cred) => ({
-                    title: cred.title || '',
-                    website: cred.website || '',
-                    username: await encrypt(cred.username || '', masterPassword),
-                    password: await encrypt(cred.password || '', masterPassword),
-                    notes: await encrypt(cred.notes || '', masterPassword),
-                    category: cred.category || 'Other',
-                    tags: []
-                }))
-            )
+   const handleSave = async () => {
+    if (!parsed.length) return
+    setSaving(true)
+    try {
+        const encrypted = await Promise.all(
+            parsed.map(async (cred) => ({
+                title: cred.title || '',
+                website: cred.website || '',
+                username: await encrypt(cred.username || '', masterPassword),
+                password: await encrypt(cred.password || '', masterPassword),
+                notes: await encrypt(cred.notes || '', masterPassword),
+                category: cred.category || 'Other',
+                tags: []
+            }))
+        )
 
-            const response = await AuthAxiosInstance.post('/vault/credentials/import', {
-                credentials: encrypted
-            })
+        const response = await AuthAxiosInstance.post('/vault/credentials/import', {
+            credentials: encrypted
+        })
 
-            queryClient.invalidateQueries({ queryKey: ['credential'] })
+        queryClient.invalidateQueries({ queryKey: ['credential'] })
 
-            await Swal.fire({
-                icon: 'success',
-                title: t('Success'),
-                text: `${t('Credential added successfully')}`,
-                background: 'rgb(1,6,46)', color: '#fff',
-                confirmButtonColor: 'rgb(48,168,90)',
-                confirmButtonText: t('OK')
+        const summary = response.data?.summary
+        const errors = response.data?.errors || []
 
-            })
+        await Swal.fire({
+            icon: summary?.failed > 0 ? 'warning' : 'success',
+            title: t('Import Successful'),
+            html: `
+                <p style="color:rgba(255,255,255,0.8);font-size:14px">
+                    ✅ ${t('Imported')}: <b>${summary?.success || 0}</b> &nbsp;|&nbsp;
+                    ⚠️ ${t('Failed')}: <b>${summary?.failed || 0}</b>
+                </p>
+                ${errors.length ? `
+                    <div style="margin-top:12px;text-align:left">
+                        ${errors.map(e => `
+                            <div style="color:#f87171;font-size:12px;padding:4px 0">
+                                • ${e.title || `Row ${e.index + 1}`}: ${e.reason}
+                            </div>
+                        `).join('')}
+                    </div>
+                ` : ''}
+            `,
+            background: 'rgb(1,6,46)', color: '#fff',
+            confirmButtonColor: 'rgb(48,168,90)',
+            confirmButtonText: t('OK')
+        })
 
-            navigate('/dashboard')
-        } catch (error) {
-            Swal.fire({
-                icon: 'error',
-                title: t('Error'),
-                text: error?.response?.data?.message || t('Something went wrong'),
-                background: 'rgb(1,6,46)', color: '#fff',
-                confirmButtonColor: 'rgb(48,168,90)',
-                confirmButtonText: t('OK')
-            })
-        } finally {
-            setSaving(false)
-        }
+        navigate('/dashboard')
+    } catch (error) {
+        Swal.fire({
+            icon: 'error',
+            title: t('Error'),
+            text: error?.response?.data?.message || t('Something went wrong'),
+            background: 'rgb(1,6,46)', color: '#fff',
+            confirmButtonColor: 'rgb(48,168,90)',
+            confirmButtonText: t('OK')
+        })
+    } finally {
+        setSaving(false)
     }
+}
 
     return (
         <Box component="main" sx={{ backgroundColor: 'primary.main', minHeight: '100vh', pb: 5 }}>

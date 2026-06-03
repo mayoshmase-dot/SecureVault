@@ -10,8 +10,8 @@ export default function Hero() {
 
   return (
         <Box
-      component="section"
-      aria-label={t("Secure Your Passwords in One Safe Vault")}
+      component="section" 
+      aria-label={t("Secure Your Passwords in One Safe Vault ")}
       sx={{
         position: "relative",
         height: "100vh",
@@ -23,7 +23,6 @@ export default function Hero() {
         component="img"
         src={heroImg}
         alt="Hero Background"
-        fetchPriority="high"
         loading="eager"
         style={{
           position: "absolute",

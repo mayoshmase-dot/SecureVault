@@ -18,6 +18,7 @@ export default function ProfileInfo() {
 
     const [editName, setEditName] = useState(false)
     const [name, setName] = useState('')
+    const [nameError, setNameError] = useState('')
     const [editEmail, setEditEmail] = useState(false)
     const [newEmail, setNewEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -29,6 +30,20 @@ export default function ProfileInfo() {
     if (isError) return <Box role="alert" color="red">{error.message}</Box>
 
     const profile = data?.data
+
+    const handleSaveName = async () => {
+        const trimmed = name.trim()
+        if (!trimmed) {
+            setNameError(t('name_required'))
+            return
+        }
+        if (!/^[A-Za-z\u0600-\u06FF\s]+$/.test(trimmed)) {
+            setNameError(t('name_letters_only'))
+            return
+        }
+        setNameError('')
+        updateName(trimmed, { onSuccess: () => setEditName(false) })
+    }
 
     return (
         <Box py={5} px={3}>
@@ -53,22 +68,32 @@ export default function ProfileInfo() {
                         </Typography>
                         {editName ? (
                             <Box display="flex" gap={1} mt={0.5} flexWrap={{ xs: 'wrap', sm: 'nowrap' }}>
-                                <TextField
-                                    id="nameField"
-                                    fullWidth size="small"
-                                    value={name}
-                                    onChange={(e) => setName(e.target.value)}
-                                    placeholder={profile?.name}
-                                    inputProps={{ 'aria-label': t('Name') }}
-                                    sx={inputSx} />
+                                <Box flex={1}>
+                                    <TextField
+                                        id="nameField"
+                                        fullWidth size="small"
+                                        value={name}
+                                        onChange={(e) => {
+                                            setName(e.target.value)
+                                            setNameError('')
+                                        }}
+                                        placeholder={profile?.name}
+                                        error={!!nameError}
+                                        helperText={nameError}
+                                        inputProps={{ 'aria-label': t('Name') }}
+                                        sx={inputSx} />
+                                </Box>
                                 <Button
                                     disabled={namePending || !name}
                                     aria-label={t('Save')}
-                                    onClick={() => updateName(name, { onSuccess: () => setEditName(false) })}
-                                    sx={{ borderRadius: 2, backgroundColor: 'secondary.main', color: 'white', px: 2, whiteSpace: 'nowrap' }}>
+                                    onClick={handleSaveName}
+                                    sx={{ borderRadius: 2, backgroundColor: 'secondary.main', color: 'white', px: 2, whiteSpace: 'nowrap', alignSelf: 'flex-start' }}>
                                     {namePending ? <CircularProgress size={18} sx={{ color: 'primary.main' }} /> : t('Save')}
                                 </Button>
-                                <Button onClick={() => setEditName(false)} aria-label={t('Cancel')} sx={{ color: 'rgba(255,255,255,0.4)' }}>
+                                <Button
+                                    onClick={() => { setEditName(false); setNameError('') }}
+                                    aria-label={t('Cancel')}
+                                    sx={{ color: 'rgba(255,255,255,0.4)', alignSelf: 'flex-start' }}>
                                     {t('Cancel')}
                                 </Button>
                             </Box>
