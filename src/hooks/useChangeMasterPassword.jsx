@@ -5,7 +5,6 @@ import Swal from "sweetalert2";
 import useVaultStore from "../store/useVaultStore";
 import { decrypt, encrypt, deriveAuthHash } from "../crypto";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
 import useAuthStore from "../store/useAuthStore";
 
 export default function useChangeMasterPassword() {
@@ -13,7 +12,6 @@ export default function useChangeMasterPassword() {
     const { setMasterPassword, clearMasterPassword } = useVaultStore();
     const logout = useAuthStore((state) => state.logout);
     const { t } = useTranslation();
-    const navigate = useNavigate();
 
     return useMutation({
         mutationFn: async ({ currentPassword, newPassword }) => {
@@ -51,7 +49,7 @@ export default function useChangeMasterPassword() {
                             tags: full.tags || [],
                             username: await encrypt(decryptedUsername, newPassword),
                             password: await encrypt(decryptedPassword, newPassword),
-                            notes: await encrypt(decryptedNotes, newPassword),
+                            notes: decryptedNotes ? await encrypt(decryptedNotes, newPassword) : '',
                         }
                     } catch {
                         return null
@@ -74,6 +72,9 @@ export default function useChangeMasterPassword() {
                     )
             )
 
+            // 7. امسح كل الـ password history — مشفر بكلمة المرور القديمة
+            await AuthAxiosInstance.delete('/vault/credentials/password-history/all')
+
             return response.data
         },
 
@@ -81,6 +82,7 @@ export default function useChangeMasterPassword() {
             setMasterPassword(newPassword)
             queryClient.invalidateQueries({ queryKey: ['credential'] })
             queryClient.invalidateQueries({ queryKey: ['vaultAudit'] })
+            queryClient.invalidateQueries({ queryKey: ['passwordHistory'] })
 
             Swal.fire({
                 icon: "success",

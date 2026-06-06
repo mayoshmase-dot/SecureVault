@@ -15,12 +15,8 @@ export default function PasswordHistory({ credentialId }) {
     const { mutate: restore, isPending } = useRestorePasswordFromHistory(credentialId)
     const [decryptedHistory, setDecryptedHistory] = useState([])
     useEffect(() => {
+        
         const history = data?.data || []
-
-        console.log('====================')
-        console.log('MASTER PASSWORD:', masterPassword)
-        console.log('RAW HISTORY:', history)
-        console.log('====================')
 
         if (!history.length || !masterPassword) {
             setDecryptedHistory([])
@@ -31,22 +27,16 @@ export default function PasswordHistory({ credentialId }) {
             const result = await Promise.all(
                 history.map(async (item) => {
                     try {
-                        console.log('Trying decrypt:', item)
-
                         const plain = await decrypt(
                             item.encryptedPassword,
                             masterPassword
                         )
-
-                        console.log('SUCCESS:', plain)
-
                         return {
                             ...item,
                             plainPassword: plain
                         }
                     } catch (err) {
-                        console.error('FAILED:', item)
-                        console.error(err)
+
 
                         return {
                             ...item,
@@ -56,7 +46,6 @@ export default function PasswordHistory({ credentialId }) {
                 })
             )
 
-            console.log('FINAL RESULT:', result)
 
             setDecryptedHistory(result)
         }

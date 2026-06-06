@@ -72,13 +72,19 @@ export default function useRecoverAccount() {
                                     tags: full.tags || [],
                                     username: await encrypt(decryptedUsername, newPassword),
                                     password: await encrypt(decryptedPassword, newPassword),
-                                    notes: await encrypt(decryptedNotes, newPassword),
+                                    notes: decryptedNotes ? await encrypt(decryptedNotes, newPassword) : '',
                                 }, {
                                     headers: { Authorization: `Bearer ${accessToken}` }
                                 })
                             } catch { }
                         })
                     )
+
+                    // 7. امسح الـ password history — مشفر بكلمة المرور القديمة
+                    await axiosInstance.delete('/vault/credentials/password-history/all', {
+                        headers: { Authorization: `Bearer ${accessToken}` }
+                    })
+
                 } catch { }
             }
 
