@@ -75,7 +75,6 @@ export default function Credentials() {
         })
     }
 
-    // Custom circular checkbox
     const CircleCheck = ({ checked, indeterminate, onChange, size = 20 }) => (
         <Box
             onClick={onChange}

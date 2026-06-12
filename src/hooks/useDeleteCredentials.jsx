@@ -12,13 +12,14 @@ export default function useDeleteCredentials() {
     return useMutation({
         mutationFn: async (id) => {
             const result = await Swal.fire({
-                icon: "warning",
                 title: t('Are you sure?'),
-                text: t('Do you want to delete this credential?'),
+                text: `${t('You are about to delete')} ${t('credentials')}`,
+                icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: t('Yes, delete it'),
                 cancelButtonText: t('Cancel'),
-                confirmButtonColor: "#d33",
+                confirmButtonColor: '#dc2626',
+                background: 'rgb(1,6,46)', color: '#fff'
             });
             if (!result.isConfirmed) throw new Error("cancelled");
             const response = await AuthAxiosInstance.delete(`/vault/credentials/${id}`);
@@ -26,11 +27,13 @@ export default function useDeleteCredentials() {
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["credential"] });
+
             Swal.fire({
                 icon: "success",
                 title: t('Deleted!'),
                 text: t('Credential deleted successfully'),
-                confirmButtonText: t('OK')
+                confirmButtonText: t('OK'),
+                background: 'rgb(1,6,46)',color: '#fff'
             }).then(() => navigate("/dashboard"));
         },
         onError: (error) => {
@@ -39,7 +42,7 @@ export default function useDeleteCredentials() {
                 icon: "error",
                 title: t('Error'),
                 text: error.response?.data?.message || t('Something went wrong'),
-                          confirmButtonText: t('OK')
+                confirmButtonText: t('OK')
             });
         }
     });
