@@ -64,13 +64,13 @@ export default function useImportCredentials() {
 
             const processed = await Promise.all(
                 credentials.map(async (cred) => {
-                    const title    = (cred.title    || cred.name  || '').trim()
+                    const title = (cred.title || cred.name || '').trim()
                     const username = (cred.username || cred.email || '').trim()
                     const password = (cred.password || '').trim()
-                    const notes    = (cred.notes    || '').trim()
-                    const website  = (cred.website  || cred.url   || '').trim()
+                    const notes = (cred.notes || '').trim()
+                    const website = (cred.website || cred.url || '').trim()
                     const category = cred.category || 'Other'
-                    const tags     = cred.tags ? cred.tags.split(';').filter(Boolean) : []
+                    const tags = cred.tags ? cred.tags.split(';').filter(Boolean) : []
 
                     // نفس الـ validation تبع الباك
                     const isValid =
@@ -84,7 +84,7 @@ export default function useImportCredentials() {
                         website,
                         username: username.length > 0 ? await encrypt(username, masterPassword) : '',
                         password: password.length > 0 ? await encrypt(password, masterPassword) : '',
-                        notes:    notes.length    > 0 ? await encrypt(notes,    masterPassword) : '',
+                        notes: notes.length > 0 ? await encrypt(notes, masterPassword) : '',
                         category,
                         tags,
                         _valid: isValid

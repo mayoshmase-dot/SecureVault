@@ -28,8 +28,8 @@ export default function useRecoverAccount() {
             // 4. hash الـ recovery key القديم
             const hashedRecoveryKey = await hashValue(recoveryKey)
 
-            // 5. ابعت للـ backend
-            await axiosInstance.post('/auth/recover-account', {
+            // 5. ابعت للـ backend — بيرجع accessToken مباشرة
+            const recoverRes = await axiosInstance.post('/auth/recover-account', {
                 email,
                 recoveryKey: hashedRecoveryKey,
                 newPassword: newAuthHash,
@@ -37,65 +37,50 @@ export default function useRecoverAccount() {
                 newRecoveryKeyHash
             })
 
-            // 6. لو عندنا masterPassword القديم — اعمل login وأعد تشفير الكريدنشلز
-            if (masterPassword) {
+            // 6. خذ الـ token من الـ response مباشرة
+            const accessToken = recoverRes.data?.data?.accessToken
+
+            // 7. لو عندنا masterPassword القديم وtoken — أعد تشفير الكريدنشلز
+            if (masterPassword && accessToken) {
                 try {
-                    const loginRes = await axiosInstance.post('/auth/login', {
-                        email,
-                        password: newAuthHash
+                    const credRes = await axiosInstance.get('/vault/credentials', {
+                        headers: { Authorization: `Bearer ${accessToken}` }
                     })
+                    const credentials = credRes.data?.data || []
 
-                    const accessToken = loginRes.data?.accessToken
-                    if (accessToken) {
-                        const credRes = await axiosInstance.get('/vault/credentials', {
-                            headers: { Authorization: `Bearer ${accessToken}` }
-                        })
-                        const credentials = credRes.data?.data || []
+                    for (const cred of credentials) {
+                        try {
+                            const res = await axiosInstance.get(`/vault/credentials/${cred._id}`, {
+                                headers: { Authorization: `Bearer ${accessToken}` }
+                            })
+                            const full = res.data?.data
 
-                        for (const cred of credentials) {
-                            try {
-                                const res = await axiosInstance.get(`/vault/credentials/${cred._id}`, {
-                                    headers: { Authorization: `Bearer ${accessToken}` }
-                                })
-                                const full = res.data?.data
+                            const decryptedUsername = await decrypt(full.username, masterPassword).catch(() => '')
+                            const decryptedPassword = await decrypt(full.password, masterPassword).catch(() => '')
+                            const decryptedNotes = full.notes
+                                ? await decrypt(full.notes, masterPassword).catch(() => '')
+                                : ''
 
-                                const decryptedUsername = await decrypt(full.username, masterPassword)
-                                const decryptedPassword = await decrypt(full.password, masterPassword)
-                                const decryptedNotes = full.notes ? await decrypt(full.notes, masterPassword) : ''
-
-                                await axiosInstance.put(`/vault/credentials/${cred._id}`, {
-                                    title: full.title,
-                                    website: full.website || '',
-                                    category: full.category || 'Other',
-                                    tags: full.tags || [],
-                                    username: await encrypt(decryptedUsername, newPassword),
-                                    password: await encrypt(decryptedPassword, newPassword),
-                                    notes: decryptedNotes ? await encrypt(decryptedNotes, newPassword) : '',
-                                }, {
-                                    headers: { Authorization: `Bearer ${accessToken}` }
-                                })
-
-                                for (const cred of credentials) {
-                                    try {
-                                        // decrypt + encrypt + update credential
-                                    } catch (err) {
-                                        console.error('Failed to re-encrypt credential', cred._id, err)
-                                    }
-                                }
-
-                                // امسح كل الـ password history — مشفر بكلمة المرور القديمة
-                                await axiosInstance.delete('/vault/credentials/password-history/all', {
-                                    headers: { Authorization: `Bearer ${accessToken}` }
-                                }).catch(() => { })
-
-                            } catch (err) {
-                                console.error('Failed to re-encrypt credential', cred._id, err)
-                            }
-                        }
+                            await axiosInstance.put(`/vault/credentials/${cred._id}`, {
+                                title: full.title,
+                                website: full.website || '',
+                                category: full.category || 'Other',
+                                tags: full.tags || [],
+                                username: await encrypt(decryptedUsername, newPassword),
+                                password: await encrypt(decryptedPassword, newPassword),
+                                notes: decryptedNotes ? await encrypt(decryptedNotes, newPassword) : '',
+                            }, {
+                                headers: { Authorization: `Bearer ${accessToken}` }
+                            })
+                        } catch { }
                     }
-                } catch (err) {
-                    console.error('Recovery re-encryption flow failed', err)
-                }
+
+                    // 8. امسح الـ password history
+                    await axiosInstance.delete('/vault/credentials/password-history/all', {
+                        headers: { Authorization: `Bearer ${accessToken}` }
+                    }).catch(() => { })
+
+                } catch { }
             }
 
             return { newRecoveryKey }
