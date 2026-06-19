@@ -14,15 +14,17 @@ const decryptField = async (field, masterPassword) => {
 }
 
 export default function useCredentialDetails({ id }) {
-    
+
     const { masterPassword } = useVaultStore()
     const navigate = useNavigate()
     const [decryptedData, setDecryptedData] = useState(null)
-    const [isDecrypting, setIsDecrypting] = useState(false)
+    const [isDecrypting, setIsDecrypting] = useState(true)
     const [decryptError, setDecryptError] = useState(null)
 
     useEffect(() => {
-        if (!masterPassword) navigate('/login')
+        if (!masterPassword) {
+            navigate('/login', { replace: true })
+        }
     }, [masterPassword])
 
     const query = useQuery({
@@ -31,11 +33,22 @@ export default function useCredentialDetails({ id }) {
             const response = await AuthAxiosInstance.get(`/vault/credentials/${id}`)
             return response.data
         },
+        enabled: !!masterPassword,
+        staleTime: 0, // ← أضيفي هاد، يجبر refetch دايماً
     })
 
     useEffect(() => {
+        // ← لو ما في masterPassword، ما تحاول تفك تشفير ولا تظهر error
+        if (!masterPassword) {
+            setIsDecrypting(true)
+            setDecryptError(null)
+            return
+        }
+
         const credential = query.data?.data
-        if (!credential || !masterPassword) return
+        if (!credential) return
+
+        let cancelled = false
 
         const decryptCredential = async () => {
             setIsDecrypting(true)
@@ -46,15 +59,23 @@ export default function useCredentialDetails({ id }) {
                     decryptField(credential.password, masterPassword),
                     decryptField(credential.notes, masterPassword),
                 ])
-                setDecryptedData({ ...credential, username, password, notes })
+                if (!cancelled) {
+                    setDecryptedData({ ...credential, username, password, notes })
+                }
             } catch (error) {
-                setDecryptError(error)
+                if (!cancelled) {
+                    setDecryptError(error)
+                }
             } finally {
-                setIsDecrypting(false)
+                if (!cancelled) {
+                    setIsDecrypting(false)
+                }
             }
         }
 
         decryptCredential()
+
+        return () => { cancelled = true }
     }, [query.data, masterPassword])
 
     return { ...query, decryptedData, isDecrypting, decryptError }

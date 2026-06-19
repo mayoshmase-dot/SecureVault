@@ -46,24 +46,22 @@ export default function useRecoverAccount() {
                     })
 
                     const accessToken = loginRes.data?.accessToken
-                    if (!accessToken) throw new Error('No token')
+                    if (accessToken) {
+                        const credRes = await axiosInstance.get('/vault/credentials', {
+                            headers: { Authorization: `Bearer ${accessToken}` }
+                        })
+                        const credentials = credRes.data?.data || []
 
-                    const credRes = await axiosInstance.get('/vault/credentials', {
-                        headers: { Authorization: `Bearer ${accessToken}` }
-                    })
-                    const credentials = credRes.data?.data || []
-
-                    await Promise.all(
-                        credentials.map(async (cred) => {
+                        for (const cred of credentials) {
                             try {
                                 const res = await axiosInstance.get(`/vault/credentials/${cred._id}`, {
                                     headers: { Authorization: `Bearer ${accessToken}` }
                                 })
                                 const full = res.data?.data
 
-                                const decryptedUsername = await decrypt(full.username, masterPassword).catch(() => '')
-                                const decryptedPassword = await decrypt(full.password, masterPassword).catch(() => '')
-                                const decryptedNotes = full.notes ? await decrypt(full.notes, masterPassword).catch(() => '') : ''
+                                const decryptedUsername = await decrypt(full.username, masterPassword)
+                                const decryptedPassword = await decrypt(full.password, masterPassword)
+                                const decryptedNotes = full.notes ? await decrypt(full.notes, masterPassword) : ''
 
                                 await axiosInstance.put(`/vault/credentials/${cred._id}`, {
                                     title: full.title,
@@ -76,16 +74,20 @@ export default function useRecoverAccount() {
                                 }, {
                                     headers: { Authorization: `Bearer ${accessToken}` }
                                 })
-                            } catch { }
-                        })
-                    )
 
-                    // 7. امسح الـ password history — مشفر بكلمة المرور القديمة
-                    await axiosInstance.delete('/vault/credentials/password-history/all', {
-                        headers: { Authorization: `Bearer ${accessToken}` }
-                    })
+                                // امسح الـ history القديم — مشفر بكلمة المرور القديمة
+                                await axiosInstance.delete(`/vault/credentials/${cred._id}/password-history`, {
+                                    headers: { Authorization: `Bearer ${accessToken}` }
+                                }).catch(() => {})
 
-                } catch { }
+                            } catch (err) {
+                                console.error('Failed to re-encrypt credential', cred._id, err)
+                            }
+                        }
+                    }
+                } catch (err) {
+                    console.error('Recovery re-encryption flow failed', err)
+                }
             }
 
             return { newRecoveryKey }

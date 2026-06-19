@@ -33,7 +33,7 @@ export default function useDeleteCredentials() {
                 title: t('Deleted!'),
                 text: t('Credential deleted successfully'),
                 confirmButtonText: t('OK'),
-                background: 'rgb(1,6,46)',color: '#fff'
+                background: 'rgb(1,6,46)', color: '#fff'
             }).then(() => navigate("/dashboard"));
         },
         onError: (error) => {

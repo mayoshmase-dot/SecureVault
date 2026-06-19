@@ -72,7 +72,8 @@ export default function UpdateCredential() {
 
     useEffect(() => {
         if (!decryptedData) return;
-
+        const hasRealData = decryptedData.title || decryptedData.username || decryptedData.password;
+        if (!hasRealData) return;
         reset({
             title: decryptedData.title || '',
             username: decryptedData.username || '',
