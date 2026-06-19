@@ -75,10 +75,18 @@ export default function useRecoverAccount() {
                                     headers: { Authorization: `Bearer ${accessToken}` }
                                 })
 
-                                // امسح الـ history القديم — مشفر بكلمة المرور القديمة
-                                await axiosInstance.delete(`/vault/credentials/${cred._id}/password-history`, {
+                                for (const cred of credentials) {
+                                    try {
+                                        // decrypt + encrypt + update credential
+                                    } catch (err) {
+                                        console.error('Failed to re-encrypt credential', cred._id, err)
+                                    }
+                                }
+
+                                // امسح كل الـ password history — مشفر بكلمة المرور القديمة
+                                await axiosInstance.delete('/vault/credentials/password-history/all', {
                                     headers: { Authorization: `Bearer ${accessToken}` }
-                                }).catch(() => {})
+                                }).catch(() => { })
 
                             } catch (err) {
                                 console.error('Failed to re-encrypt credential', cred._id, err)
